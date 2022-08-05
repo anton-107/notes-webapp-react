@@ -1,0 +1,27 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`App should render a header 1`] = `
+Object {
+  "instance": null,
+  "nodeType": "component",
+  "props": Object {
+    "name": "anonymous",
+  },
+  "rendered": Object {
+    "instance": null,
+    "nodeType": "host",
+    "props": Object {
+      "children": Array [
+        "Hello, ",
+        "anonymous",
+      ],
+    },
+    "rendered": Array [
+      "Hello, ",
+      "anonymous",
+    ],
+    "type": "h1",
+  },
+  "type": [Function],
+}
+`;
