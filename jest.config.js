@@ -10,5 +10,5 @@ module.exports = {
       statements: 100,
     },
   },
-  collectCoverageFrom: ["src/**/*"]
+  collectCoverageFrom: ["src/**/*"],
 };
