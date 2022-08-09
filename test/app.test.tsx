@@ -3,10 +3,9 @@ import { create } from "react-test-renderer";
 import { App } from "../src/app";
 
 describe("App", () => {
-  it("should render a header", () => {
+  it("should match a snapshot", () => {
     const component = create(<App name="anonymous" />);
     const tree = component.toTree();
     expect(tree).toMatchSnapshot();
-    expect(component.root.findByType("h1").children[1]).toContain("anonymous");
   });
 });

@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`App should render a header 1`] = `
+exports[`App should match a snapshot 1`] = `
 Object {
   "instance": null,
   "nodeType": "component",
@@ -11,16 +11,258 @@ Object {
     "instance": null,
     "nodeType": "host",
     "props": Object {
-      "children": Array [
-        "Hello, ",
-        "anonymous",
-      ],
+      "children": <div
+        className="layout"
+      >
+        <div
+          className="vertical-menu"
+        >
+          <h1
+            className="menu-block menu-header"
+          >
+            Notes app
+          </h1>
+          <ul
+            className="menu-links"
+          >
+            <li>
+              <a
+                href="#"
+              >
+                Notebooks
+              </a>
+            </li>
+            <li>
+              <a
+                href="#"
+              >
+                People
+              </a>
+            </li>
+          </ul>
+        </div>
+        <div
+          className="content"
+        >
+          <div
+            className="content-block"
+          >
+            Hello 
+            anonymous
+          </div>
+        </div>
+      </div>,
+      "id": "app-root",
     },
     "rendered": Array [
-      "Hello, ",
-      "anonymous",
+      Object {
+        "instance": null,
+        "nodeType": "host",
+        "props": Object {
+          "children": Array [
+            <div
+              className="vertical-menu"
+            >
+              <h1
+                className="menu-block menu-header"
+              >
+                Notes app
+              </h1>
+              <ul
+                className="menu-links"
+              >
+                <li>
+                  <a
+                    href="#"
+                  >
+                    Notebooks
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="#"
+                  >
+                    People
+                  </a>
+                </li>
+              </ul>
+            </div>,
+            <div
+              className="content"
+            >
+              <div
+                className="content-block"
+              >
+                Hello 
+                anonymous
+              </div>
+            </div>,
+          ],
+          "className": "layout",
+        },
+        "rendered": Array [
+          Object {
+            "instance": null,
+            "nodeType": "host",
+            "props": Object {
+              "children": Array [
+                <h1
+                  className="menu-block menu-header"
+                >
+                  Notes app
+                </h1>,
+                <ul
+                  className="menu-links"
+                >
+                  <li>
+                    <a
+                      href="#"
+                    >
+                      Notebooks
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      href="#"
+                    >
+                      People
+                    </a>
+                  </li>
+                </ul>,
+              ],
+              "className": "vertical-menu",
+            },
+            "rendered": Array [
+              Object {
+                "instance": null,
+                "nodeType": "host",
+                "props": Object {
+                  "children": "Notes app",
+                  "className": "menu-block menu-header",
+                },
+                "rendered": Array [
+                  "Notes app",
+                ],
+                "type": "h1",
+              },
+              Object {
+                "instance": null,
+                "nodeType": "host",
+                "props": Object {
+                  "children": Array [
+                    <li>
+                      <a
+                        href="#"
+                      >
+                        Notebooks
+                      </a>
+                    </li>,
+                    <li>
+                      <a
+                        href="#"
+                      >
+                        People
+                      </a>
+                    </li>,
+                  ],
+                  "className": "menu-links",
+                },
+                "rendered": Array [
+                  Object {
+                    "instance": null,
+                    "nodeType": "host",
+                    "props": Object {
+                      "children": <a
+                        href="#"
+                      >
+                        Notebooks
+                      </a>,
+                    },
+                    "rendered": Array [
+                      Object {
+                        "instance": null,
+                        "nodeType": "host",
+                        "props": Object {
+                          "children": "Notebooks",
+                          "href": "#",
+                        },
+                        "rendered": Array [
+                          "Notebooks",
+                        ],
+                        "type": "a",
+                      },
+                    ],
+                    "type": "li",
+                  },
+                  Object {
+                    "instance": null,
+                    "nodeType": "host",
+                    "props": Object {
+                      "children": <a
+                        href="#"
+                      >
+                        People
+                      </a>,
+                    },
+                    "rendered": Array [
+                      Object {
+                        "instance": null,
+                        "nodeType": "host",
+                        "props": Object {
+                          "children": "People",
+                          "href": "#",
+                        },
+                        "rendered": Array [
+                          "People",
+                        ],
+                        "type": "a",
+                      },
+                    ],
+                    "type": "li",
+                  },
+                ],
+                "type": "ul",
+              },
+            ],
+            "type": "div",
+          },
+          Object {
+            "instance": null,
+            "nodeType": "host",
+            "props": Object {
+              "children": <div
+                className="content-block"
+              >
+                Hello 
+                anonymous
+              </div>,
+              "className": "content",
+            },
+            "rendered": Array [
+              Object {
+                "instance": null,
+                "nodeType": "host",
+                "props": Object {
+                  "children": Array [
+                    "Hello ",
+                    "anonymous",
+                  ],
+                  "className": "content-block",
+                },
+                "rendered": Array [
+                  "Hello ",
+                  "anonymous",
+                ],
+                "type": "div",
+              },
+            ],
+            "type": "div",
+          },
+        ],
+        "type": "div",
+      },
     ],
-    "type": "h1",
+    "type": "div",
   },
   "type": [Function],
 }
