@@ -50,6 +50,11 @@ Object {
             Hello 
             anonymous
           </div>
+          <div
+            className="content-block"
+          >
+            <LoginForm />
+          </div>
         </div>
       </div>,
       "id": "app-root",
@@ -95,6 +100,11 @@ Object {
               >
                 Hello 
                 anonymous
+              </div>
+              <div
+                className="content-block"
+              >
+                <LoginForm />
               </div>
             </div>,
           ],
@@ -230,12 +240,19 @@ Object {
             "instance": null,
             "nodeType": "host",
             "props": Object {
-              "children": <div
-                className="content-block"
-              >
-                Hello 
-                anonymous
-              </div>,
+              "children": Array [
+                <div
+                  className="content-block"
+                >
+                  Hello 
+                  anonymous
+                </div>,
+                <div
+                  className="content-block"
+                >
+                  <LoginForm />
+                </div>,
+              ],
               "className": "content",
             },
             "rendered": Array [
@@ -252,6 +269,230 @@ Object {
                 "rendered": Array [
                   "Hello ",
                   "anonymous",
+                ],
+                "type": "div",
+              },
+              Object {
+                "instance": null,
+                "nodeType": "host",
+                "props": Object {
+                  "children": <LoginForm />,
+                  "className": "content-block",
+                },
+                "rendered": Array [
+                  Object {
+                    "instance": null,
+                    "nodeType": "component",
+                    "props": Object {},
+                    "rendered": Object {
+                      "instance": null,
+                      "nodeType": "host",
+                      "props": Object {
+                        "children": Array [
+                          <h1>
+                            Sign in to NotesApp
+                          </h1>,
+                          <form
+                            action="#"
+                            className="login-form"
+                            method="post"
+                          >
+                            <label>
+                              <span
+                                className="form-label"
+                              >
+                                E-mail:
+                              </span>
+                              <input
+                                className="form-input"
+                                data-testid="user-login"
+                                name="user-login"
+                              />
+                            </label>
+                            <label>
+                              <span
+                                className="form-label"
+                              >
+                                Password:
+                              </span>
+                              <input
+                                className="form-input"
+                                data-testid="user-password"
+                                name="user-password"
+                                type="password"
+                              />
+                            </label>
+                            <input
+                              className="form-button"
+                              type="submit"
+                              value="Sign in"
+                            />
+                          </form>,
+                        ],
+                        "className": "centric-form",
+                      },
+                      "rendered": Array [
+                        Object {
+                          "instance": null,
+                          "nodeType": "host",
+                          "props": Object {
+                            "children": "Sign in to NotesApp",
+                          },
+                          "rendered": Array [
+                            "Sign in to NotesApp",
+                          ],
+                          "type": "h1",
+                        },
+                        Object {
+                          "instance": null,
+                          "nodeType": "host",
+                          "props": Object {
+                            "action": "#",
+                            "children": Array [
+                              <label>
+                                <span
+                                  className="form-label"
+                                >
+                                  E-mail:
+                                </span>
+                                <input
+                                  className="form-input"
+                                  data-testid="user-login"
+                                  name="user-login"
+                                />
+                              </label>,
+                              <label>
+                                <span
+                                  className="form-label"
+                                >
+                                  Password:
+                                </span>
+                                <input
+                                  className="form-input"
+                                  data-testid="user-password"
+                                  name="user-password"
+                                  type="password"
+                                />
+                              </label>,
+                              <input
+                                className="form-button"
+                                type="submit"
+                                value="Sign in"
+                              />,
+                            ],
+                            "className": "login-form",
+                            "method": "post",
+                          },
+                          "rendered": Array [
+                            Object {
+                              "instance": null,
+                              "nodeType": "host",
+                              "props": Object {
+                                "children": Array [
+                                  <span
+                                    className="form-label"
+                                  >
+                                    E-mail:
+                                  </span>,
+                                  <input
+                                    className="form-input"
+                                    data-testid="user-login"
+                                    name="user-login"
+                                  />,
+                                ],
+                              },
+                              "rendered": Array [
+                                Object {
+                                  "instance": null,
+                                  "nodeType": "host",
+                                  "props": Object {
+                                    "children": "E-mail:",
+                                    "className": "form-label",
+                                  },
+                                  "rendered": Array [
+                                    "E-mail:",
+                                  ],
+                                  "type": "span",
+                                },
+                                Object {
+                                  "instance": null,
+                                  "nodeType": "host",
+                                  "props": Object {
+                                    "className": "form-input",
+                                    "data-testid": "user-login",
+                                    "name": "user-login",
+                                  },
+                                  "rendered": Array [],
+                                  "type": "input",
+                                },
+                              ],
+                              "type": "label",
+                            },
+                            Object {
+                              "instance": null,
+                              "nodeType": "host",
+                              "props": Object {
+                                "children": Array [
+                                  <span
+                                    className="form-label"
+                                  >
+                                    Password:
+                                  </span>,
+                                  <input
+                                    className="form-input"
+                                    data-testid="user-password"
+                                    name="user-password"
+                                    type="password"
+                                  />,
+                                ],
+                              },
+                              "rendered": Array [
+                                Object {
+                                  "instance": null,
+                                  "nodeType": "host",
+                                  "props": Object {
+                                    "children": "Password:",
+                                    "className": "form-label",
+                                  },
+                                  "rendered": Array [
+                                    "Password:",
+                                  ],
+                                  "type": "span",
+                                },
+                                Object {
+                                  "instance": null,
+                                  "nodeType": "host",
+                                  "props": Object {
+                                    "className": "form-input",
+                                    "data-testid": "user-password",
+                                    "name": "user-password",
+                                    "type": "password",
+                                  },
+                                  "rendered": Array [],
+                                  "type": "input",
+                                },
+                              ],
+                              "type": "label",
+                            },
+                            Object {
+                              "instance": null,
+                              "nodeType": "host",
+                              "props": Object {
+                                "className": "form-button",
+                                "type": "submit",
+                                "value": "Sign in",
+                              },
+                              "rendered": Array [],
+                              "type": "input",
+                            },
+                          ],
+                          "type": "form",
+                        },
+                      ],
+                      "type": "div",
+                    },
+                    "type": [Function],
+                  },
                 ],
                 "type": "div",
               },

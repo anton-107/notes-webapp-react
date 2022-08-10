@@ -1,4 +1,5 @@
 import * as React from "react";
+import { LoginForm } from "./auth/login-form";
 import "./main.css";
 
 export function App(props: { name: string }): React.ReactElement {
@@ -18,6 +19,9 @@ export function App(props: { name: string }): React.ReactElement {
         </div>
         <div className="content">
           <div className="content-block">Hello {props.name}</div>
+          <div className="content-block">
+            <LoginForm />
+          </div>
         </div>
       </div>
     </div>
