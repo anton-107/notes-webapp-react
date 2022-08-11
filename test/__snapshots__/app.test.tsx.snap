@@ -295,7 +295,9 @@ Object {
                           <form
                             action="#"
                             className="login-form"
+                            data-testid="login-form"
                             method="post"
+                            onSubmit={[Function]}
                           >
                             <label>
                               <span
@@ -307,6 +309,8 @@ Object {
                                 className="form-input"
                                 data-testid="user-login"
                                 name="user-login"
+                                onChange={[Function]}
+                                value=""
                               />
                             </label>
                             <label>
@@ -319,7 +323,9 @@ Object {
                                 className="form-input"
                                 data-testid="user-password"
                                 name="user-password"
+                                onChange={[Function]}
                                 type="password"
+                                value=""
                               />
                             </label>
                             <input
@@ -359,6 +365,8 @@ Object {
                                   className="form-input"
                                   data-testid="user-login"
                                   name="user-login"
+                                  onChange={[Function]}
+                                  value=""
                                 />
                               </label>,
                               <label>
@@ -371,7 +379,9 @@ Object {
                                   className="form-input"
                                   data-testid="user-password"
                                   name="user-password"
+                                  onChange={[Function]}
                                   type="password"
+                                  value=""
                                 />
                               </label>,
                               <input
@@ -381,7 +391,9 @@ Object {
                               />,
                             ],
                             "className": "login-form",
+                            "data-testid": "login-form",
                             "method": "post",
+                            "onSubmit": [Function],
                           },
                           "rendered": Array [
                             Object {
@@ -398,6 +410,8 @@ Object {
                                     className="form-input"
                                     data-testid="user-login"
                                     name="user-login"
+                                    onChange={[Function]}
+                                    value=""
                                   />,
                                 ],
                               },
@@ -421,6 +435,8 @@ Object {
                                     "className": "form-input",
                                     "data-testid": "user-login",
                                     "name": "user-login",
+                                    "onChange": [Function],
+                                    "value": "",
                                   },
                                   "rendered": Array [],
                                   "type": "input",
@@ -442,7 +458,9 @@ Object {
                                     className="form-input"
                                     data-testid="user-password"
                                     name="user-password"
+                                    onChange={[Function]}
                                     type="password"
+                                    value=""
                                   />,
                                 ],
                               },
@@ -466,7 +484,9 @@ Object {
                                     "className": "form-input",
                                     "data-testid": "user-password",
                                     "name": "user-password",
+                                    "onChange": [Function],
                                     "type": "password",
+                                    "value": "",
                                   },
                                   "rendered": Array [],
                                   "type": "input",
