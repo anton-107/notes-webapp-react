@@ -3,7 +3,10 @@ interface SignInResult {
 }
 
 export class AuthService {
-  public async signIn(username: string, password: string): Promise<SignInResult> {
+  public async signIn(
+    username: string,
+    password: string
+  ): Promise<SignInResult> {
     const request = await fetch("http://localhost:3000/signin", {
       method: "POST",
       mode: "cors",
@@ -19,7 +22,7 @@ export class AuthService {
     console.log("signin response", resp);
 
     return {
-      isAuthenticated: false
+      isAuthenticated: false,
     };
   }
 }
