@@ -1,12 +1,15 @@
 import * as React from "react";
 import { FormEvent, useState } from "react";
+import { AuthService } from "./auth-service";
 import "./login-form.css";
 
 export function LoginForm(): React.ReactElement {
   const [login, setLogin] = useState<string>("");
   const [password, setPassword] = useState<string>("");
-  const submitForm = (e: FormEvent) => {
+  const submitForm = async (e: FormEvent) => {
     e.preventDefault();
+    const service = new AuthService();
+    await service.signIn(login, password);
     console.log("submit form", login, password);
   };
 

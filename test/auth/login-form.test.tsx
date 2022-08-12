@@ -4,9 +4,11 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import * as React from "react";
 import { LoginForm } from "../../src/auth/login-form";
+import fetchMock from 'jest-fetch-mock';
 
 describe("Login form", () => {
   it("should submit login and password", () => {
+    fetchMock.mockResponse(`{ "body": "ok" }`);
     render(<LoginForm />);
     fireEvent.change(screen.getByTestId("user-login"), {
       target: { value: "user1" },
