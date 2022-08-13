@@ -1,3 +1,5 @@
+import { API_ROOT } from "../environment";
+
 interface SignInResult {
   isAuthenticated: boolean;
 }
@@ -7,7 +9,7 @@ export class AuthService {
     username: string,
     password: string
   ): Promise<SignInResult> {
-    const request = await fetch("http://localhost:3000/signin", {
+    const request = await fetch(`${API_ROOT}/signin`, {
       method: "POST",
       mode: "cors",
       headers: {

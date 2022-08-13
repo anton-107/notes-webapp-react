@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "webpack --config webpack.config.js",
-    "start": "webpack serve",
+    "build": "webpack --config webpack.config.js --env file=.env.example",
+    "start": "webpack serve --env file=.env.development",
     "test": "jest -c jest.config.js",
     "test:coverage": "jest  -c jest.config.js --coverage",
     "jest-update-snapshots": "jest  -c jest.config.js --updateSnapshot",
@@ -33,6 +33,7 @@
     "@types/react-test-renderer": "^18.0.0",
     "@typescript-eslint/eslint-plugin": "^5.32.0",
     "css-loader": "^6.7.1",
+    "dotenv-webpack": "^8.0.0",
     "eslint": "^8.21.0",
     "html-webpack-plugin": "^5.5.0",
     "jest": "^28.1.3",
