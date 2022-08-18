@@ -1,17 +1,25 @@
 import * as React from "react";
-import { FormEvent, useState } from "react";
+import { FormEvent, useState, useEffect } from "react";
 import { AuthService } from "./auth-service";
 import "./login-form.css";
 
 export function LoginForm(): React.ReactElement {
+  const authService = new AuthService();
   const [login, setLogin] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const submitForm = async (e: FormEvent) => {
     e.preventDefault();
-    const service = new AuthService();
-    await service.signIn(login, password);
-    console.log("submit form", login, password);
+    await authService.signIn(login, password);
+    await checkCurrentUser();
   };
+
+  const checkCurrentUser = async () => {
+    await authService.checkAuthentication();
+  };
+
+  useEffect(() => {
+    checkCurrentUser();
+  }, []);
 
   return (
     <div className="centric-form">
