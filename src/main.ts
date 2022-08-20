@@ -10,7 +10,7 @@ function run() {
   }
   const domContainer = document.querySelector("#notes-webapp-react");
   const root = createRoot(domContainer);
-  root.render(React.createElement(App, { name: "anonymous" }));
+  root.render(React.createElement(App));
 }
 
 run();

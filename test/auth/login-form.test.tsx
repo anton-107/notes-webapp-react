@@ -8,8 +8,12 @@ import fetchMock from "jest-fetch-mock";
 
 describe("Login form", () => {
   it("should submit login and password", () => {
+    const onSignIn = () => {
+      // this is intentionally empty
+    };
+
     fetchMock.mockResponse(`{ "body": "ok" }`);
-    render(<LoginForm />);
+    render(<LoginForm onSignIn={onSignIn} />);
     fireEvent.change(screen.getByTestId("user-login"), {
       target: { value: "user1" },
     });
