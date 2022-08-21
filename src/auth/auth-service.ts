@@ -47,4 +47,16 @@ export class AuthService {
 
     return resp;
   }
+  public async signOut(): Promise<void> {
+    const request = await fetch(`${API_ROOT}/signout`, {
+      method: "POST",
+      mode: "cors",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+    });
+    const resp = await request.blob();
+    console.log("signout response", resp);
+  }
 }

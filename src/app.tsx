@@ -2,6 +2,7 @@ import * as React from "react";
 import { useEffect, useState } from "react";
 import { AuthService } from "./auth/auth-service";
 import { LoginForm } from "./auth/login-form";
+import { UserMenu } from "./auth/user-menu";
 import "./main.css";
 
 export function App(): React.ReactElement {
@@ -46,8 +47,11 @@ export function App(): React.ReactElement {
           )}
           {isCheckingAuth && <div className="content-block">Loading...</div>}
           {!isCheckingAuth && isAuthenticated && (
-            <div className="content-block" data-testid="greeting">
-              Hello, {userName}
+            <div className="top-bar">
+              <div className="top-bar-section">Home</div>
+              <div className="top-bar-section-side" data-testid="greeting">
+                <UserMenu userName={userName} onSignOut={checkCurrentUser} />
+              </div>
             </div>
           )}
         </div>
