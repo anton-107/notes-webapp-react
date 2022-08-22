@@ -29,8 +29,8 @@ module.exports = (env) => {
     },
     performance: {
       hints: "error",
-      maxEntrypointSize: 300_000,
-      maxAssetSize: 300_000,
+      maxEntrypointSize: 320_000,
+      maxAssetSize: 320_000,
     },
     plugins: [
       new HtmlWebpackPlugin({
@@ -42,5 +42,10 @@ module.exports = (env) => {
         path: `./${env.file}`,
       }),
     ],
+    devServer: {
+      historyApiFallback: {
+        index: "/dist/index.html",
+      },
+    },
   };
 };
