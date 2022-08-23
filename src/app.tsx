@@ -1,9 +1,9 @@
 import * as React from "react";
 import { useEffect, useState } from "react";
+import { BrowserRouter, NavLink, Route, Routes } from "react-router-dom";
 import { AuthService } from "./auth/auth-service";
 import { LoginForm } from "./auth/login-form";
 import { UserMenu } from "./auth/user-menu";
-import { BrowserRouter, Link, Routes, Route } from "react-router-dom";
 import "./main.css";
 import { NotebooksPage } from "./notebooks/notebooks-page";
 import { PeoplePage } from "./people/people-page";
@@ -35,10 +35,26 @@ export function App(): React.ReactElement {
               <h1 className="menu-block menu-header">Notes app</h1>
               <ul className="menu-links">
                 <li>
-                  <Link to="/notebooks">Notebooks</Link>
+                  <NavLink
+                    to="/notebooks"
+                    data-testid="notebooks-page-link"
+                    className={({ isActive }) =>
+                      isActive ? "active-nav-link" : ""
+                    }
+                  >
+                    Notebooks
+                  </NavLink>
                 </li>
                 <li>
-                  <Link to="/people">People</Link>
+                  <NavLink
+                    to="/people"
+                    data-testid="people-page-link"
+                    className={({ isActive }) =>
+                      isActive ? "active-nav-link" : ""
+                    }
+                  >
+                    People
+                  </NavLink>
                 </li>
               </ul>
             </div>
