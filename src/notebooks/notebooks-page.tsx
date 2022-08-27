@@ -2,6 +2,7 @@ import * as React from "react";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Notebook, NotebooksService } from "./notebooks-service";
+import "./notebook-page.css";
 
 export function NotebooksPage(): React.ReactElement {
   const [notebooks, setNotebooks] = useState([]);
@@ -21,7 +22,12 @@ export function NotebooksPage(): React.ReactElement {
       {notebooks.map((n: Notebook) => {
         return (
           <div data-testid={`notebook-${n.id}`}>
-            <Link to={`/notebook/${n.id}`}>{n.name}</Link>
+            <Link to={`/notebook/${n.id}`} className="notebook-link">
+              <div className="notebook-item">
+                <div className="notebook-cover"></div>
+                <div className="notebook-title">{n.name}</div>
+              </div>
+            </Link>
           </div>
         );
       })}
