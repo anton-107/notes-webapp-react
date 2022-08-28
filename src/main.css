@@ -66,3 +66,9 @@ body {
 .top-bar-section-side {
   padding: 10px;
 }
+a {
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
+}

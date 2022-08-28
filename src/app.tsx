@@ -6,6 +6,7 @@ import { LoginForm } from "./auth/login-form";
 import { UserMenu } from "./auth/user-menu";
 import "./main.css";
 import { NotebooksPage } from "./notebooks/notebooks-page";
+import { SingleNotebookPage } from "./notebooks/single-notebook-page";
 import { PeoplePage } from "./people/people-page";
 
 export function App(): React.ReactElement {
@@ -68,7 +69,7 @@ export function App(): React.ReactElement {
             {isCheckingAuth && <div className="content-block">Loading...</div>}
             {!isCheckingAuth && isAuthenticated && (
               <div className="top-bar">
-                <div className="top-bar-section">Home</div>
+                <div className="top-bar-section"></div>
                 <div className="top-bar-section-side" data-testid="greeting">
                   <UserMenu userName={userName} onSignOut={checkCurrentUser} />
                 </div>
@@ -77,6 +78,10 @@ export function App(): React.ReactElement {
             {!isCheckingAuth && isAuthenticated && (
               <Routes>
                 <Route path="notebooks" element={<NotebooksPage />} />
+                <Route
+                  path="notebook/:notebookID"
+                  element={<SingleNotebookPage />}
+                />
                 <Route path="people" element={<PeoplePage />} />
               </Routes>
             )}
