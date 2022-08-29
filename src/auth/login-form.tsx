@@ -11,10 +11,14 @@ export function LoginForm(props: LoginFormProps): React.ReactElement {
   const authService = new AuthService();
   const [login, setLogin] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+  const [isSigningIn, setIsSigningIn] = useState<boolean>(false);
+
   const submitForm = async (e: FormEvent) => {
     e.preventDefault();
+    setIsSigningIn(true);
     await authService.signIn(login, password);
     props.onSignIn();
+    setIsSigningIn(false);
   };
 
   return (
@@ -48,7 +52,17 @@ export function LoginForm(props: LoginFormProps): React.ReactElement {
             onChange={(e) => setPassword(e.target.value)}
           />
         </label>
-        <input type="submit" value="Sign in" className="form-button" />
+        {!isSigningIn && (
+          <input type="submit" value="Sign in" className="form-button" />
+        )}
+        {isSigningIn && (
+          <input
+            type="button"
+            disabled={true}
+            value="Signing in..."
+            className="form-button form-button-disable"
+          />
+        )}
       </form>
     </div>
   );
