@@ -21,7 +21,7 @@ export function NotebooksPage(): React.ReactElement {
       <h1>Notebooks</h1>
       {notebooks.map((n: Notebook) => {
         return (
-          <div data-testid={`notebook-${n.id}`}>
+          <div data-testid={`notebook-${n.id}`} key={`notebook-${n.id}`}>
             <Link to={`/notebook/${n.id}`} className="notebook-link">
               <div className="notebook-item">
                 <div className="notebook-cover"></div>
