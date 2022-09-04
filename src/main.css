@@ -72,3 +72,11 @@ a {
 a:hover {
   text-decoration: underline;
 }
+.form-button {
+  font-size: 1em;
+  background-color: darkblue;
+  color: #fff;
+  border-radius: 5px;
+  border: 1px solid transparent;
+  padding: 5px 15px;
+}
