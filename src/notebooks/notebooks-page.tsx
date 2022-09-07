@@ -18,7 +18,7 @@ export function NotebooksPage(): React.ReactElement {
   }, []);
   return (
     <div className="content-block">
-      <h1>Notebooks</h1>
+      <h1 data-testid="notebooks-page-header">Notebooks</h1>
       {notebooks.map((n: Notebook) => {
         return (
           <div data-testid={`notebook-${n.id}`} key={`notebook-${n.id}`}>

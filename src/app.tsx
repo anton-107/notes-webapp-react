@@ -77,6 +77,7 @@ export function App(): React.ReactElement {
             )}
             {!isCheckingAuth && isAuthenticated && (
               <Routes>
+                <Route path="/" element={<NotebooksPage />} />
                 <Route path="notebooks" element={<NotebooksPage />} />
                 <Route
                   path="notebook/:notebookID"

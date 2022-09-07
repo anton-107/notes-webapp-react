@@ -37,4 +37,18 @@ export class NotesService {
     console.log("add note response response", resp);
     return resp;
   }
+  public async deleteNote(noteID: string): Promise<void> {
+    const request = await fetch(`${API_ROOT}/note/delete`, {
+      method: "POST",
+      mode: "cors",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ "note-id": noteID }),
+      credentials: "include",
+    });
+    const resp = await request.json();
+    console.log("dlete note response", resp);
+    return resp;
+  }
 }

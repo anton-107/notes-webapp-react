@@ -40,7 +40,7 @@ export function SingleNotebookPage(): React.ReactElement {
         )}
       </div>
       <div className="content-block">
-        {notebook && <NotesList notes={notes} />}
+        {notebook && <NotesList notes={notes} onNoteDeleted={loadNotes} />}
       </div>
       <div className="content-block">
         {notebook && (
