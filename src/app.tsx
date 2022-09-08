@@ -1,10 +1,11 @@
 import * as React from "react";
 import { useEffect, useState } from "react";
-import { BrowserRouter, NavLink, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { AuthService } from "./auth/auth-service";
 import { LoginForm } from "./auth/login-form";
 import { UserMenu } from "./auth/user-menu";
 import "./main.css";
+import { LeftMenuLinks } from "./navigation/left-menu-links";
 import { NotebooksPage } from "./notebooks/notebooks-page";
 import { SingleNotebookPage } from "./notebooks/single-notebook-page";
 import { PeoplePage } from "./people/people-page";
@@ -34,30 +35,7 @@ export function App(): React.ReactElement {
           {isAuthenticated && (
             <div className="vertical-menu">
               <h1 className="menu-block menu-header">Notes app</h1>
-              <ul className="menu-links">
-                <li>
-                  <NavLink
-                    to="/notebooks"
-                    data-testid="notebooks-page-link"
-                    className={({ isActive }) =>
-                      isActive ? "active-nav-link" : ""
-                    }
-                  >
-                    Notebooks
-                  </NavLink>
-                </li>
-                <li>
-                  <NavLink
-                    to="/people"
-                    data-testid="people-page-link"
-                    className={({ isActive }) =>
-                      isActive ? "active-nav-link" : ""
-                    }
-                  >
-                    People
-                  </NavLink>
-                </li>
-              </ul>
+              <LeftMenuLinks />
             </div>
           )}
           <div className="content">
