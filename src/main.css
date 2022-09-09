@@ -52,6 +52,10 @@ body {
   font-size: 1.2em;
   line-height: 2.4em;
 }
+h2.menu-header {
+  font-size: 1em;
+  line-height: 2em;
+}
 .content-block {
   padding: 20px 60px;
 }

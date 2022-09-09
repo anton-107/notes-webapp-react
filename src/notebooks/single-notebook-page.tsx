@@ -1,12 +1,13 @@
 import * as React from "react";
 import { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useLocation, useParams } from "react-router-dom";
 import { AddPlaintextNoteComponent } from "../notes/add-plaintext-note.component";
 import { NotesList } from "../notes/notes-list";
 import { NotesService } from "../notes/notes-service";
 import { Notebook, NotebooksService } from "./notebooks-service";
 
 export function SingleNotebookPage(): React.ReactElement {
+  const location = useLocation();
   const [notebook, setNotebook] = useState<Notebook | null>(null);
   const [notes, setNotes] = useState([]);
   const { notebookID } = useParams();
@@ -25,10 +26,10 @@ export function SingleNotebookPage(): React.ReactElement {
 
   useEffect(() => {
     loadNotebook(notebookID);
-  }, []);
+  }, [location]);
   useEffect(() => {
     loadNotes();
-  }, []);
+  }, [location]);
 
   return (
     <div>

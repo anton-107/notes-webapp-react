@@ -6,6 +6,7 @@ import { LoginForm } from "./auth/login-form";
 import { UserMenu } from "./auth/user-menu";
 import "./main.css";
 import { LeftMenuLinks } from "./navigation/left-menu-links";
+import { NotebooksLeftMenu } from "./navigation/notebooks-left-menu";
 import { NotebooksPage } from "./notebooks/notebooks-page";
 import { SingleNotebookPage } from "./notebooks/single-notebook-page";
 import { PeoplePage } from "./people/people-page";
@@ -36,6 +37,7 @@ export function App(): React.ReactElement {
             <div className="vertical-menu">
               <h1 className="menu-block menu-header">Notes app</h1>
               <LeftMenuLinks />
+              <NotebooksLeftMenu />
             </div>
           )}
           <div className="content">
