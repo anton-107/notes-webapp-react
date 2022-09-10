@@ -62,4 +62,25 @@ describe("Notebooks page", () => {
 
     component.unmount();
   });
+
+  it("should delete a note", async () => {
+    const component = render(
+      <BrowserRouter>
+        <SingleNotebookPage />
+      </BrowserRouter>
+    );
+    await waitFor(() => screen.getByTestId("note-content-note-2"));
+    fireEvent.click(screen.getByTestId("note-content-note-2"));
+    expect(screen.getByTestId("single-notebook-page-sidepanel")).toHaveClass(
+      "visible"
+    );
+    await waitFor(() => screen.getByTestId("action-delete-note-note-2"));
+    fireEvent.click(screen.getByTestId("action-delete-note-note-2"));
+    await waitFor(() =>
+      expect(
+        screen.getByTestId("single-notebook-page-sidepanel")
+      ).not.toHaveClass("visible")
+    );
+    component.unmount();
+  });
 });

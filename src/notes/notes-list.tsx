@@ -1,17 +1,11 @@
 import * as React from "react";
-import { Note, NotesService } from "./notes-service";
+import { Note } from "./notes-service";
 
 interface NotesListProperties {
   notes: Note[];
-  onNoteDeleted: (noteID: string) => void;
   onNoteSelected: (note: Note) => void;
 }
 export function NotesList(props: NotesListProperties): React.ReactElement {
-  const deleteNote = async (noteID: string) => {
-    const notesService = new NotesService();
-    await notesService.deleteNote(noteID);
-    props.onNoteDeleted(noteID);
-  };
   const selectNote = async (
     e: React.MouseEvent<HTMLElement, MouseEvent>,
     note: Note
@@ -32,15 +26,6 @@ export function NotesList(props: NotesListProperties): React.ReactElement {
                 data-testid={`note-content-${n.id}`}
               >
                 {n.content}
-              </div>
-              <div className="note-actions">
-                <a
-                  href="#"
-                  onClick={() => deleteNote(n.id)}
-                  data-testid={`delete-note-link-${n.id}`}
-                >
-                  Delete
-                </a>
               </div>
             </div>
           </div>

@@ -2,6 +2,7 @@ import * as React from "react";
 import { useEffect, useState } from "react";
 import { Link, useLocation, useParams } from "react-router-dom";
 import { AddPlaintextNoteComponent } from "../notes/add-plaintext-note.component";
+import { NoteDetails } from "../notes/note-details";
 import { NotesList } from "../notes/notes-list";
 import { Note, NotesService } from "../notes/notes-service";
 import { Notebook, NotebooksService } from "./notebooks-service";
@@ -60,7 +61,6 @@ export function SingleNotebookPage(): React.ReactElement {
         {notebook && (
           <NotesList
             notes={notes}
-            onNoteDeleted={loadNotes}
             onNoteSelected={(note: Note) => showSidePanel(note)}
           />
         )}
@@ -80,9 +80,13 @@ export function SingleNotebookPage(): React.ReactElement {
         }
       >
         {selectedNote && (
-          <div className="content-block">
-            <h2>{selectedNote.content}</h2>
-          </div>
+          <NoteDetails
+            note={selectedNote}
+            onNoteDeleted={() => {
+              hideSidePanel();
+              loadNotes();
+            }}
+          />
         )}
       </div>
     </div>

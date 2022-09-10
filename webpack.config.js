@@ -29,8 +29,8 @@ module.exports = (env) => {
     },
     performance: {
       hints: "error",
-      maxEntrypointSize: 345_000,
-      maxAssetSize: 345_000,
+      maxEntrypointSize: 350_000,
+      maxAssetSize: 350_000,
     },
     plugins: [
       new HtmlWebpackPlugin({
