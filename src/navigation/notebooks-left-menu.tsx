@@ -24,12 +24,13 @@ export function NotebooksLeftMenu(): React.ReactElement {
           <ul className="menu-links">
             {notebooks.map((n: Notebook) => {
               return (
-                <li data-testid={`notebook-${n.id}`} key={`notebook-${n.id}`}>
+                <li key={`notebook-${n.id}`}>
                   <NavLink
                     to={`/notebook/${n.id}`}
                     className={({ isActive }) =>
                       isActive ? "active-nav-link" : ""
                     }
+                    data-testid={`notebook-${n.id}`}
                   >
                     {n.name}
                   </NavLink>

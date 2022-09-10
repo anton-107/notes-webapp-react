@@ -11,6 +11,7 @@ import fetchMock from "jest-fetch-mock";
 describe("Notes list component", () => {
   it("should show list of notes", async () => {
     const noteDeletedMock = jest.fn();
+    const noteSelectedMock = jest.fn();
     const notes = [
       {
         content: "Note 1",
@@ -24,7 +25,11 @@ describe("Notes list component", () => {
 
     const component = render(
       <BrowserRouter>
-        <NotesList notes={notes} onNoteDeleted={noteDeletedMock} />
+        <NotesList
+          notes={notes}
+          onNoteDeleted={noteDeletedMock}
+          onNoteSelected={noteSelectedMock}
+        />
       </BrowserRouter>
     );
     await waitFor(() => screen.getByTestId("note-note-2"));
@@ -34,6 +39,7 @@ describe("Notes list component", () => {
   it("should delete a note", async () => {
     fetchMock.mockResponse(`{}`);
     const noteDeletedMock = jest.fn();
+    const noteSelectedMock = jest.fn();
     const notes = [
       {
         content: "Note 1",
@@ -47,7 +53,11 @@ describe("Notes list component", () => {
 
     const component = render(
       <BrowserRouter>
-        <NotesList notes={notes} onNoteDeleted={noteDeletedMock} />
+        <NotesList
+          notes={notes}
+          onNoteDeleted={noteDeletedMock}
+          onNoteSelected={noteSelectedMock}
+        />
       </BrowserRouter>
     );
     await waitFor(() => screen.getByTestId("delete-note-link-note-2"));

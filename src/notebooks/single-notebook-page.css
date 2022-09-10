@@ -1,0 +1,23 @@
+.single-page-container {
+  position: relative;
+  min-height: 100vh;
+}
+.side-panel {
+  position: absolute;
+  right: -520px;
+  top: 0;
+  bottom: 0;
+  width: 500px;
+  border-left: 1px solid #eceae9;
+  box-shadow: -4px 3px 7px 0px rgba(163, 163, 163, 1);
+  transition: right 1s;
+}
+.side-panel.hidden {
+  right: -520px;
+}
+.side-panel.visible {
+  right: 0;
+}
+.side-panel .content-block {
+  padding-left: 20px;
+}
