@@ -57,3 +57,13 @@
   text-decoration: none;
   background-color: #eceae9;
 }
+.note-content-edit-input {
+  font-size: 2em;
+  border: 1px solid transparent;
+  border-radius: 3px;
+  background: transparent;
+}
+.note-content-edit-input:hover {
+  background-color: #fff;
+  border: 1px solid #eceae9;
+}

@@ -1,15 +1,17 @@
 import * as React from "react";
-import { Note, NotesService } from "./notes-service";
-import "./note-details.css";
 import { useEffect, useState } from "react";
+import "./note-details.css";
+import { Note, NotesService } from "./notes-service";
 
 interface NoteDetailsProps {
   note: Note;
   onNoteDeleted: (noteID: string) => void;
+  onNoteEdited: (note: Note) => void;
 }
 
 export function NoteDetails(props: NoteDetailsProps): React.ReactElement {
   const [isMoreActionsMenuOpen, setMoreActionsMenuOpen] = useState(false);
+  const [noteContent, setNoteContent] = useState("");
 
   const openMoreActionsMenu = (
     e: React.MouseEvent<HTMLElement, MouseEvent>
@@ -27,8 +29,37 @@ export function NoteDetails(props: NoteDetailsProps): React.ReactElement {
     props.onNoteDeleted(noteID);
   };
 
+  const changeNoteContent = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    setNoteContent(e.target.value);
+  };
+  const saveNoteContent = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    setNoteContent(e.target.value);
+    await persistNote({
+      ...props.note,
+      content: noteContent,
+    });
+  };
+  const saveNoteContentOnEnter = async (
+    e: React.KeyboardEvent<HTMLInputElement>
+  ) => {
+    if (e.code === "Enter") {
+      await saveNoteContent(e);
+    }
+  };
+  const persistNote = async (note: Note) => {
+    const notesService = new NotesService();
+    const persistedNote = await notesService.editNote({
+      "note-id": note.id,
+      "note-content": noteContent,
+      "note-type": note.type.type,
+      "notebook-id": note.notebook.id,
+    });
+    props.onNoteEdited(persistedNote);
+  };
+
   useEffect(() => {
     setMoreActionsMenuOpen(false);
+    setNoteContent(props.note.content);
   }, [props.note]);
 
   return (
@@ -66,7 +97,15 @@ export function NoteDetails(props: NoteDetailsProps): React.ReactElement {
         </div>
       </div>
       <div className="content-block">
-        <h2>{props.note.content}</h2>
+        <input
+          type="text"
+          value={noteContent}
+          className="note-content-edit-input"
+          onChange={changeNoteContent}
+          onBlur={saveNoteContent}
+          onKeyPress={saveNoteContentOnEnter}
+          data-testid="note-details-content-edit-input"
+        />
       </div>
     </div>
   );

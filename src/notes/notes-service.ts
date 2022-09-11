@@ -3,11 +3,16 @@ import { API_ROOT } from "../environment";
 export interface Note {
   id: string;
   content: string;
+  type: { type: string };
+  notebook: { id: string };
 }
 export interface NoteRequest {
   "note-type": string;
   "notebook-id": string;
   "note-content": string;
+}
+export interface EditNoteRequest extends NoteRequest {
+  "note-id": string;
 }
 
 export class NotesService {
@@ -34,7 +39,7 @@ export class NotesService {
       credentials: "include",
     });
     const resp = await request.json();
-    console.log("add note response response", resp);
+    console.log("add note response", resp);
     return resp;
   }
   public async deleteNote(noteID: string): Promise<void> {
@@ -49,6 +54,20 @@ export class NotesService {
     });
     const resp = await request.json();
     console.log("dlete note response", resp);
+    return resp;
+  }
+  public async editNote(note: EditNoteRequest): Promise<Note> {
+    const request = await fetch(`${API_ROOT}/note/${note["note-id"]}/edit`, {
+      method: "POST",
+      mode: "cors",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(note),
+      credentials: "include",
+    });
+    const resp = await request.json();
+    console.log("edit note response", resp);
     return resp;
   }
 }

@@ -86,6 +86,7 @@ export function SingleNotebookPage(): React.ReactElement {
               hideSidePanel();
               loadNotes();
             }}
+            onNoteEdited={loadNotes}
           />
         )}
       </div>

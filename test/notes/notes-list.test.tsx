@@ -14,10 +14,14 @@ describe("Notes list component", () => {
       {
         content: "Note 1",
         id: "note-1",
+        type: { type: "note" },
+        notebook: { id: "notebook-1" },
       },
       {
         content: "Note 2",
         id: "note-2",
+        type: { type: "note" },
+        notebook: { id: "notebook-1" },
       },
     ];
 
