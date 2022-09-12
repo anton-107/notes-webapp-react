@@ -24,7 +24,13 @@ describe("Add plain text note component", () => {
     fireEvent.change(screen.getByTestId("add-plaintext-note-textarea"), {
       target: { value: "my note" },
     });
-    fireEvent.submit(screen.getByTestId("add-plaintext-note-form"));
+    fireEvent.keyDown(screen.getByTestId("add-plaintext-note-textarea"), {
+      code: "Enter",
+      shiftKey: true,
+    }); // should not trigger "add" twice
+    fireEvent.keyDown(screen.getByTestId("add-plaintext-note-textarea"), {
+      code: "Enter",
+    });
     await waitFor(() => expect(onNoteAddedMock).toHaveBeenCalledTimes(1));
     component.unmount();
   });

@@ -47,31 +47,31 @@ export function SingleNotebookPage(): React.ReactElement {
   return (
     <div className="single-page-container">
       <div
-        className="content-block"
+        className="single-page-content-wrapper"
         onClick={hideSidePanel}
         data-testid="single-notebook-page-content-wrapper"
       >
-        <Link to="/notebooks">← notebooks</Link>
-        {!notebook && <div>Loading...</div>}
-        {notebook && (
-          <h1 data-testid="notebook-name-header">{notebook.name}</h1>
-        )}
-      </div>
-      <div className="content-block">
-        {notebook && (
-          <NotesList
-            notes={notes}
-            onNoteSelected={(note: Note) => showSidePanel(note)}
-          />
-        )}
-      </div>
-      <div className="content-block">
-        {notebook && (
-          <AddPlaintextNoteComponent
-            notebookID={notebook.id}
-            onNoteAdded={loadNotes}
-          />
-        )}
+        <div className="content-block">
+          <Link to="/notebooks">← notebooks</Link>
+          {!notebook && <div>Loading...</div>}
+          {notebook && (
+            <h1 data-testid="notebook-name-header">{notebook.name}</h1>
+          )}
+        </div>
+        <div className="content-block">
+          {notebook && (
+            <NotesList
+              notes={notes}
+              onNoteSelected={(note: Note) => showSidePanel(note)}
+            />
+          )}
+          {notebook && (
+            <AddPlaintextNoteComponent
+              notebookID={notebook.id}
+              onNoteAdded={loadNotes}
+            />
+          )}
+        </div>
       </div>
       <div
         data-testid="single-notebook-page-sidepanel"

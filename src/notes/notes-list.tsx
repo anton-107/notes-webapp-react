@@ -11,6 +11,7 @@ export function NotesList(props: NotesListProperties): React.ReactElement {
     note: Note
   ) => {
     e.preventDefault();
+    e.stopPropagation();
     props.onNoteSelected(note);
   };
 

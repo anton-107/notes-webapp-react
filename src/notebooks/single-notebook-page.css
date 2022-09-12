@@ -2,6 +2,9 @@
   position: relative;
   min-height: 100vh;
 }
+.single-page-content-wrapper {
+  min-height: 100vh;
+}
 .side-panel {
   position: absolute;
   right: -520px;
