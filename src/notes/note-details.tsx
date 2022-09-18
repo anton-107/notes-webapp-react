@@ -74,7 +74,7 @@ export function NoteDetails(props: NoteDetailsProps): React.ReactElement {
             }
           >
             <button
-              className="simple-button"
+              className="simple-button dropdown-button"
               onClick={openMoreActionsMenu}
               data-testid="more-actions-menu-button"
             >

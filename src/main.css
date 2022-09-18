@@ -84,3 +84,13 @@ a:hover {
   border: 1px solid transparent;
   padding: 5px 15px;
 }
+.simple-button {
+  background: transparent;
+  border: none;
+  border-radius: 3px;
+  padding: 5px;
+  cursor: pointer;
+}
+.simple-button:hover {
+  background-color: #e3e3e3;
+}

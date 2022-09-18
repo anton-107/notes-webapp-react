@@ -2,6 +2,7 @@ import * as React from "react";
 import { useEffect, useState } from "react";
 import { Link, useLocation, useParams } from "react-router-dom";
 import { AddPlaintextNoteComponent } from "../notes/add-plaintext-note.component";
+import { AddSectionComponent } from "../notes/add-section.component";
 import { NoteDetails } from "../notes/note-details";
 import { NotesList } from "../notes/notes-list";
 import { Note, NotesService } from "../notes/notes-service";
@@ -69,6 +70,12 @@ export function SingleNotebookPage(): React.ReactElement {
             <AddPlaintextNoteComponent
               notebookID={notebook.id}
               onNoteAdded={loadNotes}
+            />
+          )}
+          {notebook && (
+            <AddSectionComponent
+              notebookID={notebook.id}
+              onSectionAdded={loadNotes}
             />
           )}
         </div>

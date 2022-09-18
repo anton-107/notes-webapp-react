@@ -6,15 +6,6 @@
 .details-top-menu-left {
   flex: 1;
 }
-.simple-button {
-  background: transparent;
-  border: none;
-  border-radius: 3px;
-  padding: 5px 5px 0;
-}
-.simple-button:hover {
-  background-color: #e3e3e3;
-}
 .dropdown-menu {
   position: relative;
 }
@@ -66,4 +57,7 @@
 .note-content-edit-input:hover {
   background-color: #fff;
   border: 1px solid #eceae9;
+}
+.dropdown-button {
+  padding-bottom: 0;
 }
