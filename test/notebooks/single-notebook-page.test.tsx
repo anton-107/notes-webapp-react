@@ -25,12 +25,12 @@ describe("Notebooks page", () => {
             {
               content: "To do",
               id: "todo-section",
-              type: { type: 'notes-container' }
+              type: { type: "notes-container" },
             },
             {
               content: "To do item one",
               id: "todo-1",
-              section: 'todo-section'
+              section: "todo-section",
             },
           ],
         });

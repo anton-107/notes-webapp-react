@@ -17,7 +17,9 @@ export function NotesSection(
 ): React.ReactElement {
   return (
     <div>
-      <h1 data-testid={`section-${props.section.sectionID}`}>{props.section.sectionName}</h1>
+      <h1 data-testid={`section-${props.section.sectionID}`}>
+        {props.section.sectionName}
+      </h1>
       <NotesList
         notes={props.section.notes}
         onNoteSelected={props.onNoteSelected}

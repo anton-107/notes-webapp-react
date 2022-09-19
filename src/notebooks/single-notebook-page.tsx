@@ -19,7 +19,9 @@ function groupNotesBySection(notes: Note[]): NotesInSection[] {
   };
   r.push(untitledSection);
 
-  const sections = notes.filter((x) =>  x.type && x.type.type === "notes-container");
+  const sections = notes.filter(
+    (x) => x.type && x.type.type === "notes-container"
+  );
 
   sections.forEach((x) => {
     const section: NotesInSection = {
