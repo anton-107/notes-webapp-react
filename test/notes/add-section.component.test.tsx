@@ -7,8 +7,8 @@ import fetchMock from "jest-fetch-mock";
 import React from "react";
 import { BrowserRouter } from "react-router-dom";
 import { AddSectionComponent } from "../../src/notes/add-section.component";
- 
- describe("Add section component", () => {
+
+describe("Add section component", () => {
   it("should submit form for section creation", async () => {
     fetchMock.mockResponse(`{ "id": "test-section-id" }`);
     const onSectionAddedMock = jest.fn();
@@ -20,7 +20,7 @@ import { AddSectionComponent } from "../../src/notes/add-section.component";
         />
       </BrowserRouter>
     );
-    fireEvent.click(screen.getByTestId('add-section-button'));
+    fireEvent.click(screen.getByTestId("add-section-button"));
     fireEvent.change(screen.getByTestId("new-section-name-input"), {
       target: { value: "To do" },
     });

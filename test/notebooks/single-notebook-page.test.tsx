@@ -22,6 +22,16 @@ describe("Notebooks page", () => {
               content: "Note 2",
               id: "note-2",
             },
+            {
+              content: "To do",
+              id: "todo-section",
+              type: { type: 'notes-container' }
+            },
+            {
+              content: "To do item one",
+              id: "todo-1",
+              section: 'todo-section'
+            },
           ],
         });
       } else {
@@ -41,6 +51,18 @@ describe("Notebooks page", () => {
     await waitFor(() => screen.getByTestId("notebook-name-header"));
     expect(screen.getByTestId("notebook-name-header")).toHaveTextContent(
       "Notebook 1"
+    );
+    component.unmount();
+  });
+  it("should show a section", async () => {
+    const component = render(
+      <BrowserRouter>
+        <SingleNotebookPage />
+      </BrowserRouter>
+    );
+    await waitFor(() => screen.getByTestId("section-todo-section"));
+    expect(screen.getByTestId("section-todo-section")).toHaveTextContent(
+      "To do"
     );
     component.unmount();
   });

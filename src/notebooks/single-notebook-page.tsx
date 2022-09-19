@@ -4,15 +4,50 @@ import { Link, useLocation, useParams } from "react-router-dom";
 import { AddPlaintextNoteComponent } from "../notes/add-plaintext-note.component";
 import { AddSectionComponent } from "../notes/add-section.component";
 import { NoteDetails } from "../notes/note-details";
-import { NotesList } from "../notes/notes-list";
+import { NotesInSection, NotesSection } from "../notes/notes-section.component";
 import { Note, NotesService } from "../notes/notes-service";
 import { Notebook, NotebooksService } from "./notebooks-service";
 import "./single-notebook-page.css";
 
+function groupNotesBySection(notes: Note[]): NotesInSection[] {
+  const r = [];
+  const sectionsByID: { [key: string]: NotesInSection } = {};
+  const untitledSection: NotesInSection = {
+    sectionName: null,
+    sectionID: null,
+    notes: [],
+  };
+  r.push(untitledSection);
+
+  const sections = notes.filter((x) =>  x.type && x.type.type === "notes-container");
+
+  sections.forEach((x) => {
+    const section: NotesInSection = {
+      sectionName: x.content,
+      sectionID: x.id,
+      notes: [],
+    };
+    r.push(section);
+    sectionsByID[x.id] = section;
+  });
+
+  notes.forEach((x) => {
+    if (!x.type || x.type.type !== "notes-container") {
+      if (x.section) {
+        sectionsByID[x.section].notes.push(x);
+      } else {
+        untitledSection.notes.push(x);
+      }
+    }
+  });
+
+  return r;
+}
+
 export function SingleNotebookPage(): React.ReactElement {
   const location = useLocation();
   const [notebook, setNotebook] = useState<Notebook | null>(null);
-  const [notes, setNotes] = useState([]);
+  const [sections, setSections] = useState([]);
   const [isSidePanelVisible, setSidePanelVisible] = useState(false);
   const [selectedNote, setSelectedNote] = useState<Note | null>(null);
   const { notebookID } = useParams();
@@ -26,7 +61,8 @@ export function SingleNotebookPage(): React.ReactElement {
   const loadNotes = async () => {
     const notesService = new NotesService();
     const notes = await notesService.listAllForNotebook(notebookID);
-    setNotes(notes);
+    const sections = groupNotesBySection(notes);
+    setSections(sections);
   };
 
   const showSidePanel = (note: Note) => {
@@ -60,12 +96,13 @@ export function SingleNotebookPage(): React.ReactElement {
           )}
         </div>
         <div className="content-block">
-          {notebook && (
-            <NotesList
-              notes={notes}
-              onNoteSelected={(note: Note) => showSidePanel(note)}
-            />
-          )}
+          {notebook &&
+            sections.map((x) => (
+              <NotesSection
+                section={x}
+                onNoteSelected={(note: Note) => showSidePanel(note)}
+              />
+            ))}
           {notebook && (
             <AddPlaintextNoteComponent
               notebookID={notebook.id}

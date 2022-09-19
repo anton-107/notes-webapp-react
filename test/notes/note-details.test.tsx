@@ -6,18 +6,19 @@ import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import * as React from "react";
 import { BrowserRouter } from "react-router-dom";
 import { NoteDetails } from "../../src/notes/note-details";
-import { EditNoteRequest } from "../../src/notes/notes-service";
+import { EditNoteRequest, Note } from "../../src/notes/notes-service";
 import fetchMock from "jest-fetch-mock";
 
 describe("Notes details component", () => {
   it("should display 'more actions' menu", () => {
     const onNoteDeletedMock = jest.fn();
     const onNoteEditedMock = jest.fn();
-    const note = {
+    const note: Note = {
       id: "note-1",
       content: "This is a test note",
       type: { type: "note" },
       notebook: { id: "notebook-1" },
+      section: null,
     };
 
     const component = render(
@@ -46,11 +47,12 @@ describe("Notes details component", () => {
     });
     const onNoteDeletedMock = jest.fn();
     const onNoteEditedMock = jest.fn();
-    const note = {
+    const note: Note = {
       id: "note-1",
       content: "This is a test note",
       type: { type: "note" },
       notebook: { id: "notebook-1" },
+      section: null,
     };
 
     const component = render(

@@ -6,22 +6,25 @@ import { render, screen, waitFor } from "@testing-library/react";
 import * as React from "react";
 import { BrowserRouter } from "react-router-dom";
 import { NotesList } from "../../src/notes/notes-list";
+import { Note } from "../../src/notes/notes-service";
 
 describe("Notes list component", () => {
   it("should show list of notes", async () => {
     const noteSelectedMock = jest.fn();
-    const notes = [
+    const notes: Note[] = [
       {
         content: "Note 1",
         id: "note-1",
         type: { type: "note" },
         notebook: { id: "notebook-1" },
+        section: null,
       },
       {
         content: "Note 2",
         id: "note-2",
         type: { type: "note" },
         notebook: { id: "notebook-1" },
+        section: null,
       },
     ];
 

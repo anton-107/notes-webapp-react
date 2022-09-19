@@ -54,11 +54,15 @@ export function AddSectionComponent(
           disabled={isInputDisabled}
           value={sectionName}
           onChange={(e) => setSectionName(e.target.value)}
-          data-testid='new-section-name-input'
+          data-testid="new-section-name-input"
         />
       </div>
       {!isInputVisible && (
-        <button className="simple-button" onClick={showInput} data-testid='add-section-button'>
+        <button
+          className="simple-button"
+          onClick={showInput}
+          data-testid="add-section-button"
+        >
           + Add section
         </button>
       )}

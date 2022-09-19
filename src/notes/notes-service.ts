@@ -1,13 +1,16 @@
 import { API_ROOT } from "../environment";
 
+type NoteType = "note" | "notes-container";
+
 export interface Note {
   id: string;
   content: string;
-  type: { type: string };
+  type: { type: NoteType };
   notebook: { id: string };
+  section: string | null;
 }
 export interface NoteRequest {
-  "note-type": string;
+  "note-type": NoteType;
   "notebook-id": string;
   "note-content": string;
 }
