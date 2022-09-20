@@ -17,6 +17,7 @@ describe("Add plain text note component", () => {
       <BrowserRouter>
         <AddPlaintextNoteComponent
           notebookID="notebook-1"
+          sectionID={null}
           onNoteAdded={onNoteAddedMock}
         />
       </BrowserRouter>

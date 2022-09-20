@@ -13,6 +13,7 @@ export interface NoteRequest {
   "note-type": NoteType;
   "notebook-id": string;
   "note-content": string;
+  "note-section-id": string;
 }
 export interface EditNoteRequest extends NoteRequest {
   "note-id": string;

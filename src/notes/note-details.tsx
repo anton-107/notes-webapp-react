@@ -53,6 +53,7 @@ export function NoteDetails(props: NoteDetailsProps): React.ReactElement {
       "note-content": noteContent,
       "note-type": note.type.type,
       "notebook-id": note.notebook.id,
+      "note-section-id": null,
     });
     props.onNoteEdited(persistedNote);
   };

@@ -1,7 +1,6 @@
 import * as React from "react";
 import { useEffect, useState } from "react";
 import { Link, useLocation, useParams } from "react-router-dom";
-import { AddPlaintextNoteComponent } from "../notes/add-plaintext-note.component";
 import { AddSectionComponent } from "../notes/add-section.component";
 import { NoteDetails } from "../notes/note-details";
 import { NotesInSection, NotesSection } from "../notes/notes-section.component";
@@ -101,16 +100,12 @@ export function SingleNotebookPage(): React.ReactElement {
           {notebook &&
             sections.map((x) => (
               <NotesSection
+                notebookID={notebook.id}
                 section={x}
+                onNoteAdded={loadNotes}
                 onNoteSelected={(note: Note) => showSidePanel(note)}
               />
             ))}
-          {notebook && (
-            <AddPlaintextNoteComponent
-              notebookID={notebook.id}
-              onNoteAdded={loadNotes}
-            />
-          )}
           {notebook && (
             <AddSectionComponent
               notebookID={notebook.id}
