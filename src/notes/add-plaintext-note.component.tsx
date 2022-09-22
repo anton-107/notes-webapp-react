@@ -23,7 +23,7 @@ export function AddPlaintextNoteComponent(
       "note-type": "note",
       "notebook-id": props.notebookID,
       "note-content": noteContent,
-      "note-section-id": props.sectionID,
+      "note-section": props.sectionID,
     });
     setTextareaDisabled(false);
     setNoteContent("");

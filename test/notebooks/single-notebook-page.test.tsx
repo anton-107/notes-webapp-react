@@ -30,7 +30,7 @@ describe("Notebooks page", () => {
             {
               content: "To do item one",
               id: "todo-1",
-              section: "todo-section",
+              extensionProperties: { section: "todo-section" },
             },
           ],
         });

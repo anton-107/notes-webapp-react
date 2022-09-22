@@ -7,13 +7,13 @@ export interface Note {
   content: string;
   type: { type: NoteType };
   notebook: { id: string };
-  section: string | null;
+  extensionProperties: { section: string | null };
 }
 export interface NoteRequest {
   "note-type": NoteType;
   "notebook-id": string;
   "note-content": string;
-  "note-section-id": string;
+  "note-section": string;
 }
 export interface EditNoteRequest extends NoteRequest {
   "note-id": string;

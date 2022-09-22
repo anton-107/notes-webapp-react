@@ -34,8 +34,8 @@ function groupNotesBySection(notes: Note[]): NotesInSection[] {
 
   notes.forEach((x) => {
     if (!x.type || x.type.type !== "notes-container") {
-      if (x.section) {
-        sectionsByID[x.section].notes.push(x);
+      if (x.extensionProperties && x.extensionProperties.section) {
+        sectionsByID[x.extensionProperties.section].notes.push(x);
       } else {
         untitledSection.notes.push(x);
       }

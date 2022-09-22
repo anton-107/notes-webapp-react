@@ -29,7 +29,7 @@ export function AddSectionComponent(
       "note-type": "notes-container",
       "notebook-id": props.notebookID,
       "note-content": sectionName,
-      "note-section-id": null,
+      "note-section": null,
     });
     setInputDisabled(false);
     setInputVisible(false);
