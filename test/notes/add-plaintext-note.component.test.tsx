@@ -22,6 +22,9 @@ describe("Add plain text note component", () => {
         />
       </BrowserRouter>
     );
+    fireEvent.click(screen.getByTestId("add-note-button"));
+    fireEvent.blur(screen.getByTestId("add-plaintext-note-textarea"));
+    fireEvent.click(screen.getByTestId("add-note-button"));
     fireEvent.change(screen.getByTestId("add-plaintext-note-textarea"), {
       target: { value: "my note" },
     });

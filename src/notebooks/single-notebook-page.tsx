@@ -106,6 +106,8 @@ export function SingleNotebookPage(): React.ReactElement {
                 onNoteSelected={(note: Note) => showSidePanel(note)}
               />
             ))}
+        </div>
+        <div className="content-block">
           {notebook && (
             <AddSectionComponent
               notebookID={notebook.id}
