@@ -5,7 +5,7 @@ import * as React from "react";
 import "@testing-library/jest-dom/extend-expect";
 import fetchMock from "jest-fetch-mock";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
-import { BrowserRouter } from "react-router-dom";
+import { BrowserRouter, MemoryRouter } from "react-router-dom";
 import { SingleNotebookPage } from "../../src/notebooks/single-notebook-page";
 
 describe("Notebooks page", () => {
@@ -102,6 +102,42 @@ describe("Notebooks page", () => {
       expect(
         screen.getByTestId("single-notebook-page-sidepanel")
       ).not.toHaveClass("visible")
+    );
+    component.unmount();
+  });
+  it("should highlight overview link", async () => {
+    const component = render(
+      <MemoryRouter initialEntries={["/"]}>
+        <SingleNotebookPage />
+      </MemoryRouter>
+    );
+    await waitFor(() => screen.getByTestId("notebook-overview-link"));
+    expect(screen.getByTestId("notebook-overview-link")).toHaveClass(
+      "active-nav-link"
+    );
+    component.unmount();
+  });
+  it("should highlight list link", async () => {
+    const component = render(
+      <MemoryRouter initialEntries={["/list"]}>
+        <SingleNotebookPage />
+      </MemoryRouter>
+    );
+    await waitFor(() => screen.getByTestId("notebook-list-link"));
+    expect(screen.getByTestId("notebook-list-link")).toHaveClass(
+      "active-nav-link"
+    );
+    component.unmount();
+  });
+  it("should highlight board link", async () => {
+    const component = render(
+      <MemoryRouter initialEntries={["/board"]}>
+        <SingleNotebookPage />
+      </MemoryRouter>
+    );
+    await waitFor(() => screen.getByTestId("notebook-board-link"));
+    expect(screen.getByTestId("notebook-board-link")).toHaveClass(
+      "active-nav-link"
     );
     component.unmount();
   });

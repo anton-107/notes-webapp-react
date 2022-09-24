@@ -24,3 +24,20 @@
 .side-panel .content-block {
   padding-left: 20px;
 }
+.notebook-horizontal-menu {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #eceae9;
+}
+.notebook-horizontal-menu li {
+  display: inline-block;
+}
+.notebook-horizontal-menu li a {
+  padding: 5px 10px 10px;
+}
+.notebook-horizontal-menu li .active-nav-link {
+  font-weight: bold;
+  border-bottom: 2px solid black;
+}

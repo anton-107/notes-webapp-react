@@ -1,6 +1,12 @@
 import * as React from "react";
 import { useEffect, useState } from "react";
-import { Link, useLocation, useParams } from "react-router-dom";
+import {
+  Link,
+  NavLink,
+  Outlet,
+  useLocation,
+  useParams,
+} from "react-router-dom";
 import { AddSectionComponent } from "../notes/add-section.component";
 import { NoteDetails } from "../notes/note-details";
 import { NotesInSection, NotesSection } from "../notes/notes-section.component";
@@ -93,9 +99,48 @@ export function SingleNotebookPage(): React.ReactElement {
           <Link to="/notebooks">← notebooks</Link>
           {!notebook && <div>Loading...</div>}
           {notebook && (
-            <h1 data-testid="notebook-name-header">{notebook.name}</h1>
+            <div>
+              <h1 data-testid="notebook-name-header">{notebook.name}</h1>
+              <ul className="notebook-horizontal-menu">
+                <li>
+                  <NavLink
+                    data-testid="notebook-overview-link"
+                    to={``}
+                    className={({ isActive }) =>
+                      isActive ? "active-nav-link" : ""
+                    }
+                    end
+                  >
+                    Overview
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink
+                    data-testid="notebook-list-link"
+                    to={`list`}
+                    className={({ isActive }) =>
+                      isActive ? "active-nav-link" : ""
+                    }
+                  >
+                    List
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink
+                    data-testid="notebook-board-link"
+                    to={`board`}
+                    className={({ isActive }) =>
+                      isActive ? "active-nav-link" : ""
+                    }
+                  >
+                    Board
+                  </NavLink>
+                </li>
+              </ul>
+            </div>
           )}
         </div>
+        <Outlet />
         <div className="content-block">
           {notebook &&
             sections.map((x) => (

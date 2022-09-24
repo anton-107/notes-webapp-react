@@ -24,22 +24,4 @@ describe("App", () => {
     expect(screen.getByTestId("greeting")).toBeVisible();
     component.unmount();
   });
-  // it("should show and highlight menu items", async () => {
-  //   fetchMock.mockResponse(
-  //     `{ "isAuthenticated": true, "username": "testuser1" }`
-  //   );
-  //   const component = render(<App />);
-  //   await waitFor(() => screen.getByTestId("notebooks-page-link"));
-  //   expect(screen.getByTestId("notebooks-page-link")).not.toHaveClass("active");
-  //   expect(screen.getByTestId("people-page-link")).not.toHaveClass("active");
-  //   fireEvent.click(screen.getByTestId("notebooks-page-link"));
-  //   expect(screen.getByTestId("notebooks-page-link")).toHaveClass(
-  //     "active-nav-link"
-  //   );
-  //   fireEvent.click(screen.getByTestId("people-page-link"));
-  //   expect(screen.getByTestId("people-page-link")).toHaveClass(
-  //     "active-nav-link"
-  //   );
-  //   component.unmount();
-  // });
 });
