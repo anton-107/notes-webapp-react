@@ -2,50 +2,11 @@ import * as React from "react";
 import { useEffect, useState } from "react";
 import { useLocation, useParams } from "react-router-dom";
 import { AddSectionComponent } from "../../notes/add-section.component";
-import {
-  NotesInSection,
-  NotesSection,
-} from "../../notes/notes-section.component";
+import { groupNotesBySection } from "../../notes/notes-group-service";
+import { NotesSection } from "../../notes/notes-section.component";
 import { Note, NotesService } from "../../notes/notes-service";
 import { Notebook, NotebooksService } from "../notebooks-service";
 import { NotebookSidePanel } from "./notebook-side-panel";
-
-function groupNotesBySection(notes: Note[]): NotesInSection[] {
-  const r = [];
-  const sectionsByID: { [key: string]: NotesInSection } = {};
-  const untitledSection: NotesInSection = {
-    sectionName: null,
-    sectionID: null,
-    notes: [],
-  };
-  r.push(untitledSection);
-
-  const sections = notes.filter(
-    (x) => x.type && x.type.type === "notes-container"
-  );
-
-  sections.forEach((x) => {
-    const section: NotesInSection = {
-      sectionName: x.content,
-      sectionID: x.id,
-      notes: [],
-    };
-    r.push(section);
-    sectionsByID[x.id] = section;
-  });
-
-  notes.forEach((x) => {
-    if (!x.type || x.type.type !== "notes-container") {
-      if (x.extensionProperties && x.extensionProperties.section) {
-        sectionsByID[x.extensionProperties.section].notes.push(x);
-      } else {
-        untitledSection.notes.push(x);
-      }
-    }
-  });
-
-  return r;
-}
 
 export function NotebookListComponent(): React.ReactElement {
   const location = useLocation();
