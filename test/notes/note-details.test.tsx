@@ -17,7 +17,7 @@ describe("Notes details component", () => {
       id: "note-1",
       content: "This is a test note",
       type: { type: "note" },
-      notebook: { id: "notebook-1" },
+      notebookID: "notebook-1",
       extensionProperties: { section: null },
     };
 
@@ -51,7 +51,7 @@ describe("Notes details component", () => {
       id: "note-1",
       content: "This is a test note",
       type: { type: "note" },
-      notebook: { id: "notebook-1" },
+      notebookID: "notebook-1",
       extensionProperties: { section: null },
     };
 

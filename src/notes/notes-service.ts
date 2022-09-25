@@ -6,7 +6,7 @@ export interface Note {
   id: string;
   content: string;
   type: { type: NoteType };
-  notebook: { id: string };
+  notebookID: string;
   extensionProperties: { section: string | null };
 }
 export interface NoteRequest {
