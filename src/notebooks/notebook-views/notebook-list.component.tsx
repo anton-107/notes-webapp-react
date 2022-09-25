@@ -2,13 +2,13 @@ import * as React from "react";
 import { useEffect, useState } from "react";
 import { useLocation, useParams } from "react-router-dom";
 import { AddSectionComponent } from "../../notes/add-section.component";
-import { NoteDetails } from "../../notes/note-details";
 import {
   NotesInSection,
   NotesSection,
 } from "../../notes/notes-section.component";
 import { Note, NotesService } from "../../notes/notes-service";
 import { Notebook, NotebooksService } from "../notebooks-service";
+import { NotebookSidePanel } from "./notebook-side-panel";
 
 function groupNotesBySection(notes: Note[]): NotesInSection[] {
   const r = [];
@@ -114,23 +114,15 @@ export function NotebookListComponent(): React.ReactElement {
           />
         )}
       </div>
-      <div
-        data-testid="single-notebook-page-sidepanel"
-        className={
-          isSidePanelVisible ? "side-panel visible" : "side-panel hidden"
-        }
-      >
-        {selectedNote && (
-          <NoteDetails
-            note={selectedNote}
-            onNoteDeleted={() => {
-              hideSidePanel();
-              loadNotes();
-            }}
-            onNoteEdited={loadNotes}
-          />
-        )}
-      </div>
+      <NotebookSidePanel
+        isVisible={isSidePanelVisible}
+        selectedNote={selectedNote}
+        onNoteDeleted={() => {
+          hideSidePanel();
+          loadNotes();
+        }}
+        onNoteEdited={loadNotes}
+      />
     </div>
   );
 }
