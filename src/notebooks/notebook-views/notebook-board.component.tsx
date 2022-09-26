@@ -1,9 +1,89 @@
 import * as React from "react";
+import { useEffect, useState } from "react";
+import { useLocation, useParams } from "react-router-dom";
+import { groupNotesBySection } from "../../notes/notes-group-service";
+import {
+  NotesInSection,
+  NotesSection,
+} from "../../notes/notes-section.component";
+import { Note, NotesService } from "../../notes/notes-service";
+import { Notebook, NotebooksService } from "../notebooks-service";
+import { NotebookSidePanel } from "./notebook-side-panel";
+import "./notebook-board.component.css";
 
 export function NotebookBoardComponent(): React.ReactElement {
+  const location = useLocation();
+  const [notebook, setNotebook] = useState<Notebook | null>(null);
+  const [sections, setSections] = useState<NotesInSection[]>([]);
+  const { notebookID } = useParams();
+  const [isSidePanelVisible, setSidePanelVisible] = useState(false);
+  const [selectedNote, setSelectedNote] = useState<Note | null>(null);
+
+  const loadNotebook = async (notebookID: string) => {
+    const notebooksService = new NotebooksService();
+    const notebook = await notebooksService.getOne(notebookID);
+    setNotebook(notebook);
+  };
+
+  const loadNotes = async () => {
+    const notesService = new NotesService();
+    const notes = await notesService.listAllForNotebook(notebookID);
+    const sections = groupNotesBySection(notes);
+    setSections(sections);
+  };
+
+  const showSidePanel = (note: Note) => {
+    setSelectedNote(note);
+    setSidePanelVisible(true);
+  };
+
+  const hideSidePanel = () => {
+    setSidePanelVisible(false);
+  };
+
+  useEffect(() => {
+    document.body.addEventListener("click", hideSidePanel);
+  });
+  useEffect(() => {
+    loadNotebook(notebookID);
+  }, [location]);
+  useEffect(() => {
+    loadNotes();
+  }, [location]);
+
   return (
-    <div className="content-block" data-testid="notebook-board-view">
-      Board
+    <div
+      data-testid="notebook-board-view"
+      onClick={hideSidePanel}
+      className="single-page-content-wrapper"
+    >
+      <div className="content-block">
+        {!notebook && <div>Loading...</div>}
+        {notebook && (
+          <div className="board-wrapper">
+            {sections.map((x) => (
+              <div className="board-column">
+                {!x.sectionName && <h1>(untitled)</h1>}
+                <NotesSection
+                  notebookID={notebook.id}
+                  section={x}
+                  onNoteAdded={loadNotes}
+                  onNoteSelected={(note: Note) => showSidePanel(note)}
+                />
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+      <NotebookSidePanel
+        isVisible={isSidePanelVisible}
+        selectedNote={selectedNote}
+        onNoteDeleted={() => {
+          hideSidePanel();
+          loadNotes();
+        }}
+        onNoteEdited={loadNotes}
+      />
     </div>
   );
 }

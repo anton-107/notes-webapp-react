@@ -17,7 +17,6 @@ export function NotebookListComponent(): React.ReactElement {
   const [selectedNote, setSelectedNote] = useState<Note | null>(null);
 
   const loadNotebook = async (notebookID: string) => {
-    console.log("load notebook from component", notebookID);
     const notebooksService = new NotebooksService();
     const notebook = await notebooksService.getOne(notebookID);
     setNotebook(notebook);

@@ -1,0 +1,9 @@
+.board-wrapper {
+  white-space: nowrap;
+  overflow-x: scroll;
+}
+.board-column {
+  display: inline-block;
+  min-width: 250px;
+  vertical-align: top;
+}
