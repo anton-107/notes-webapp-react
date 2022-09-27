@@ -7,6 +7,11 @@ import { NotesSection } from "../../notes/notes-section.component";
 import { Note, NotesService } from "../../notes/notes-service";
 import { Notebook, NotebooksService } from "../notebooks-service";
 import { NotebookSidePanel } from "./notebook-side-panel";
+import { DragDropContext } from "react-beautiful-dnd";
+
+export function handleDrop(): void {
+  return null;
+}
 
 export function NotebookListComponent(): React.ReactElement {
   const location = useLocation();
@@ -56,15 +61,18 @@ export function NotebookListComponent(): React.ReactElement {
     >
       <div className="content-block">
         {!notebook && <div>Loading...</div>}
-        {notebook &&
-          sections.map((x) => (
-            <NotesSection
-              notebookID={notebook.id}
-              section={x}
-              onNoteAdded={loadNotes}
-              onNoteSelected={(note: Note) => showSidePanel(note)}
-            />
-          ))}
+        {notebook && (
+          <DragDropContext onDragEnd={handleDrop}>
+            {sections.map((x) => (
+              <NotesSection
+                notebookID={notebook.id}
+                section={x}
+                onNoteAdded={loadNotes}
+                onNoteSelected={(note: Note) => showSidePanel(note)}
+              />
+            ))}
+          </DragDropContext>
+        )}
       </div>
       <div className="content-block">
         {notebook && (

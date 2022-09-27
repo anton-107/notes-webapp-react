@@ -1,5 +1,6 @@
 import * as React from "react";
 import { Note } from "./notes-service";
+import { Draggable } from "react-beautiful-dnd";
 
 interface NotesListProperties {
   notes: Note[];
@@ -17,19 +18,29 @@ export function NotesList(props: NotesListProperties): React.ReactElement {
 
   return (
     <div>
-      {props.notes.map((n: Note) => {
+      {props.notes.map((n: Note, index) => {
         return (
-          <div data-testid={`note-${n.id}`} key={`note-${n.id}`}>
-            <div className="note-item">
+          <Draggable draggableId={n.id} index={index} key={`note-${n.id}`}>
+            {(provided) => (
               <div
-                className="note-content"
-                onClick={(e) => selectNote(e, n)}
-                data-testid={`note-content-${n.id}`}
+                data-testid={`note-${n.id}`}
+                className="note-wrapper"
+                ref={provided.innerRef}
+                {...provided.draggableProps}
+                {...provided.dragHandleProps}
               >
-                {n.content}
+                <div className="note-item">
+                  <div
+                    className="note-content"
+                    onClick={(e) => selectNote(e, n)}
+                    data-testid={`note-content-${n.id}`}
+                  >
+                    {n.content}
+                  </div>
+                </div>
               </div>
-            </div>
-          </div>
+            )}
+          </Draggable>
         );
       })}
     </div>

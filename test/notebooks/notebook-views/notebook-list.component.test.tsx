@@ -6,7 +6,10 @@ import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import fetchMock from "jest-fetch-mock";
 import * as React from "react";
 import { BrowserRouter } from "react-router-dom";
-import { NotebookListComponent } from "../../../src/notebooks/notebook-views/notebook-list.component";
+import {
+  handleDrop,
+  NotebookListComponent,
+} from "../../../src/notebooks/notebook-views/notebook-list.component";
 
 describe("Notebook list component", () => {
   beforeAll(() => {
@@ -92,5 +95,8 @@ describe("Notebook list component", () => {
       ).not.toHaveClass("visible")
     );
     component.unmount();
+  });
+  it("should do nothing on note drop", () => {
+    expect(handleDrop()).toBe(null);
   });
 });

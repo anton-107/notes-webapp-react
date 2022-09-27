@@ -6,7 +6,10 @@ import { fireEvent, render, waitFor, screen } from "@testing-library/react";
 import fetchMock from "jest-fetch-mock";
 import * as React from "react";
 import { BrowserRouter } from "react-router-dom";
-import { NotebookBoardComponent } from "../../../src/notebooks/notebook-views/notebook-board.component";
+import {
+  handleDrop,
+  NotebookBoardComponent,
+} from "../../../src/notebooks/notebook-views/notebook-board.component";
 
 describe("Notebook board component", () => {
   beforeAll(() => {
@@ -89,5 +92,8 @@ describe("Notebook board component", () => {
       ).not.toHaveClass("visible")
     );
     component.unmount();
+  });
+  it("should do nothing on note drop", () => {
+    expect(handleDrop()).toBe(null);
   });
 });

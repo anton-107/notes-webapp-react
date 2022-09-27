@@ -6,4 +6,15 @@
   display: inline-block;
   min-width: 250px;
   vertical-align: top;
+  margin-right: 10px;
+}
+.board-wrapper .note-wrapper {
+  border: 1px solid rgba(23, 23, 23, 0.1);
+  border-radius: 3px;
+  padding: 5px;
+  margin-bottom: 5px;
+  background-color: white;
+}
+.board-wrapper .note-wrapper:hover {
+  border: 1px solid rgba(23, 23, 23, 0.4);
 }
