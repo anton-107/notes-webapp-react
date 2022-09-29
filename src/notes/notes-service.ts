@@ -18,6 +18,10 @@ export interface NoteRequest {
 export interface EditNoteRequest extends NoteRequest {
   "note-id": string;
 }
+export interface UpdateNoteSectionRequest {
+  "note-id": string;
+  "note-section": string;
+}
 
 export class NotesService {
   public async listAllForNotebook(notebookID: string): Promise<Note[]> {
@@ -72,6 +76,22 @@ export class NotesService {
     });
     const resp = await request.json();
     console.log("edit note response", resp);
+    return resp;
+  }
+  public async moveNoteToSection(
+    note: UpdateNoteSectionRequest
+  ): Promise<Note> {
+    const request = await fetch(`${API_ROOT}/note/${note["note-id"]}/edit`, {
+      method: "POST",
+      mode: "cors",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(note),
+      credentials: "include",
+    });
+    const resp = await request.json();
+    console.log("moveNoteToSection response", resp);
     return resp;
   }
 }

@@ -28,7 +28,15 @@ export function groupNotesBySection(notes: Note[]): NotesInSection[] {
   notes.forEach((x) => {
     if (!x.type || x.type.type !== "notes-container") {
       if (x.extensionProperties && x.extensionProperties.section) {
-        sectionsByID[x.extensionProperties.section].notes.push(x);
+        if (
+          sectionsByID[x.extensionProperties.section] &&
+          sectionsByID[x.extensionProperties.section].notes
+        ) {
+          sectionsByID[x.extensionProperties.section].notes.push(x);
+        } else {
+          console.warn("Moving note to an untitled section", x);
+          untitledSection.notes.push(x);
+        }
       } else {
         untitledSection.notes.push(x);
       }

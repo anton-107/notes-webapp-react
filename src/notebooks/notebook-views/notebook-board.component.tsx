@@ -10,10 +10,24 @@ import { Note, NotesService } from "../../notes/notes-service";
 import { Notebook, NotebooksService } from "../notebooks-service";
 import { NotebookSidePanel } from "./notebook-side-panel";
 import "./notebook-board.component.css";
-import { DragDropContext } from "react-beautiful-dnd";
+import { DragDropContext, DropResult, SensorAPI } from "react-beautiful-dnd";
 
-export function handleDrop(): void {
-  return null;
+class DragAndDropTestingSensor {
+  private sensorAPI: SensorAPI;
+  public setAPI(sensorAPI: SensorAPI) {
+    this.sensorAPI = sensorAPI;
+  }
+  public moveCard(draggableId: string) {
+    const lock = this.sensorAPI.tryGetLock(draggableId);
+    const lift = lock.snapLift();
+    lift.moveRight();
+    lift.drop();
+  }
+}
+
+export const testingSensor = new DragAndDropTestingSensor();
+function testSensor(api: SensorAPI) {
+  testingSensor.setAPI(api);
 }
 
 export function NotebookBoardComponent(): React.ReactElement {
@@ -46,6 +60,16 @@ export function NotebookBoardComponent(): React.ReactElement {
     setSidePanelVisible(false);
   };
 
+  const handleDrop = async (dropResult: DropResult): Promise<void> => {
+    console.log("handleDrop", dropResult);
+    const notesService = new NotesService();
+    await notesService.moveNoteToSection({
+      "note-id": dropResult.draggableId,
+      "note-section": dropResult.destination.droppableId,
+    });
+    loadNotes();
+  };
+
   useEffect(() => {
     document.body.addEventListener("click", hideSidePanel);
   });
@@ -65,7 +89,7 @@ export function NotebookBoardComponent(): React.ReactElement {
       <div className="content-block">
         {!notebook && <div>Loading...</div>}
         {notebook && (
-          <DragDropContext onDragEnd={handleDrop}>
+          <DragDropContext onDragEnd={handleDrop} sensors={[testSensor]}>
             <div className="board-wrapper">
               {sections.map((x, index) => (
                 <div className="board-column" key={`section-${index}`}>

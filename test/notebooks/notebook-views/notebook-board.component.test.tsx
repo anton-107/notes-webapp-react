@@ -7,8 +7,8 @@ import fetchMock from "jest-fetch-mock";
 import * as React from "react";
 import { BrowserRouter } from "react-router-dom";
 import {
-  handleDrop,
   NotebookBoardComponent,
+  testingSensor,
 } from "../../../src/notebooks/notebook-views/notebook-board.component";
 
 describe("Notebook board component", () => {
@@ -35,6 +35,11 @@ describe("Notebook board component", () => {
               id: "todo-1",
               extensionProperties: { section: "todo-section" },
             },
+            {
+              content: "Item in a non-existent section",
+              id: "non-existent-item-1",
+              extensionProperties: { section: "non-existent-section" },
+            },
           ],
         });
       } else {
@@ -52,6 +57,8 @@ describe("Notebook board component", () => {
       </BrowserRouter>
     );
     await waitFor(() => screen.getByTestId("notebook-board-view"));
+    // it should render notes even if their section does not exist:
+    await waitFor(() => screen.getByTestId("note-content-non-existent-item-1"));
     component.unmount();
   });
   it("should show and hide side panel when a note is selected and de-selected", async () => {
@@ -93,7 +100,15 @@ describe("Notebook board component", () => {
     );
     component.unmount();
   });
-  it("should do nothing on note drop", () => {
-    expect(handleDrop()).toBe(null);
+  it("should handle drag and drop note", async () => {
+    const component = render(
+      <BrowserRouter>
+        <NotebookBoardComponent />
+      </BrowserRouter>
+    );
+    await waitFor(() => screen.getByTestId("note-content-note-1"));
+    testingSensor.moveCard("note-1");
+    // there are no expectations in this test, since it is not possible to drop a note in a target section
+    component.unmount();
   });
 });
