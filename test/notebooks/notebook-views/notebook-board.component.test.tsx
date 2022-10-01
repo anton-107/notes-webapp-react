@@ -20,10 +20,17 @@ describe("Notebook board component", () => {
             {
               content: "Note 1",
               id: "note-1",
+              extensionProperties: { manualOrder: 100 },
             },
             {
               content: "Note 2",
               id: "note-2",
+              extensionProperties: { manualOrder: 200 },
+            },
+            {
+              content: "Note 3",
+              id: "note-3",
+              extensionProperties: { manualOrder: 300 },
             },
             {
               content: "To do",
@@ -33,6 +40,11 @@ describe("Notebook board component", () => {
             {
               content: "To do item one",
               id: "todo-1",
+              extensionProperties: { section: "todo-section" },
+            },
+            {
+              content: "To do item two",
+              id: "todo-2",
               extensionProperties: { section: "todo-section" },
             },
             {

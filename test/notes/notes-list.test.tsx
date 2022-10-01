@@ -18,14 +18,14 @@ describe("Notes list component", () => {
         id: "note-1",
         type: { type: "note" },
         notebookID: "notebook-1",
-        extensionProperties: { section: null },
+        extensionProperties: { section: null, manualOrder: null },
       },
       {
         content: "Note 2",
         id: "note-2",
         type: { type: "note" },
         notebookID: "notebook-1",
-        extensionProperties: { section: null },
+        extensionProperties: { section: null, manualOrder: null },
       },
     ];
 

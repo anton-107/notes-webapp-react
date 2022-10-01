@@ -1,11 +1,12 @@
 import * as React from "react";
 import { useEffect, useState } from "react";
 import { useLocation, useParams } from "react-router-dom";
-import { groupNotesBySection } from "../../notes/notes-group-service";
 import {
+  groupNotesBySection,
   NotesInSection,
-  NotesSection,
-} from "../../notes/notes-section.component";
+  NotesInSectionService,
+} from "../../notes/notes-group-service";
+import { NotesSection } from "../../notes/notes-section.component";
 import { Note, NotesService } from "../../notes/notes-service";
 import { Notebook, NotebooksService } from "../notebooks-service";
 import { NotebookSidePanel } from "./notebook-side-panel";
@@ -20,7 +21,7 @@ class DragAndDropTestingSensor {
   public moveCard(draggableId: string) {
     const lock = this.sensorAPI.tryGetLock(draggableId);
     const lift = lock.snapLift();
-    lift.moveRight();
+    lift.moveDown();
     lift.drop();
   }
 }
@@ -29,6 +30,8 @@ export const testingSensor = new DragAndDropTestingSensor();
 function testSensor(api: SensorAPI) {
   testingSensor.setAPI(api);
 }
+
+const notesInSectionService = new NotesInSectionService();
 
 export function NotebookBoardComponent(): React.ReactElement {
   const location = useLocation();
@@ -48,6 +51,7 @@ export function NotebookBoardComponent(): React.ReactElement {
     const notesService = new NotesService();
     const notes = await notesService.listAllForNotebook(notebookID);
     const sections = groupNotesBySection(notes);
+    notesInSectionService.setSections(sections);
     setSections(sections);
   };
 
@@ -63,9 +67,22 @@ export function NotebookBoardComponent(): React.ReactElement {
   const handleDrop = async (dropResult: DropResult): Promise<void> => {
     console.log("handleDrop", dropResult);
     const notesService = new NotesService();
+    let insertAtIndex = dropResult.destination.index;
+    if (
+      dropResult.source.droppableId === dropResult.destination.droppableId &&
+      dropResult.source.index < insertAtIndex
+    ) {
+      insertAtIndex += 1;
+    }
+    console.log("insertAtIndex", insertAtIndex);
+    const order = notesInSectionService.getOrderAfterInsert(
+      dropResult.destination.droppableId,
+      insertAtIndex
+    );
     await notesService.moveNoteToSection({
       "note-id": dropResult.draggableId,
       "note-section": dropResult.destination.droppableId,
+      "note-manual-order": order,
     });
     loadNotes();
   };

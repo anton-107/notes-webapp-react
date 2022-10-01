@@ -3,12 +3,7 @@ import { AddPlaintextNoteComponent } from "./add-plaintext-note.component";
 import { NotesList } from "./notes-list";
 import { Note } from "./notes-service";
 import { Droppable } from "react-beautiful-dnd";
-
-export interface NotesInSection {
-  sectionName: string | null;
-  sectionID: string | null;
-  notes: Note[];
-}
+import { NotesInSection } from "./notes-group-service";
 
 interface NotesSectionProperties {
   notebookID: string;
@@ -24,7 +19,7 @@ export function NotesSection(
       <h1 data-testid={`section-${props.section.sectionID}`}>
         {props.section.sectionName}
       </h1>
-      <Droppable droppableId={props.section.sectionID || "<empty-section>"}>
+      <Droppable droppableId={props.section.sectionID}>
         {(provided) => (
           <div {...provided.droppableProps} ref={provided.innerRef}>
             <NotesList

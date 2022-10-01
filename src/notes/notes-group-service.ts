@@ -1,12 +1,17 @@
-import { NotesInSection } from "./notes-section.component";
 import { Note } from "./notes-service";
+
+export interface NotesInSection {
+  sectionName: string | null;
+  sectionID: string | null;
+  notes: Note[];
+}
 
 export function groupNotesBySection(notes: Note[]): NotesInSection[] {
   const r = [];
   const sectionsByID: { [key: string]: NotesInSection } = {};
   const untitledSection: NotesInSection = {
     sectionName: null,
-    sectionID: null,
+    sectionID: "<empty-section>",
     notes: [],
   };
   r.push(untitledSection);
@@ -43,5 +48,84 @@ export function groupNotesBySection(notes: Note[]): NotesInSection[] {
     }
   });
 
+  // sort notes by manual order:
+  r.forEach((section) => {
+    section.notes.sort((a, b) => {
+      const aOrder = a.extensionProperties
+        ? a.extensionProperties.manualOrder || 1
+        : 1;
+      const bOrder = b.extensionProperties
+        ? b.extensionProperties.manualOrder || 2
+        : 2;
+      return aOrder - bOrder;
+    });
+  });
+
   return r;
+}
+
+export class NotesInSectionService {
+  private sections: NotesInSection[] = [];
+  private STEP = 100;
+
+  public setSections(sections: NotesInSection[]): void {
+    console.log("getOrderAfterInsert setSections", sections);
+    this.sections = sections;
+  }
+  public getOrderAfterInsert(
+    sectionID: string,
+    insertedAtIndex: number
+  ): number | null {
+    const section = this.sections.find((x) => x.sectionID === sectionID);
+    console.log(
+      "getOrderAfterInsert section",
+      section,
+      sectionID,
+      this.sections.length
+    );
+    if (!section) {
+      return null;
+    }
+    if (section.notes.length === 0) {
+      return this.STEP;
+    }
+    if (insertedAtIndex === 0) {
+      const firstNoteOrder = section.notes[0].extensionProperties
+        ? section.notes[0].extensionProperties.manualOrder
+        : null;
+      if (typeof firstNoteOrder !== "number") {
+        return this.STEP;
+      } else {
+        return firstNoteOrder / 2;
+      }
+    }
+    if (insertedAtIndex >= section.notes.length) {
+      const lastNoteOrder = section.notes[section.notes.length - 1]
+        .extensionProperties
+        ? section.notes[section.notes.length - 1].extensionProperties
+            .manualOrder
+        : null;
+      if (typeof lastNoteOrder !== "number") {
+        return this.STEP;
+      } else {
+        return lastNoteOrder + this.STEP;
+      }
+    }
+    const cardBeforeOrder = section.notes[insertedAtIndex - 1]
+      .extensionProperties
+      ? section.notes[insertedAtIndex - 1].extensionProperties.manualOrder
+      : null;
+    const cardAfterOrder = section.notes[insertedAtIndex].extensionProperties
+      ? section.notes[insertedAtIndex].extensionProperties.manualOrder
+      : null;
+    console.log("orders", insertedAtIndex, cardBeforeOrder, cardAfterOrder);
+    if (
+      typeof cardBeforeOrder !== "number" ||
+      typeof cardAfterOrder !== "number"
+    ) {
+      return this.STEP;
+    }
+
+    return Math.abs((cardAfterOrder + cardBeforeOrder) / 2);
+  }
 }

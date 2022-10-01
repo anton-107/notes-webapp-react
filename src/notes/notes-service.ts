@@ -7,7 +7,7 @@ export interface Note {
   content: string;
   type: { type: NoteType };
   notebookID: string;
-  extensionProperties: { section: string | null };
+  extensionProperties?: { section: string | null; manualOrder: number | null };
 }
 export interface NoteRequest {
   "note-type": NoteType;
@@ -21,6 +21,7 @@ export interface EditNoteRequest extends NoteRequest {
 export interface UpdateNoteSectionRequest {
   "note-id": string;
   "note-section": string;
+  "note-manual-order": number;
 }
 
 export class NotesService {
