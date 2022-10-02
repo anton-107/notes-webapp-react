@@ -7,6 +7,7 @@ import { NotesInSection } from "./notes-group-service";
 
 interface NotesSectionProperties {
   notebookID: string;
+  newNoteManualOrder: number;
   section: NotesInSection;
   onNoteSelected: (note: Note) => void;
   onNoteAdded: () => void;
@@ -31,6 +32,7 @@ export function NotesSection(
         )}
       </Droppable>
       <AddPlaintextNoteComponent
+        newNoteManualOrder={props.newNoteManualOrder}
         notebookID={props.notebookID}
         onNoteAdded={props.onNoteAdded}
         sectionID={props.section.sectionID}

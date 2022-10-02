@@ -77,12 +77,6 @@ export class NotesInSectionService {
     insertedAtIndex: number
   ): number | null {
     const section = this.sections.find((x) => x.sectionID === sectionID);
-    console.log(
-      "getOrderAfterInsert section",
-      section,
-      sectionID,
-      this.sections.length
-    );
     if (!section) {
       return null;
     }
@@ -127,5 +121,22 @@ export class NotesInSectionService {
     }
 
     return Math.abs((cardAfterOrder + cardBeforeOrder) / 2);
+  }
+  public getNextOrderInSection(sectionID: string): number {
+    const section = this.sections.find((x) => x.sectionID === sectionID);
+    if (!section) {
+      return this.STEP;
+    }
+    if (section.notes.length === 0) {
+      return this.STEP;
+    }
+    const lastNote = section.notes[section.notes.length - 1];
+    if (!lastNote.extensionProperties) {
+      return this.STEP;
+    }
+    if (!lastNote.extensionProperties.manualOrder) {
+      return this.STEP;
+    }
+    return lastNote.extensionProperties.manualOrder + this.STEP;
   }
 }

@@ -113,6 +113,9 @@ export function NotebookBoardComponent(): React.ReactElement {
                   {!x.sectionName && <h1>(untitled)</h1>}
                   <NotesSection
                     notebookID={notebook.id}
+                    newNoteManualOrder={notesInSectionService.getNextOrderInSection(
+                      x.sectionID
+                    )}
                     section={x}
                     onNoteAdded={loadNotes}
                     onNoteSelected={(note: Note) => showSidePanel(note)}

@@ -5,6 +5,7 @@ import { NotesService } from "./notes-service";
 
 interface AddPlaintextNoteComponentProperties {
   notebookID: string;
+  newNoteManualOrder: number;
   sectionID: string | null;
   onNoteAdded: () => void;
 }
@@ -26,6 +27,7 @@ export function AddPlaintextNoteComponent(
       "notebook-id": props.notebookID,
       "note-content": noteContent,
       "note-section": props.sectionID,
+      "note-manual-order": props.newNoteManualOrder,
     });
     setTextareaDisabled(false);
     setNoteContent("");

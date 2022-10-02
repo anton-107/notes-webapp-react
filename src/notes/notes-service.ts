@@ -14,6 +14,7 @@ export interface NoteRequest {
   "notebook-id": string;
   "note-content": string;
   "note-section": string;
+  "note-manual-order"?: number;
 }
 export interface EditNoteRequest extends NoteRequest {
   "note-id": string;

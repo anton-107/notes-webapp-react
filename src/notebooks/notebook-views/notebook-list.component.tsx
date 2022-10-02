@@ -66,6 +66,7 @@ export function NotebookListComponent(): React.ReactElement {
             {sections.map((x) => (
               <NotesSection
                 notebookID={notebook.id}
+                newNoteManualOrder={100}
                 section={x}
                 onNoteAdded={loadNotes}
                 onNoteSelected={(note: Note) => showSidePanel(note)}
