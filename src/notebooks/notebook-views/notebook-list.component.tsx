@@ -2,7 +2,10 @@ import * as React from "react";
 import { useEffect, useState } from "react";
 import { useLocation, useParams } from "react-router-dom";
 import { AddSectionComponent } from "../../notes/add-section.component";
-import { groupNotesBySection } from "../../notes/notes-group-service";
+import {
+  groupNotesBySection,
+  NotesInSectionService,
+} from "../../notes/notes-group-service";
 import { NotesSection } from "../../notes/notes-section.component";
 import { Note, NotesService } from "../../notes/notes-service";
 import { Notebook, NotebooksService } from "../notebooks-service";
@@ -12,6 +15,8 @@ import { DragDropContext } from "react-beautiful-dnd";
 export function handleDrop(): void {
   return null;
 }
+
+const notesInSectionService = new NotesInSectionService();
 
 export function NotebookListComponent(): React.ReactElement {
   const location = useLocation();
@@ -31,6 +36,7 @@ export function NotebookListComponent(): React.ReactElement {
     const notesService = new NotesService();
     const notes = await notesService.listAllForNotebook(notebookID);
     const sections = groupNotesBySection(notes);
+    notesInSectionService.setSections(sections);
     setSections(sections);
   };
 
@@ -66,7 +72,9 @@ export function NotebookListComponent(): React.ReactElement {
             {sections.map((x) => (
               <NotesSection
                 notebookID={notebook.id}
-                newNoteManualOrder={100}
+                newNoteManualOrder={notesInSectionService.getNextOrderInSection(
+                  x.sectionID
+                )}
                 section={x}
                 onNoteAdded={loadNotes}
                 onNoteSelected={(note: Note) => showSidePanel(note)}
