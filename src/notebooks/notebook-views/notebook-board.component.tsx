@@ -18,7 +18,7 @@ class DragAndDropTestingSensor {
   public setAPI(sensorAPI: SensorAPI) {
     this.sensorAPI = sensorAPI;
   }
-  public moveCard(draggableId: string) {
+  public moveCardDown(draggableId: string) {
     const lock = this.sensorAPI.tryGetLock(draggableId);
     const lift = lock.snapLift();
     lift.moveDown();

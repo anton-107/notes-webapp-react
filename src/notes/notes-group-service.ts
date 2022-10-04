@@ -39,7 +39,6 @@ export function groupNotesBySection(notes: Note[]): NotesInSection[] {
         ) {
           sectionsByID[x.extensionProperties.section].notes.push(x);
         } else {
-          console.warn("Moving note to an untitled section", x);
           untitledSection.notes.push(x);
         }
       } else {
@@ -69,7 +68,6 @@ export class NotesInSectionService {
   private STEP = 100;
 
   public setSections(sections: NotesInSection[]): void {
-    console.log("getOrderAfterInsert setSections", sections);
     this.sections = sections;
   }
   public getOrderAfterInsert(

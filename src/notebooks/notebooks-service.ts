@@ -28,10 +28,6 @@ export class NotebooksService {
       },
       credentials: "include",
     });
-    console.log("[one notebook] request", request);
-    const resp = await request.json();
-    console.log("[one notebooks] response", resp);
-
-    return resp;
+    return await request.json();
   }
 }

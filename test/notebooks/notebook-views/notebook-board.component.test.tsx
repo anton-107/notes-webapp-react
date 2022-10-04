@@ -2,7 +2,13 @@
  * @jest-environment jsdom
  */
 import "@testing-library/jest-dom/extend-expect";
-import { fireEvent, render, waitFor, screen } from "@testing-library/react";
+import {
+  fireEvent,
+  render,
+  waitFor,
+  screen,
+  act,
+} from "@testing-library/react";
 import fetchMock from "jest-fetch-mock";
 import * as React from "react";
 import { BrowserRouter } from "react-router-dom";
@@ -50,7 +56,10 @@ describe("Notebook board component", () => {
             {
               content: "Item in a non-existent section",
               id: "non-existent-item-1",
-              extensionProperties: { section: "non-existent-section" },
+              extensionProperties: {
+                section: "non-existent-section",
+                manualOrder: 400,
+              },
             },
           ],
         });
@@ -62,14 +71,13 @@ describe("Notebook board component", () => {
       }
     });
   });
-  it("should render", async () => {
+  it("should render notes even if their section does not exist", async () => {
     const component = render(
       <BrowserRouter>
         <NotebookBoardComponent />
       </BrowserRouter>
     );
     await waitFor(() => screen.getByTestId("notebook-board-view"));
-    // it should render notes even if their section does not exist:
     await waitFor(() => screen.getByTestId("note-content-non-existent-item-1"));
     component.unmount();
   });
@@ -112,15 +120,24 @@ describe("Notebook board component", () => {
     );
     component.unmount();
   });
-  it("should handle drag and drop note", async () => {
+  it.only("should handle drag and drop note", async () => {
     const component = render(
       <BrowserRouter>
         <NotebookBoardComponent />
       </BrowserRouter>
     );
     await waitFor(() => screen.getByTestId("note-content-note-1"));
-    testingSensor.moveCard("note-1");
-    // there are no expectations in this test, since it is not possible to drop a note in a target section
+    act(() => {
+      testingSensor.moveCardDown("note-1");
+    });
+    expect(fetchMock).lastCalledWith("undefined/note/note-1/edit", {
+      body: '{"note-id":"note-1","note-section":"<empty-section>","note-manual-order":250}',
+      credentials: "include",
+      headers: { "Content-Type": "application/json" },
+      method: "POST",
+      mode: "cors",
+    });
+
     component.unmount();
   });
 });
