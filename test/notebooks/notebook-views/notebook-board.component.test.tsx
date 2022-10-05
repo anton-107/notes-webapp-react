@@ -120,7 +120,7 @@ describe("Notebook board component", () => {
     );
     component.unmount();
   });
-  it.only("should handle drag and drop note", async () => {
+  it("should handle dragging and dropping a note", async () => {
     const component = render(
       <BrowserRouter>
         <NotebookBoardComponent />

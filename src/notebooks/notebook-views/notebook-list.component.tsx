@@ -10,10 +10,24 @@ import { NotesSection } from "../../notes/notes-section.component";
 import { Note, NotesService } from "../../notes/notes-service";
 import { Notebook, NotebooksService } from "../notebooks-service";
 import { NotebookSidePanel } from "./notebook-side-panel";
-import { DragDropContext } from "react-beautiful-dnd";
+import { DragDropContext, DropResult, SensorAPI } from "react-beautiful-dnd";
 
-export function handleDrop(): void {
-  return null;
+class DragAndDropTestingSensor {
+  private sensorAPI: SensorAPI;
+  public setAPI(sensorAPI: SensorAPI) {
+    this.sensorAPI = sensorAPI;
+  }
+  public moveCardDown(draggableId: string) {
+    const lock = this.sensorAPI.tryGetLock(draggableId);
+    const lift = lock.snapLift();
+    lift.moveDown();
+    lift.drop();
+  }
+}
+
+export const testingSensor = new DragAndDropTestingSensor();
+function testSensor(api: SensorAPI) {
+  testingSensor.setAPI(api);
 }
 
 const notesInSectionService = new NotesInSectionService();
@@ -49,6 +63,28 @@ export function NotebookListComponent(): React.ReactElement {
     setSidePanelVisible(false);
   };
 
+  const handleDrop = async (dropResult: DropResult): Promise<void> => {
+    const notesService = new NotesService();
+    let insertAtIndex = dropResult.destination.index;
+    if (
+      dropResult.source.droppableId === dropResult.destination.droppableId &&
+      dropResult.source.index < insertAtIndex
+    ) {
+      insertAtIndex += 1;
+    }
+    console.log("insertAtIndex", insertAtIndex);
+    const order = notesInSectionService.getOrderAfterInsert(
+      dropResult.destination.droppableId,
+      insertAtIndex
+    );
+    await notesService.moveNoteToSection({
+      "note-id": dropResult.draggableId,
+      "note-section": dropResult.destination.droppableId,
+      "note-manual-order": order,
+    });
+    loadNotes();
+  };
+
   useEffect(() => {
     document.body.addEventListener("click", hideSidePanel);
   });
@@ -68,8 +104,8 @@ export function NotebookListComponent(): React.ReactElement {
       <div className="content-block">
         {!notebook && <div>Loading...</div>}
         {notebook && (
-          <DragDropContext onDragEnd={handleDrop}>
-            {sections.map((x) => (
+          <DragDropContext onDragEnd={handleDrop} sensors={[testSensor]}>
+            {sections.map((x, index) => (
               <NotesSection
                 notebookID={notebook.id}
                 newNoteManualOrder={notesInSectionService.getNextOrderInSection(
@@ -78,6 +114,7 @@ export function NotebookListComponent(): React.ReactElement {
                 section={x}
                 onNoteAdded={loadNotes}
                 onNoteSelected={(note: Note) => showSidePanel(note)}
+                key={`section-${index}`}
               />
             ))}
           </DragDropContext>

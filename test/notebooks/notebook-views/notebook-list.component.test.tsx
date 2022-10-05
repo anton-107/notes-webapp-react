@@ -2,13 +2,19 @@
  * @jest-environment jsdom
  */
 import "@testing-library/jest-dom/extend-expect";
-import { fireEvent, render, screen, waitFor } from "@testing-library/react";
+import {
+  act,
+  fireEvent,
+  render,
+  screen,
+  waitFor,
+} from "@testing-library/react";
 import fetchMock from "jest-fetch-mock";
 import * as React from "react";
 import { BrowserRouter } from "react-router-dom";
 import {
-  handleDrop,
   NotebookListComponent,
+  testingSensor,
 } from "../../../src/notebooks/notebook-views/notebook-list.component";
 
 describe("Notebook list component", () => {
@@ -20,10 +26,25 @@ describe("Notebook list component", () => {
             {
               content: "Note 1",
               id: "note-1",
+              extensionProperties: { manualOrder: 100 },
             },
             {
               content: "Note 2",
               id: "note-2",
+              extensionProperties: { manualOrder: 200 },
+            },
+            {
+              content: "Note 3",
+              id: "note-3",
+              extensionProperties: { manualOrder: 300 },
+            },
+            {
+              content: "Note 4",
+              id: "note-4",
+            },
+            {
+              content: "Note 5",
+              id: "note-5",
             },
             {
               content: "To do",
@@ -96,7 +117,24 @@ describe("Notebook list component", () => {
     );
     component.unmount();
   });
-  it("should do nothing on note drop", () => {
-    expect(handleDrop()).toBe(null);
+  it("should handle dragging and dropping a note", async () => {
+    const component = render(
+      <BrowserRouter>
+        <NotebookListComponent />
+      </BrowserRouter>
+    );
+    await waitFor(() => screen.getByTestId("note-content-note-1"));
+    act(() => {
+      testingSensor.moveCardDown("note-1");
+    });
+    expect(fetchMock).lastCalledWith("undefined/note/note-1/edit", {
+      body: '{"note-id":"note-1","note-section":"<empty-section>","note-manual-order":250}',
+      credentials: "include",
+      headers: { "Content-Type": "application/json" },
+      method: "POST",
+      mode: "cors",
+    });
+
+    component.unmount();
   });
 });
