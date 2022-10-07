@@ -4,6 +4,9 @@ export interface Notebook {
   id: string;
   name: string;
 }
+export interface AddNotebookRequest {
+  "notebook-name": string;
+}
 
 export class NotebooksService {
   public async listAll(): Promise<Notebook[]> {
@@ -29,5 +32,19 @@ export class NotebooksService {
       credentials: "include",
     });
     return await request.json();
+  }
+  public async addOne(notebook: AddNotebookRequest) {
+    const request = await fetch(`${API_ROOT}/notebook`, {
+      method: "POST",
+      mode: "cors",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(notebook),
+      credentials: "include",
+    });
+    const resp = await request.json();
+    console.log("add notebook response", resp);
+    return resp;
   }
 }
