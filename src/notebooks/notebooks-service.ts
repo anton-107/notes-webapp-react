@@ -47,4 +47,17 @@ export class NotebooksService {
     console.log("add notebook response", resp);
     return resp;
   }
+  public async deleteOne(notebookID: string) {
+    const request = await fetch(`${API_ROOT}/delete-notebook`, {
+      method: "POST",
+      mode: "cors",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ "notebook-id": notebookID }),
+      credentials: "include",
+    });
+    const resp = await request.json();
+    return resp;
+  }
 }
