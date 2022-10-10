@@ -1,9 +1,16 @@
 import * as React from "react";
 import { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
+import { ApplicationEventEmitter } from "../app-events";
 import { Notebook, NotebooksService } from "../notebooks/notebooks-service";
 
-export function NotebooksLeftMenu(): React.ReactElement {
+interface NotebooksLeftMenuProperties {
+  applicationEvents: ApplicationEventEmitter;
+}
+
+export function NotebooksLeftMenu(
+  props: NotebooksLeftMenuProperties
+): React.ReactElement {
   const [notebooks, setNotebooks] = useState([]);
 
   const loadNotebooks = async () => {
@@ -15,6 +22,13 @@ export function NotebooksLeftMenu(): React.ReactElement {
   useEffect(() => {
     loadNotebooks();
   }, []);
+
+  useEffect(() => {
+    props.applicationEvents.addListener("notebook.deleted", loadNotebooks);
+    return function cleanup() {
+      props.applicationEvents.removeListener("notebook.deleted", loadNotebooks);
+    };
+  });
 
   return (
     <div>

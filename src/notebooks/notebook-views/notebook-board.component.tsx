@@ -89,6 +89,9 @@ export function NotebookBoardComponent(): React.ReactElement {
 
   useEffect(() => {
     document.body.addEventListener("click", hideSidePanel);
+    return function cleanup() {
+      document.body.removeEventListener("click", hideSidePanel);
+    };
   });
   useEffect(() => {
     loadNotebook(notebookID);

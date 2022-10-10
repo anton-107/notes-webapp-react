@@ -7,6 +7,7 @@ import fetchMock from "jest-fetch-mock";
 import { render, screen, waitFor } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
 import { NotebooksLeftMenu } from "../../src/navigation/notebooks-left-menu";
+import { ApplicationEventEmitter } from "../../src/app-events";
 
 describe("Notebooks page", () => {
   it("should show list of notebooks and highlight an active notebook", async () => {
@@ -21,7 +22,7 @@ describe("Notebooks page", () => {
 
     const component = render(
       <MemoryRouter initialEntries={["/notebook/notebook-2"]}>
-        <NotebooksLeftMenu />
+        <NotebooksLeftMenu applicationEvents={new ApplicationEventEmitter()} />
       </MemoryRouter>
     );
     await waitFor(() => screen.getByTestId("notebook-notebook-1"));
