@@ -25,8 +25,10 @@ export function NotebooksLeftMenu(
 
   useEffect(() => {
     props.applicationEvents.addListener("notebook.deleted", loadNotebooks);
+    props.applicationEvents.addListener("notebook.added", loadNotebooks);
     return function cleanup() {
       props.applicationEvents.removeListener("notebook.deleted", loadNotebooks);
+      props.applicationEvents.removeListener("notebook.added", loadNotebooks);
     };
   });
 

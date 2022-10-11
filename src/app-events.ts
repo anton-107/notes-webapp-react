@@ -1,7 +1,7 @@
 import React from "react";
 import EventEmitter from "eventemitter3";
 
-export type ApplicationEventType = "notebook.deleted";
+export type ApplicationEventType = "notebook.deleted" | "notebook.added";
 
 export class ApplicationEventEmitter {
   private eventEmitter = new EventEmitter();

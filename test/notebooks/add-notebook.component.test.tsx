@@ -9,7 +9,7 @@ import { BrowserRouter } from "react-router-dom";
 import { AddNotebookComponent } from "../../src/notebooks/add-notebook.component";
 
 describe("Add notebook component", () => {
-  it("should submit form for notebook creation", async () => {
+  it("should submit form for notebook creation by hitting Enter on the keyboard", async () => {
     fetchMock.mockResponse(`{ "id": "test-notebook-id" }`);
     const onNotebookAddedMock = jest.fn();
 
@@ -31,6 +31,25 @@ describe("Add notebook component", () => {
     fireEvent.keyDown(screen.getByTestId("add-notebook-input"), {
       code: "Enter",
     });
+    await waitFor(() => expect(onNotebookAddedMock).toHaveBeenCalledTimes(1));
+    component.unmount();
+  });
+  it("should submit form for notebook creation by hitting Enter on the keyboard", async () => {
+    fetchMock.mockResponse(`{ "id": "test-notebook-id" }`);
+    const onNotebookAddedMock = jest.fn();
+
+    const component = render(
+      <BrowserRouter>
+        <AddNotebookComponent onNotebookAdded={onNotebookAddedMock} />
+      </BrowserRouter>
+    );
+    fireEvent.click(screen.getByTestId("add-notebook-button"));
+    fireEvent.blur(screen.getByTestId("add-notebook-input"));
+    fireEvent.click(screen.getByTestId("add-notebook-button"));
+    fireEvent.change(screen.getByTestId("add-notebook-input"), {
+      target: { value: "my notes" },
+    });
+    fireEvent.submit(screen.getByTestId("add-notebook-form"));
     await waitFor(() => expect(onNotebookAddedMock).toHaveBeenCalledTimes(1));
     component.unmount();
   });
