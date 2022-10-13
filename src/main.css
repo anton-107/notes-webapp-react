@@ -61,6 +61,9 @@ h2.menu-header {
 .content-block {
   padding: 20px 60px;
 }
+.form-field-block {
+  margin-bottom: 18px;
+}
 .top-bar {
   border-bottom: 1px solid #eceae9;
   display: flex;

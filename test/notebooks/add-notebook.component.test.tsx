@@ -34,7 +34,7 @@ describe("Add notebook component", () => {
     await waitFor(() => expect(onNotebookAddedMock).toHaveBeenCalledTimes(1));
     component.unmount();
   });
-  it("should submit form for notebook creation by hitting Enter on the keyboard", async () => {
+  it("should submit request for notebook creation by submitting the form", async () => {
     fetchMock.mockResponse(`{ "id": "test-notebook-id" }`);
     const onNotebookAddedMock = jest.fn();
 

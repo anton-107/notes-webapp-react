@@ -9,6 +9,6 @@ import { PeoplePage } from "../../src/people/people-page";
 describe("People page", () => {
   it("should show people page header", () => {
     render(<PeoplePage />);
-    expect(screen.getByRole("heading")).toHaveTextContent("People page");
+    expect(screen.getByRole("heading")).toHaveTextContent("People");
   });
 });
