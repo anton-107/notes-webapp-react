@@ -9,7 +9,7 @@ import { NotebooksPage } from "./../../src/notebooks/notebooks-page";
 import { BrowserRouter } from "react-router-dom";
 
 describe("Notebooks page", () => {
-  it("should show notebooks page header", async () => {
+  it("should show list of notebooks", async () => {
     fetchMock.mockResponse(
       JSON.stringify({
         notebooks: [
