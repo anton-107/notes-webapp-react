@@ -26,6 +26,7 @@ export function AddPersonComponent(
     });
     setInputDisabled(false);
     setPersonName("");
+    setPersonEmail("");
     setFormVisible(false);
     props.onPersonAdded();
   };

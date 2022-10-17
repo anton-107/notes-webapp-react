@@ -18,6 +18,7 @@
   border: 1px solid #eceae9;
   border-radius: 3px;
   display: none;
+  z-index: 100;
 }
 .dropdown-menu.open .dropdown-content {
   display: block;

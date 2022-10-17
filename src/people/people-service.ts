@@ -37,4 +37,18 @@ export class PeopleService {
     console.log("add person response", resp);
     return resp;
   }
+  public async deleteOne(personID: string) {
+    const request = await fetch(`${API_ROOT}/delete-person`, {
+      method: "POST",
+      mode: "cors",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ "person-id": personID }),
+      credentials: "include",
+    });
+    const resp = await request.json();
+    console.log("delete person response", resp);
+    return resp;
+  }
 }
