@@ -114,3 +114,6 @@ a:hover {
   vertical-align: top;
   padding: 5px;
 }
+.note-placeholder {
+  height: 30px;
+}

@@ -65,7 +65,6 @@ export function NotebookBoardComponent(): React.ReactElement {
   };
 
   const handleDrop = async (dropResult: DropResult): Promise<void> => {
-    console.log("handleDrop", dropResult);
     const notesService = new NotesService();
     let insertAtIndex = dropResult.destination.index;
     if (
@@ -74,7 +73,6 @@ export function NotebookBoardComponent(): React.ReactElement {
     ) {
       insertAtIndex += 1;
     }
-    console.log("insertAtIndex", insertAtIndex);
     const order = notesInSectionService.getOrderAfterInsert(
       dropResult.destination.droppableId,
       insertAtIndex

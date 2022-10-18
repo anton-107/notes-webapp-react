@@ -27,6 +27,7 @@ export function NotesSection(
               notes={props.section.notes}
               onNoteSelected={props.onNoteSelected}
             />
+            <div className="note-placeholder"></div>
             {provided.placeholder}
           </div>
         )}
