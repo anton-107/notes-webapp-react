@@ -132,6 +132,17 @@ export function SingleNotebookPage(): React.ReactElement {
                         Board
                       </NavLink>
                     </li>
+                    <li>
+                      <NavLink
+                        data-testid="notebook-table-link"
+                        to={`table`}
+                        className={({ isActive }) =>
+                          isActive ? "active-nav-link" : ""
+                        }
+                      >
+                        Table
+                      </NavLink>
+                    </li>
                   </ul>
                 </div>
               )}

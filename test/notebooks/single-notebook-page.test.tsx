@@ -90,6 +90,18 @@ describe("Notebooks page", () => {
     );
     component.unmount();
   });
+  it("should highlight table link", async () => {
+    const component = render(
+      <MemoryRouter initialEntries={["/table"]}>
+        <SingleNotebookPage />
+      </MemoryRouter>
+    );
+    await waitFor(() => screen.getByTestId("notebook-table-link"));
+    expect(screen.getByTestId("notebook-table-link")).toHaveClass(
+      "active-nav-link"
+    );
+    component.unmount();
+  });
   it("should delete a notebook", async () => {
     const component = render(
       <MemoryRouter initialEntries={["/"]}>

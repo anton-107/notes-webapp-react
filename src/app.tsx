@@ -11,6 +11,7 @@ import { NotebooksLeftMenu } from "./navigation/notebooks-left-menu";
 import { NotebookBoardComponent } from "./notebooks/notebook-views/notebook-board.component";
 import { NotebookListComponent } from "./notebooks/notebook-views/notebook-list.component";
 import { NotebookOverviewComponent } from "./notebooks/notebook-views/notebook-overview.component";
+import { NotebookTableComponent } from "./notebooks/notebook-views/notebook-table.component";
 import { NotebooksPage } from "./notebooks/notebooks-page";
 import { SingleNotebookPage } from "./notebooks/single-notebook-page";
 import { PeoplePage } from "./people/people-page";
@@ -85,6 +86,10 @@ export function App(): React.ReactElement {
                       <Route
                         path="board"
                         element={<NotebookBoardComponent />}
+                      />
+                      <Route
+                        path="table"
+                        element={<NotebookTableComponent />}
                       />
                     </Route>
                     <Route path="people" element={<PeoplePage />} />
