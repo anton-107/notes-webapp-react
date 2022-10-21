@@ -1,0 +1,7 @@
+.notes-table td {
+  cursor: pointer;
+  border: 1px solid transparent;
+}
+.notes-table td:hover {
+  border-color: orange;
+}

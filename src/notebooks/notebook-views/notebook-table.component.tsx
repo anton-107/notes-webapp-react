@@ -2,6 +2,7 @@ import * as React from "react";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Note, NotesService } from "../../notes/notes-service";
+import "./notebook-table.component.css";
 
 export function NotebookTableComponent(): React.ReactElement {
   const [notes, setNotes] = useState<Note[]>([]);
@@ -18,7 +19,7 @@ export function NotebookTableComponent(): React.ReactElement {
 
   return (
     <div className="content-block" data-testid="notebook-table-view">
-      <table className="data-table">
+      <table className="data-table notes-table">
         <thead>
           <tr>
             <th>Note</th>
