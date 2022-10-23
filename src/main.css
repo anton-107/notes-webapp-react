@@ -114,6 +114,9 @@ a:hover {
   vertical-align: top;
   padding: 5px;
 }
+.data-table .table-header-link {
+  color: white;
+}
 .note-placeholder {
   height: 30px;
 }
