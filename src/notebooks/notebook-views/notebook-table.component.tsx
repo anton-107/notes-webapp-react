@@ -8,8 +8,15 @@ import "./notebook-table.component.css";
 
 export function NotebookTableComponent(): React.ReactElement {
   const [notes, setNotes] = useState<Note[]>([]);
+  const [tableColumns, setTableColumns] = useState<NotebookTableColumn[]>([]);
   const [isSidePanelVisible, setSidePanelVisible] = useState(false);
   const { notebookID } = useParams();
+
+  const loadNotebook = async (notebookID: string) => {
+    const notebooksService = new NotebooksService();
+    const notebook = await notebooksService.getOne(notebookID);
+    setTableColumns(notebook.tableColumns || []);
+  };
 
   const loadNotes = async () => {
     const notesService = new NotesService();
@@ -38,10 +45,12 @@ export function NotebookTableComponent(): React.ReactElement {
       }),
     });
     hideSidePanel();
+    loadNotebook(notebookID);
   };
 
   useEffect(() => {
     loadNotes();
+    loadNotebook(notebookID);
   }, [location]);
 
   return (
@@ -52,10 +61,13 @@ export function NotebookTableComponent(): React.ReactElement {
             <tr>
               <th>Note</th>
               <th>ID</th>
+              {tableColumns.map((x) => {
+                return <th data-testid={`dynamic-column-header-${x.columnType}`}>{x.name}</th>;
+              })}
               <th>
                 <a
                   href="#"
-                  title="Add a column"
+                  title="Columns configuration"
                   className="table-header-link"
                   data-testid="add-table-column-link"
                   onClick={(e) => showSidePanel(e)}
@@ -70,6 +82,9 @@ export function NotebookTableComponent(): React.ReactElement {
               <tr data-testid={`note-row-${n.id}`} key={`note-${n.id}`}>
                 <td>{n.content}</td>
                 <td>{n.id}</td>
+                {tableColumns.map(() => {
+                  return <td>&nbsp;</td>;
+                })}
                 <td className="table-no-highlight"></td>
               </tr>
             ))}

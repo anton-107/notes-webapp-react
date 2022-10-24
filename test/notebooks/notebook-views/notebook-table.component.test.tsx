@@ -51,11 +51,18 @@ describe("Notebook table component", () => {
     },
   ];
 
-  it("should show list of notes", async () => {
-    fetchMock.mockResponse(async () => {
-      return JSON.stringify({
-        notes: mockNotes,
-      });
+  it("should show list of notes and columns", async () => {
+    fetchMock.mockResponse(async (req) => {
+
+      if (req.url.endsWith("/note")) {
+        return JSON.stringify({
+          notes: mockNotes,
+        });
+      } else {
+        return JSON.stringify({
+          tableColumns: [{name: "Due date", columnType: "due-date"}]
+        });
+      }
     });
     const component = render(
       <BrowserRouter>
@@ -64,6 +71,7 @@ describe("Notebook table component", () => {
     );
     await waitFor(() => screen.getByTestId("notebook-table-view"));
     await waitFor(() => screen.getByTestId("note-row-note-1"));
+    await waitFor(() => screen.getByTestId("dynamic-column-header-due-date"));
     component.unmount();
   });
   it("should add a new column to the table view of the notebook when no columns are set in the notebook", async () => {
