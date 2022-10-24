@@ -53,14 +53,13 @@ describe("Notebook table component", () => {
 
   it("should show list of notes and columns", async () => {
     fetchMock.mockResponse(async (req) => {
-
       if (req.url.endsWith("/note")) {
         return JSON.stringify({
           notes: mockNotes,
         });
       } else {
         return JSON.stringify({
-          tableColumns: [{name: "Due date", columnType: "due-date"}]
+          tableColumns: [{ name: "Due date", columnType: "due-date" }],
         });
       }
     });

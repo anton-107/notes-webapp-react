@@ -62,7 +62,11 @@ export function NotebookTableComponent(): React.ReactElement {
               <th>Note</th>
               <th>ID</th>
               {tableColumns.map((x) => {
-                return <th data-testid={`dynamic-column-header-${x.columnType}`}>{x.name}</th>;
+                return (
+                  <th data-testid={`dynamic-column-header-${x.columnType}`}>
+                    {x.name}
+                  </th>
+                );
               })}
               <th>
                 <a
