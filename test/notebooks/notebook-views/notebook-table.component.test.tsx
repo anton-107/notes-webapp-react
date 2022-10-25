@@ -98,8 +98,12 @@ describe("Notebook table component", () => {
     await waitFor(() => screen.getByTestId("note-row-note-1"));
     await waitFor(() => screen.getByTestId("add-table-column-link"));
     fireEvent.click(screen.getByTestId("add-table-column-link"));
-    await waitFor(() => screen.getByTestId("add-table-column-button"));
-    fireEvent.click(screen.getByTestId("add-table-column-button"));
+
+    await waitFor(() => screen.getByTestId("checkbox-due-date"));
+    fireEvent.click(screen.getByTestId("checkbox-due-date"));
+
+    await waitFor(() => screen.getByTestId("save-table-columns-button"));
+    fireEvent.click(screen.getByTestId("save-table-columns-button"));
     await waitFor(() => expect(lastRequestBody).not.toBe(undefined));
     if (!lastRequestBody) {
       throw "Expected lastRequestBody to be set";
@@ -120,7 +124,7 @@ describe("Notebook table component", () => {
       } else {
         return JSON.stringify({
           id: "notebook-1",
-          tableColumns: [{ id: "column-1", name: "Column 1" }],
+          tableColumns: [{ columnType: "due-date", name: "Due date" }],
         });
       }
     });
@@ -136,14 +140,24 @@ describe("Notebook table component", () => {
     act(() => {
       fireEvent.click(screen.getByTestId("add-table-column-link"));
     });
-    await waitFor(() => screen.getByTestId("add-table-column-button"));
+
+    await waitFor(() =>
+      expect(
+        screen.getByTestId<HTMLInputElement>("checkbox-due-date").checked
+      ).toBe(true)
+    );
+    await waitFor(() => screen.getByTestId("checkbox-task-completed"));
+    fireEvent.click(screen.getByTestId("checkbox-task-completed"));
+
+    await waitFor(() => screen.getByTestId("save-table-columns-button"));
     act(() => {
-      fireEvent.click(screen.getByTestId("add-table-column-button"));
+      fireEvent.click(screen.getByTestId("save-table-columns-button"));
     });
     await waitFor(() => expect(lastRequestBody).not.toBe(undefined));
     if (!lastRequestBody) {
       throw "Expected lastRequestBody to be set";
     }
+    console.log("lastRequestBody", lastRequestBody);
     expect(lastRequestBody["table-columns"].length).toBe(2);
     component.unmount();
   });

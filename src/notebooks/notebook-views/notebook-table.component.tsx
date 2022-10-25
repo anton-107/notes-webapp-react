@@ -33,14 +33,11 @@ export function NotebookTableComponent(): React.ReactElement {
     setSidePanelVisible(false);
   };
 
-  const addColumn = async (columnType: NotebookTableColumn) => {
+  const saveColumns = async (enabledColumns: NotebookTableColumn[]) => {
     const notebookService = new NotebooksService();
-    const notebook = await notebookService.getOne(notebookID);
-    const columns = notebook.tableColumns ? [...notebook.tableColumns] : [];
-    columns.push(columnType);
     await notebookService.updateOne({
       "notebook-id": notebookID,
-      "table-columns": columns.map((x) => {
+      "table-columns": enabledColumns.map((x) => {
         return { name: x.name, "column-type": x.columnType };
       }),
     });
@@ -97,8 +94,9 @@ export function NotebookTableComponent(): React.ReactElement {
       </div>
 
       <NotebookTableColumnSidePanel
+        enabledColumns={tableColumns}
         isVisible={isSidePanelVisible}
-        onColumnTypeAdded={addColumn}
+        onColumnConfigurationChanged={saveColumns}
       />
     </div>
   );

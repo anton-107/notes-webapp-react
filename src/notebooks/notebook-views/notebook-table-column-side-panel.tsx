@@ -1,16 +1,20 @@
 import * as React from "react";
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { NotebookTableColumn } from "../notebooks-service";
 
 interface NotebookTableColumnSidePanelProps {
   isVisible: boolean;
-  onColumnTypeAdded: (t: NotebookTableColumn) => void;
+  enabledColumns: NotebookTableColumn[];
+  onColumnConfigurationChanged: (enabledColumns: NotebookTableColumn[]) => void;
 }
 
 export function NotebookTableColumnSidePanel(
   props: NotebookTableColumnSidePanelProps
 ): React.ReactElement {
-  const columnType = useRef<HTMLSelectElement>();
+  const [enabledColumns, setEnabledColumns] = useState<NotebookTableColumn[]>(
+    []
+  );
+  const columnCheckboxes = useRef<{ [key: string]: HTMLInputElement }>({});
 
   const supportedColumnTypes = [
     { name: "Due date", columnType: "due-date" },
@@ -20,12 +24,32 @@ export function NotebookTableColumnSidePanel(
     { name: "Completed", columnType: "task-completed" },
   ];
 
-  const addColumn = () => {
-    const selectedColumnType = supportedColumnTypes.find(
-      (x) => x.columnType === columnType.current.value
+  const isColumnTypeChecked = (columnType: string): boolean => {
+    // console.log('enabledColumns', enabledColumns);
+    return (
+      enabledColumns.find((x) => x.columnType === columnType) !== undefined
     );
-    props.onColumnTypeAdded(selectedColumnType);
   };
+
+  const handleCheckboxChange = () => {
+    const newColumns = supportedColumnTypes.filter(
+      (x) => columnCheckboxes.current[x.columnType].checked
+    );
+    setEnabledColumns(newColumns);
+  };
+
+  const saveColumnsConfiguration = () => {
+    const enabledColumns = supportedColumnTypes.filter(
+      (x) => columnCheckboxes.current[x.columnType].checked
+    );
+    props.onColumnConfigurationChanged(enabledColumns);
+  };
+
+  useEffect(() => {
+    console.log("enabledColumns changed", props.enabledColumns);
+    setEnabledColumns(props.enabledColumns);
+  }, [props.enabledColumns]);
+
   return (
     <div
       data-testid="single-notebook-page-sidepanel"
@@ -35,24 +59,35 @@ export function NotebookTableColumnSidePanel(
       <div className="content-block">
         <h1>Add a column</h1>
         <div className="form-field-block">
-          <label>New column type: </label>
-          <select ref={columnType}>
-            {supportedColumnTypes.map((column) => {
-              return (
-                <option value={column.columnType} key={column.columnType}>
+          Visible columns:
+          {supportedColumnTypes.map((column) => {
+            return (
+              <div>
+                <label>
+                  <input
+                    type="checkbox"
+                    value={column.columnType}
+                    key={column.columnType}
+                    ref={(el: HTMLInputElement) =>
+                      (columnCheckboxes.current[column.columnType] = el)
+                    }
+                    checked={isColumnTypeChecked(column.columnType)}
+                    onChange={handleCheckboxChange}
+                    data-testid={`checkbox-${column.columnType}`}
+                  />{" "}
                   {column.name}
-                </option>
-              );
-            })}
-          </select>
+                </label>
+              </div>
+            );
+          })}
         </div>
         <div className="form-field-block">
           <button
             className="form-button"
-            onClick={addColumn}
-            data-testid="add-table-column-button"
+            onClick={saveColumnsConfiguration}
+            data-testid="save-table-columns-button"
           >
-            Add
+            Save
           </button>
         </div>
       </div>
