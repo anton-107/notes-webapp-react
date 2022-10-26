@@ -6,6 +6,7 @@ interface NotebookTableColumnSidePanelProps {
   isVisible: boolean;
   enabledColumns: NotebookTableColumn[];
   onColumnConfigurationChanged: (enabledColumns: NotebookTableColumn[]) => void;
+  onCancelled: () => void;
 }
 
 export function NotebookTableColumnSidePanel(
@@ -88,6 +89,13 @@ export function NotebookTableColumnSidePanel(
             data-testid="save-table-columns-button"
           >
             Save
+          </button>
+          &nbsp;
+          <button
+            className="form-button form-button-secondary"
+            onClick={props.onCancelled}
+          >
+            Cancel
           </button>
         </div>
       </div>

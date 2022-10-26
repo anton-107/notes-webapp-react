@@ -88,6 +88,12 @@ a:hover {
   border-radius: 5px;
   border: 1px solid transparent;
   padding: 5px 15px;
+  cursor: pointer;
+}
+.form-button-secondary {
+  background-color: white;
+  color: #333;
+  border: 1px solid #333;
 }
 .simple-button {
   background: transparent;

@@ -97,6 +97,7 @@ export function NotebookTableComponent(): React.ReactElement {
         enabledColumns={tableColumns}
         isVisible={isSidePanelVisible}
         onColumnConfigurationChanged={saveColumns}
+        onCancelled={hideSidePanel}
       />
     </div>
   );
