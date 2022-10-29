@@ -51,11 +51,23 @@ describe("Notebook table component", () => {
     },
   ];
 
+  const mockSupportedColumns = [
+    { name: "Due date", columnType: "due-date", valueType: "date" },
+    { name: "Start date", columnType: "start-date", valueType: "date" },
+    { name: "End date", columnType: "end-date", valueType: "date" },
+    { name: "Assignee", columnType: "task-assignee", valueType: "person-id" },
+    { name: "Completed", columnType: "task-completed", valueType: "boolean" },
+  ];
+
   it("should show list of notes and columns", async () => {
     fetchMock.mockResponse(async (req) => {
       if (req.url.endsWith("/note")) {
         return JSON.stringify({
           notes: mockNotes,
+        });
+      } else if (req.url.endsWith("/notebook-supported-columns")) {
+        return JSON.stringify({
+          columns: mockSupportedColumns,
         });
       } else {
         return JSON.stringify({
@@ -82,6 +94,10 @@ describe("Notebook table component", () => {
       if (req.url.endsWith("/note")) {
         return JSON.stringify({
           notes: mockNotes,
+        });
+      } else if (req.url.endsWith("/notebook-supported-columns")) {
+        return JSON.stringify({
+          columns: mockSupportedColumns,
         });
       } else {
         return JSON.stringify({
@@ -120,6 +136,10 @@ describe("Notebook table component", () => {
       if (req.url.endsWith("/note")) {
         return JSON.stringify({
           notes: mockNotes,
+        });
+      } else if (req.url.endsWith("/notebook-supported-columns")) {
+        return JSON.stringify({
+          columns: mockSupportedColumns,
         });
       } else {
         return JSON.stringify({

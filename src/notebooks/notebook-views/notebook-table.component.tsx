@@ -9,6 +9,9 @@ import "./notebook-table.component.css";
 export function NotebookTableComponent(): React.ReactElement {
   const [notes, setNotes] = useState<Note[]>([]);
   const [tableColumns, setTableColumns] = useState<NotebookTableColumn[]>([]);
+  const [supportedColumns, setSupportedColumns] = useState<
+    NotebookTableColumn[]
+  >([]);
   const [isSidePanelVisible, setSidePanelVisible] = useState(false);
   const { notebookID } = useParams();
 
@@ -22,6 +25,12 @@ export function NotebookTableComponent(): React.ReactElement {
     const notesService = new NotesService();
     const notes = await notesService.listAllForNotebook(notebookID);
     setNotes(notes);
+  };
+
+  const loadSupportedColumns = async () => {
+    const notebooksService = new NotebooksService();
+    const supportedColumns = await notebooksService.listSupportedColumns();
+    setSupportedColumns(supportedColumns);
   };
 
   const showSidePanel = (e: React.MouseEvent<HTMLElement, MouseEvent>) => {
@@ -48,6 +57,7 @@ export function NotebookTableComponent(): React.ReactElement {
   useEffect(() => {
     loadNotes();
     loadNotebook(notebookID);
+    loadSupportedColumns();
   }, [location]);
 
   return (
@@ -96,6 +106,7 @@ export function NotebookTableComponent(): React.ReactElement {
       <NotebookTableColumnSidePanel
         enabledColumns={tableColumns}
         isVisible={isSidePanelVisible}
+        supportedColumns={supportedColumns}
         onColumnConfigurationChanged={saveColumns}
         onCancelled={hideSidePanel}
       />

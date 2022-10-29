@@ -47,6 +47,17 @@ export class NotebooksService {
     });
     return await request.json();
   }
+  public async listSupportedColumns(): Promise<NotebookTableColumn[]> {
+    const request = await fetch(`${API_ROOT}/notebook-supported-columns`, {
+      method: "GET",
+      mode: "cors",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+    });
+    return (await request.json()).columns;
+  }
   public async addOne(notebook: AddNotebookRequest) {
     const request = await fetch(`${API_ROOT}/notebook`, {
       method: "POST",

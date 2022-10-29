@@ -4,6 +4,7 @@ import { NotebookTableColumn } from "../notebooks-service";
 
 interface NotebookTableColumnSidePanelProps {
   isVisible: boolean;
+  supportedColumns: NotebookTableColumn[];
   enabledColumns: NotebookTableColumn[];
   onColumnConfigurationChanged: (enabledColumns: NotebookTableColumn[]) => void;
   onCancelled: () => void;
@@ -17,14 +18,6 @@ export function NotebookTableColumnSidePanel(
   );
   const columnCheckboxes = useRef<{ [key: string]: HTMLInputElement }>({});
 
-  const supportedColumnTypes = [
-    { name: "Due date", columnType: "due-date" },
-    { name: "Start date", columnType: "start-date" },
-    { name: "End date", columnType: "end-date" },
-    { name: "Assignee", columnType: "task-assignee" },
-    { name: "Completed", columnType: "task-completed" },
-  ];
-
   const isColumnTypeChecked = (columnType: string): boolean => {
     // console.log('enabledColumns', enabledColumns);
     return (
@@ -33,14 +26,14 @@ export function NotebookTableColumnSidePanel(
   };
 
   const handleCheckboxChange = () => {
-    const newColumns = supportedColumnTypes.filter(
+    const newColumns = props.supportedColumns.filter(
       (x) => columnCheckboxes.current[x.columnType].checked
     );
     setEnabledColumns(newColumns);
   };
 
   const saveColumnsConfiguration = () => {
-    const enabledColumns = supportedColumnTypes.filter(
+    const enabledColumns = props.supportedColumns.filter(
       (x) => columnCheckboxes.current[x.columnType].checked
     );
     props.onColumnConfigurationChanged(enabledColumns);
@@ -61,7 +54,7 @@ export function NotebookTableColumnSidePanel(
         <h1>Add a column</h1>
         <div className="form-field-block">
           Visible columns:
-          {supportedColumnTypes.map((column) => {
+          {props.supportedColumns.map((column) => {
             return (
               <div>
                 <label>
