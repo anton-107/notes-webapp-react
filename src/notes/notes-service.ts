@@ -8,6 +8,7 @@ export interface Note {
   type: { type: NoteType };
   notebookID: string;
   extensionProperties?: { section: string | null; manualOrder: number | null };
+  columnValues?: { [key: string]: string };
 }
 export interface NoteRequest {
   "note-type": NoteType;
@@ -18,6 +19,10 @@ export interface NoteRequest {
 }
 export interface EditNoteRequest extends NoteRequest {
   "note-id": string;
+}
+export interface PartialEditNoteRequest {
+  "note-id": string;
+  "table-columns"?: { [columnType: string]: string };
 }
 export interface UpdateNoteSectionRequest {
   "note-id": string;
@@ -66,7 +71,9 @@ export class NotesService {
     console.log("dlete note response", resp);
     return resp;
   }
-  public async editNote(note: EditNoteRequest): Promise<Note> {
+  public async editNote(
+    note: EditNoteRequest | PartialEditNoteRequest
+  ): Promise<Note> {
     const request = await fetch(`${API_ROOT}/note/${note["note-id"]}/edit`, {
       method: "POST",
       mode: "cors",

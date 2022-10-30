@@ -5,6 +5,12 @@ import { Note, NotesService } from "../../notes/notes-service";
 import { NotebooksService, NotebookTableColumn } from "../notebooks-service";
 import { NotebookTableColumnSidePanel } from "./notebook-table-column-side-panel";
 import "./notebook-table.component.css";
+import { CellEditorPlaintext } from "./table-cells/cell-editor-plaintext";
+
+interface TableCell {
+  noteID: string;
+  dynamicColumnIndex: number;
+}
 
 export function NotebookTableComponent(): React.ReactElement {
   const [notes, setNotes] = useState<Note[]>([]);
@@ -13,6 +19,9 @@ export function NotebookTableComponent(): React.ReactElement {
     NotebookTableColumn[]
   >([]);
   const [isSidePanelVisible, setSidePanelVisible] = useState(false);
+  const [activeCellToEdit, setActiveCellToEdit] = useState<TableCell | null>(
+    null
+  );
   const { notebookID } = useParams();
 
   const loadNotebook = async (notebookID: string) => {
@@ -54,6 +63,35 @@ export function NotebookTableComponent(): React.ReactElement {
     loadNotebook(notebookID);
   };
 
+  const isCellActivelyEdited = (
+    noteID: string,
+    columnIndex: number
+  ): boolean => {
+    return (
+      activeCellToEdit !== null &&
+      activeCellToEdit.noteID === noteID &&
+      activeCellToEdit.dynamicColumnIndex === columnIndex
+    );
+  };
+
+  const startEditCell = (noteID: string, columnIndex: number) => {
+    setActiveCellToEdit({ noteID, dynamicColumnIndex: columnIndex });
+  };
+
+  const saveCellValue = async (
+    noteID: string,
+    column: NotebookTableColumn,
+    newValue: string
+  ) => {
+    const notesService = new NotesService();
+    await notesService.editNote({
+      "note-id": noteID,
+      "table-columns": { [column.columnType]: newValue },
+    });
+    setActiveCellToEdit(null);
+    loadNotes();
+  };
+
   useEffect(() => {
     loadNotes();
     loadNotebook(notebookID);
@@ -67,7 +105,6 @@ export function NotebookTableComponent(): React.ReactElement {
           <thead>
             <tr>
               <th>Note</th>
-              <th>ID</th>
               {tableColumns.map((x) => {
                 return (
                   <th data-testid={`dynamic-column-header-${x.columnType}`}>
@@ -92,9 +129,37 @@ export function NotebookTableComponent(): React.ReactElement {
             {notes.map((n) => (
               <tr data-testid={`note-row-${n.id}`} key={`note-${n.id}`}>
                 <td>{n.content}</td>
-                <td>{n.id}</td>
-                {tableColumns.map(() => {
-                  return <td>&nbsp;</td>;
+                {tableColumns.map((c, columnIndex) => {
+                  return (
+                    <td
+                      onClick={() => startEditCell(n.id, columnIndex)}
+                      data-testid={`table-cell-${n.id}-${c.columnType}`}
+                    >
+                      <span>
+                        {isCellActivelyEdited(n.id, columnIndex) && (
+                          <span>
+                            <CellEditorPlaintext
+                              onSave={(value) =>
+                                saveCellValue(
+                                  n.id,
+                                  tableColumns[columnIndex],
+                                  value
+                                )
+                              }
+                            />
+                          </span>
+                        )}
+                        {!isCellActivelyEdited(n.id, columnIndex) &&
+                          n.columnValues && (
+                            <span
+                              data-testid={`table-cell-displayed-value-${n.id}-${c.columnType}`}
+                            >
+                              {n.columnValues[c.columnType]}
+                            </span>
+                          )}
+                      </span>
+                    </td>
+                  );
                 })}
                 <td className="table-no-highlight"></td>
               </tr>

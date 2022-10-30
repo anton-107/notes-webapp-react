@@ -30,6 +30,7 @@ describe("Notebook table component", () => {
       content: "Note 3",
       id: "note-3",
       extensionProperties: { manualOrder: 300 },
+      columnValues: { "due-date": "2022-10-31" },
     },
     {
       content: "Note 4",
@@ -83,6 +84,12 @@ describe("Notebook table component", () => {
     await waitFor(() => screen.getByTestId("notebook-table-view"));
     await waitFor(() => screen.getByTestId("note-row-note-1"));
     await waitFor(() => screen.getByTestId("dynamic-column-header-due-date"));
+    await waitFor(() =>
+      screen.getByTestId("table-cell-displayed-value-note-3-due-date")
+    );
+    expect(
+      screen.getByTestId("table-cell-displayed-value-note-3-due-date")
+    ).toHaveTextContent("2022-10-31");
     component.unmount();
   });
   it("should add a new column to the table view of the notebook when no columns are set in the notebook", async () => {
@@ -177,8 +184,54 @@ describe("Notebook table component", () => {
     if (!lastRequestBody) {
       throw "Expected lastRequestBody to be set";
     }
-    console.log("lastRequestBody", lastRequestBody);
     expect(lastRequestBody["table-columns"].length).toBe(2);
+    component.unmount();
+  });
+  it("should edit and save value for a dynamic column", async () => {
+    let lastRequestBody: {
+      "note-id": string;
+      "table-columns": Record<string, string>;
+    };
+    fetchMock.mockResponse(async (req) => {
+      if (req.method === "POST") {
+        lastRequestBody = await req.json();
+      }
+      if (req.url.endsWith("/note")) {
+        return JSON.stringify({
+          notes: mockNotes,
+        });
+      } else if (req.url.endsWith("/notebook-supported-columns")) {
+        return JSON.stringify({
+          columns: mockSupportedColumns,
+        });
+      } else {
+        return JSON.stringify({
+          id: "notebook-1",
+          tableColumns: [{ columnType: "due-date", name: "Due date" }],
+        });
+      }
+    });
+    const component = render(
+      <BrowserRouter>
+        <NotebookTableComponent />
+      </BrowserRouter>
+    );
+    await waitFor(() => screen.getByTestId("table-cell-note-1-due-date"));
+    fireEvent.click(screen.getByTestId("table-cell-note-1-due-date"));
+    await waitFor(() => screen.getByTestId("cell-editor-plaintext"));
+    fireEvent.keyDown(screen.getByTestId("cell-editor-plaintext"), {
+      target: { value: "2022-10-30" },
+    });
+    fireEvent.keyDown(screen.getByTestId("cell-editor-plaintext"), {
+      target: { value: "2022-10-30" },
+      code: "Enter",
+    });
+    await waitFor(() =>
+      expect(
+        screen.queryByTestId("cell-editor-plaintext")
+      ).not.toBeInTheDocument()
+    );
+    expect(lastRequestBody["table-columns"]["due-date"]).toBe("2022-10-30");
     component.unmount();
   });
 });
