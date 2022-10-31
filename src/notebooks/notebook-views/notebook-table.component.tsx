@@ -5,6 +5,7 @@ import { Note, NotesService } from "../../notes/notes-service";
 import { NotebooksService, NotebookTableColumn } from "../notebooks-service";
 import { NotebookTableColumnSidePanel } from "./notebook-table-column-side-panel";
 import "./notebook-table.component.css";
+import { CellEditorCheckbox } from "./table-cells/cell-editor-checkbox";
 import { CellEditorPlaintext } from "./table-cells/cell-editor-plaintext";
 
 interface TableCell {
@@ -18,6 +19,9 @@ export function NotebookTableComponent(): React.ReactElement {
   const [supportedColumns, setSupportedColumns] = useState<
     NotebookTableColumn[]
   >([]);
+  const [supportedColumnsMap, setSupportedColumnsMap] = useState<
+    Record<string, NotebookTableColumn>
+  >({});
   const [isSidePanelVisible, setSidePanelVisible] = useState(false);
   const [activeCellToEdit, setActiveCellToEdit] = useState<TableCell | null>(
     null
@@ -33,13 +37,19 @@ export function NotebookTableComponent(): React.ReactElement {
   const loadNotes = async () => {
     const notesService = new NotesService();
     const notes = await notesService.listAllForNotebook(notebookID);
-    setNotes(notes);
+    setNotes(notes.filter((x) => !x.type || x.type.type !== "notes-container"));
   };
 
   const loadSupportedColumns = async () => {
     const notebooksService = new NotebooksService();
     const supportedColumns = await notebooksService.listSupportedColumns();
     setSupportedColumns(supportedColumns);
+
+    const columnsMap: Record<string, NotebookTableColumn> = {};
+    supportedColumns.forEach((c) => {
+      columnsMap[c.columnType] = c;
+    });
+    setSupportedColumnsMap(columnsMap);
   };
 
   const showSidePanel = (e: React.MouseEvent<HTMLElement, MouseEvent>) => {
@@ -132,10 +142,30 @@ export function NotebookTableComponent(): React.ReactElement {
                 {tableColumns.map((c, columnIndex) => {
                   return (
                     <td
-                      onClick={() => startEditCell(n.id, columnIndex)}
+                      onClick={() =>
+                        supportedColumnsMap[c.columnType].valueType !==
+                          "boolean" && startEditCell(n.id, columnIndex)
+                      }
                       data-testid={`table-cell-${n.id}-${c.columnType}`}
                     >
                       <span>
+                        {supportedColumnsMap[c.columnType].valueType ===
+                          "boolean" && (
+                          <CellEditorCheckbox
+                            testid={`${c.columnType}-${n.id}`}
+                            value={
+                              n.columnValues &&
+                              n.columnValues[c.columnType] === "true"
+                            }
+                            onSave={(value: boolean) =>
+                              saveCellValue(
+                                n.id,
+                                tableColumns[columnIndex],
+                                String(value)
+                              )
+                            }
+                          />
+                        )}
                         {isCellActivelyEdited(n.id, columnIndex) && (
                           <span>
                             <CellEditorPlaintext

@@ -187,7 +187,7 @@ describe("Notebook table component", () => {
     expect(lastRequestBody["table-columns"].length).toBe(2);
     component.unmount();
   });
-  it("should edit and save value for a dynamic column", async () => {
+  it("should edit and save a plaintext value for a dynamic column", async () => {
     let lastRequestBody: {
       "note-id": string;
       "table-columns": Record<string, string>;
@@ -232,6 +232,47 @@ describe("Notebook table component", () => {
       ).not.toBeInTheDocument()
     );
     expect(lastRequestBody["table-columns"]["due-date"]).toBe("2022-10-30");
+    component.unmount();
+  });
+  it("should edit and save a boolean value for a dynamic column", async () => {
+    let lastRequestBody: {
+      "note-id": string;
+      "table-columns": Record<string, string>;
+    };
+    fetchMock.mockResponse(async (req) => {
+      if (req.method === "POST") {
+        lastRequestBody = await req.json();
+      }
+      if (req.url.endsWith("/note")) {
+        return JSON.stringify({
+          notes: mockNotes,
+        });
+      } else if (req.url.endsWith("/notebook-supported-columns")) {
+        return JSON.stringify({
+          columns: mockSupportedColumns,
+        });
+      } else {
+        return JSON.stringify({
+          id: "notebook-1",
+          tableColumns: [{ columnType: "task-completed", name: "Completed" }],
+        });
+      }
+    });
+    const component = render(
+      <BrowserRouter>
+        <NotebookTableComponent />
+      </BrowserRouter>
+    );
+    await waitFor(() => screen.getByTestId("table-cell-note-1-task-completed"));
+    fireEvent.click(screen.getByTestId("table-cell-note-1-task-completed"));
+    await waitFor(() =>
+      screen.getByTestId("cell-editor-checkbox-task-completed-note-1")
+    );
+    fireEvent.click(
+      screen.getByTestId("cell-editor-checkbox-task-completed-note-1")
+    );
+    await waitFor(() => expect(lastRequestBody).toBeDefined());
+    expect(lastRequestBody["table-columns"]["task-completed"]).toBe("true");
     component.unmount();
   });
 });
