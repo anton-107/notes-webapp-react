@@ -169,6 +169,9 @@ export function NotebookTableComponent(): React.ReactElement {
                         {isCellActivelyEdited(n.id, columnIndex) && (
                           <span>
                             <CellEditorPlaintext
+                              value={
+                                n.columnValues && n.columnValues[c.columnType]
+                              }
                               onSave={(value) =>
                                 saveCellValue(
                                   n.id,

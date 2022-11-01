@@ -216,10 +216,19 @@ describe("Notebook table component", () => {
         <NotebookTableComponent />
       </BrowserRouter>
     );
+
+    await waitFor(() => screen.getByTestId("table-cell-note-3-due-date"));
+    fireEvent.click(screen.getByTestId("table-cell-note-3-due-date"));
+    await waitFor(() => screen.getByTestId("cell-editor-plaintext"));
+    expect(screen.getByTestId("cell-editor-plaintext")).toHaveValue(
+      "2022-10-31"
+    );
+
     await waitFor(() => screen.getByTestId("table-cell-note-1-due-date"));
     fireEvent.click(screen.getByTestId("table-cell-note-1-due-date"));
     await waitFor(() => screen.getByTestId("cell-editor-plaintext"));
-    fireEvent.keyDown(screen.getByTestId("cell-editor-plaintext"), {
+    expect(screen.getByTestId("cell-editor-plaintext")).toHaveValue("");
+    fireEvent.change(screen.getByTestId("cell-editor-plaintext"), {
       target: { value: "2022-10-30" },
     });
     fireEvent.keyDown(screen.getByTestId("cell-editor-plaintext"), {
