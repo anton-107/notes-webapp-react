@@ -10,7 +10,7 @@ import { CellEditorPlaintext } from "./table-cells/cell-editor-plaintext";
 
 interface TableCell {
   noteID: string;
-  dynamicColumnIndex: number;
+  dynamicColumnType: string;
 }
 
 export function NotebookTableComponent(): React.ReactElement {
@@ -24,6 +24,9 @@ export function NotebookTableComponent(): React.ReactElement {
   >({});
   const [isSidePanelVisible, setSidePanelVisible] = useState(false);
   const [activeCellToEdit, setActiveCellToEdit] = useState<TableCell | null>(
+    null
+  );
+  const [cellBeingUpdated, setCellBeingUpdated] = useState<TableCell | null>(
     null
   );
   const { notebookID } = useParams();
@@ -75,17 +78,25 @@ export function NotebookTableComponent(): React.ReactElement {
 
   const isCellActivelyEdited = (
     noteID: string,
-    columnIndex: number
+    columnType: string
   ): boolean => {
     return (
       activeCellToEdit !== null &&
       activeCellToEdit.noteID === noteID &&
-      activeCellToEdit.dynamicColumnIndex === columnIndex
+      activeCellToEdit.dynamicColumnType === columnType
     );
   };
 
-  const startEditCell = (noteID: string, columnIndex: number) => {
-    setActiveCellToEdit({ noteID, dynamicColumnIndex: columnIndex });
+  const isCellBeingUpdated = (noteID: string, columnType: string): boolean => {
+    return (
+      cellBeingUpdated !== null &&
+      cellBeingUpdated.noteID === noteID &&
+      cellBeingUpdated.dynamicColumnType === columnType
+    );
+  };
+
+  const startEditCell = (noteID: string, columnType: string) => {
+    setActiveCellToEdit({ noteID, dynamicColumnType: columnType });
   };
 
   const saveCellValue = async (
@@ -94,12 +105,14 @@ export function NotebookTableComponent(): React.ReactElement {
     newValue: string
   ) => {
     const notesService = new NotesService();
+    setActiveCellToEdit(null);
+    setCellBeingUpdated({ noteID, dynamicColumnType: column.columnType });
     await notesService.editNote({
       "note-id": noteID,
       "table-columns": { [column.columnType]: newValue },
     });
-    setActiveCellToEdit(null);
-    loadNotes();
+    await loadNotes();
+    setCellBeingUpdated(null);
   };
 
   useEffect(() => {
@@ -144,7 +157,7 @@ export function NotebookTableComponent(): React.ReactElement {
                     <td
                       onClick={() =>
                         supportedColumnsMap[c.columnType].valueType !==
-                          "boolean" && startEditCell(n.id, columnIndex)
+                          "boolean" && startEditCell(n.id, c.columnType)
                       }
                       data-testid={`table-cell-${n.id}-${c.columnType}`}
                     >
@@ -166,7 +179,7 @@ export function NotebookTableComponent(): React.ReactElement {
                             }
                           />
                         )}
-                        {isCellActivelyEdited(n.id, columnIndex) && (
+                        {isCellActivelyEdited(n.id, c.columnType) && (
                           <span>
                             <CellEditorPlaintext
                               value={
@@ -182,7 +195,7 @@ export function NotebookTableComponent(): React.ReactElement {
                             />
                           </span>
                         )}
-                        {!isCellActivelyEdited(n.id, columnIndex) &&
+                        {!isCellActivelyEdited(n.id, c.columnType) &&
                           n.columnValues && (
                             <span
                               data-testid={`table-cell-displayed-value-${n.id}-${c.columnType}`}
@@ -190,6 +203,9 @@ export function NotebookTableComponent(): React.ReactElement {
                               {n.columnValues[c.columnType]}
                             </span>
                           )}
+                        {isCellBeingUpdated(n.id, c.columnType) && (
+                          <small> (updating)</small>
+                        )}
                       </span>
                     </td>
                   );
