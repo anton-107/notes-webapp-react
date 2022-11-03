@@ -14,6 +14,7 @@ interface TableCell {
 }
 
 export function NotebookTableComponent(): React.ReactElement {
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [notes, setNotes] = useState<Note[]>([]);
   const [tableColumns, setTableColumns] = useState<NotebookTableColumn[]>([]);
   const [supportedColumns, setSupportedColumns] = useState<
@@ -38,9 +39,11 @@ export function NotebookTableComponent(): React.ReactElement {
   };
 
   const loadNotes = async () => {
+    setIsLoading(true);
     const notesService = new NotesService();
     const notes = await notesService.listAllForNotebook(notebookID);
     setNotes(notes.filter((x) => !x.type || x.type.type !== "notes-container"));
+    setIsLoading(false);
   };
 
   const loadSupportedColumns = async () => {
@@ -124,6 +127,8 @@ export function NotebookTableComponent(): React.ReactElement {
   return (
     <div onClick={hideSidePanel} className="single-page-content-wrapper">
       <div className="content-block" data-testid="notebook-table-view">
+        {isLoading && <span>Loading...</span>}
+
         <table className="data-table notes-table">
           <thead>
             <tr>
