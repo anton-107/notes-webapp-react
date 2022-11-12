@@ -108,6 +108,9 @@ export function NoteDetails(props: NoteDetailsProps): React.ReactElement {
           data-testid="note-details-content-edit-input"
         />
       </div>
+      <div className="content-block">
+        <pre>{JSON.stringify(props.note.extensionProperties, null, 4)}</pre>
+      </div>
     </div>
   );
 }

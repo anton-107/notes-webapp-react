@@ -36,6 +36,7 @@ export function NotesList(props: NotesListProperties): React.ReactElement {
                     data-testid={`note-content-${n.id}`}
                   >
                     {n.content}
+                    {n.extensionProperties && n.extensionProperties.youtubeURL}
                   </div>
                 </div>
               </div>

@@ -7,7 +7,11 @@ export interface Note {
   content: string;
   type: { type: NoteType };
   notebookID: string;
-  extensionProperties?: { section: string | null; manualOrder: number | null };
+  extensionProperties?: {
+    section: string | null;
+    manualOrder: number | null;
+    youtubeURL?: string | null;
+  };
   columnValues?: { [key: string]: string };
 }
 export interface NoteRequest {
