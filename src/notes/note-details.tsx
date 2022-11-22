@@ -1,7 +1,8 @@
 import * as React from "react";
 import { useEffect, useState } from "react";
+import { API_ROOT } from "../environment";
 import "./note-details.css";
-import { Note, NotesService } from "./notes-service";
+import { Note, NoteAttachment, NotesService } from "./notes-service";
 
 interface NoteDetailsProps {
   note: Note;
@@ -12,6 +13,14 @@ interface NoteDetailsProps {
 export function NoteDetails(props: NoteDetailsProps): React.ReactElement {
   const [isMoreActionsMenuOpen, setMoreActionsMenuOpen] = useState(false);
   const [noteContent, setNoteContent] = useState("");
+  const [attachments, setAttachments] = useState<NoteAttachment[]>([]);
+
+  const loadAttachments = async (noteID: string) => {
+    const notesService = new NotesService();
+    const attachments = await notesService.listAttachments(noteID);
+    console.log("ATTACHMENTS", attachments);
+    setAttachments(attachments);
+  };
 
   const openMoreActionsMenu = (
     e: React.MouseEvent<HTMLElement, MouseEvent>
@@ -61,6 +70,7 @@ export function NoteDetails(props: NoteDetailsProps): React.ReactElement {
   useEffect(() => {
     setMoreActionsMenuOpen(false);
     setNoteContent(props.note.content);
+    loadAttachments(props.note.id);
   }, [props.note]);
 
   return (
@@ -108,9 +118,30 @@ export function NoteDetails(props: NoteDetailsProps): React.ReactElement {
           data-testid="note-details-content-edit-input"
         />
       </div>
+      <div className="content-block">Note ID: {props.note.id}</div>
       <div className="content-block">
         <pre>{JSON.stringify(props.note.extensionProperties, null, 4)}</pre>
       </div>
+      {attachments && (
+        <div className="content-block">
+          {attachments.length}
+          {attachments.map((a: NoteAttachment) => {
+            return (
+              <div
+                data-testid={`attachment-${a.id}`}
+                key={`attachment-${a.id}`}
+              >
+                [attachment]&nbsp;
+                <a
+                  href={`${API_ROOT}/note/${props.note.id}/attachment/${a.id}`}
+                >
+                  {a.name}
+                </a>
+              </div>
+            );
+          })}
+        </div>
+      )}
     </div>
   );
 }

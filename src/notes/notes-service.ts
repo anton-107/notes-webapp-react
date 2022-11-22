@@ -2,6 +2,13 @@ import { API_ROOT } from "../environment";
 
 type NoteType = "note" | "notes-container";
 
+export interface NoteAttachment {
+  id: string;
+  name: string;
+  objectKey: string;
+  createdAt: string;
+}
+
 export interface Note {
   id: string;
   content: string;
@@ -46,6 +53,18 @@ export class NotesService {
     });
     const resp = await request.json();
     return resp.notes;
+  }
+  public async listAttachments(noteID: string): Promise<NoteAttachment[]> {
+    const request = await fetch(`${API_ROOT}/note/${noteID}/attachment`, {
+      method: "GET",
+      mode: "cors",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+    });
+    const resp = await request.json();
+    return resp.attachments;
   }
   public async addNote(note: NoteRequest): Promise<Note> {
     const request = await fetch(`${API_ROOT}/note`, {

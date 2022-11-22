@@ -11,6 +11,9 @@ import fetchMock from "jest-fetch-mock";
 
 describe("Notes details component", () => {
   it("should display 'more actions' menu", () => {
+    fetchMock.mockResponse(async () => {
+      return JSON.stringify({ attachments: [] });
+    });
     const onNoteDeletedMock = jest.fn();
     const onNoteEditedMock = jest.fn();
     const note: Note = {
@@ -37,8 +40,34 @@ describe("Notes details component", () => {
 
     component.unmount();
   });
+  it("should display list of attachments", async () => {
+    fetchMock.mockResponse(async () => {
+      return JSON.stringify({
+        attachments: [{ id: "attachment-1", name: "Attached file" }],
+      });
+    });
+    const note: Note = {
+      id: "note-1",
+      content: "This is a test note",
+      type: { type: "note" },
+      notebookID: "notebook-1",
+    };
+    const component = render(
+      <BrowserRouter>
+        <NoteDetails note={note} onNoteDeleted={null} onNoteEdited={null} />
+      </BrowserRouter>
+    );
+    await waitFor(() => screen.getByTestId("attachment-attachment-1"));
+    expect(screen.getByTestId("attachment-attachment-1")).toHaveTextContent(
+      "[attachment] Attached file"
+    );
+    component.unmount();
+  });
   it("should edit note content", async () => {
     fetchMock.mockResponse(async (req) => {
+      if (req.url.endsWith("/attachment")) {
+        return JSON.stringify({ attachments: [] });
+      }
       const requestBody: EditNoteRequest = await req.json();
       return JSON.stringify({
         id: requestBody["note-id"],
