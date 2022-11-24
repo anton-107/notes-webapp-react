@@ -1,5 +1,6 @@
 import * as React from "react";
 import { useEffect, useRef, useState } from "react";
+
 import { NotebookTableColumn } from "../notebooks-service";
 
 interface NotebookTableColumnSidePanelProps {

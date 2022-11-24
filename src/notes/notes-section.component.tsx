@@ -1,9 +1,10 @@
 import * as React from "react";
+import { Droppable } from "react-beautiful-dnd";
+
 import { AddPlaintextNoteComponent } from "./add-plaintext-note.component";
+import { NotesInSection } from "./notes-group-service";
 import { NotesList } from "./notes-list";
 import { Note } from "./notes-service";
-import { Droppable } from "react-beautiful-dnd";
-import { NotesInSection } from "./notes-group-service";
 
 interface NotesSectionProperties {
   notebookID: string;

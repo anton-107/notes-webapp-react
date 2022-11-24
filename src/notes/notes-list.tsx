@@ -1,6 +1,7 @@
 import * as React from "react";
-import { Note } from "./notes-service";
 import { Draggable } from "react-beautiful-dnd";
+
+import { Note } from "./notes-service";
 
 interface NotesListProperties {
   notes: Note[];

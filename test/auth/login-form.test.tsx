@@ -2,9 +2,10 @@
  * @jest-environment jsdom
  */
 import { fireEvent, render, screen } from "@testing-library/react";
-import * as React from "react";
-import { LoginForm } from "../../src/auth/login-form";
 import fetchMock from "jest-fetch-mock";
+import * as React from "react";
+
+import { LoginForm } from "../../src/auth/login-form";
 
 describe("Login form", () => {
   it("should submit login and password", () => {

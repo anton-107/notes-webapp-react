@@ -2,10 +2,12 @@
  * @jest-environment jsdom
  */
 import "@testing-library/jest-dom/extend-expect";
+
 import { render, screen, waitFor } from "@testing-library/react";
 import * as React from "react";
 import { DragDropContext, Droppable } from "react-beautiful-dnd";
 import { BrowserRouter } from "react-router-dom";
+
 import { NotesList } from "../../src/notes/notes-list";
 import { Note } from "../../src/notes/notes-service";
 

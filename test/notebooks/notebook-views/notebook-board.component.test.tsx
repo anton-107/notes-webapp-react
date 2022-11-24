@@ -2,16 +2,18 @@
  * @jest-environment jsdom
  */
 import "@testing-library/jest-dom/extend-expect";
+
 import {
+  act,
   fireEvent,
   render,
-  waitFor,
   screen,
-  act,
+  waitFor,
 } from "@testing-library/react";
 import fetchMock from "jest-fetch-mock";
 import * as React from "react";
 import { BrowserRouter } from "react-router-dom";
+
 import {
   NotebookBoardComponent,
   testingSensor,

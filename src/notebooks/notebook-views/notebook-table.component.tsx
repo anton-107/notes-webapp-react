@@ -1,10 +1,12 @@
+import "./notebook-table.component.css";
+
 import * as React from "react";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+
 import { Note, NotesService } from "../../notes/notes-service";
 import { NotebooksService, NotebookTableColumn } from "../notebooks-service";
 import { NotebookTableColumnSidePanel } from "./notebook-table-column-side-panel";
-import "./notebook-table.component.css";
 import { CellEditorCheckbox } from "./table-cells/cell-editor-checkbox";
 import { CellEditorPlaintext } from "./table-cells/cell-editor-plaintext";
 

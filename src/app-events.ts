@@ -1,5 +1,5 @@
-import React from "react";
 import EventEmitter from "eventemitter3";
+import React from "react";
 
 export type ApplicationEventType = "notebook.deleted" | "notebook.added";
 

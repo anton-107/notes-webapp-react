@@ -1,12 +1,14 @@
 /**
  * @jest-environment jsdom
  */
-import * as React from "react";
 import "@testing-library/jest-dom/extend-expect";
-import fetchMock from "jest-fetch-mock";
+
 import { render, screen, waitFor } from "@testing-library/react";
-import { NotebooksPage } from "./../../src/notebooks/notebooks-page";
+import fetchMock from "jest-fetch-mock";
+import * as React from "react";
 import { BrowserRouter } from "react-router-dom";
+
+import { NotebooksPage } from "./../../src/notebooks/notebooks-page";
 
 describe("Notebooks page", () => {
   it("should show list of notebooks", async () => {

@@ -2,10 +2,12 @@
  * @jest-environment jsdom
  */
 import "@testing-library/jest-dom/extend-expect";
+
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import fetchMock from "jest-fetch-mock";
 import * as React from "react";
 import { BrowserRouter } from "react-router-dom";
+
 import { AddNotebookComponent } from "../../src/notebooks/add-notebook.component";
 
 describe("Add notebook component", () => {

@@ -1,11 +1,13 @@
 /**
  * @jest-environment jsdom
  */
-import React from "react";
 import "@testing-library/jest-dom/extend-expect";
+
 import { render, screen } from "@testing-library/react";
-import { LeftMenuLinks } from "../../src/navigation/left-menu-links";
+import React from "react";
 import { MemoryRouter } from "react-router-dom";
+
+import { LeftMenuLinks } from "../../src/navigation/left-menu-links";
 
 describe("Left menu links component", () => {
   it("should highlight notebooks menu item", async () => {

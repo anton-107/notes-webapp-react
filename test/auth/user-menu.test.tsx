@@ -1,10 +1,12 @@
 /**
  * @jest-environment jsdom
  */
-import { fireEvent, render, screen } from "@testing-library/react";
-import * as React from "react";
 import "@testing-library/jest-dom/extend-expect";
+
+import { fireEvent, render, screen } from "@testing-library/react";
 import fetchMock from "jest-fetch-mock";
+import * as React from "react";
+
 import { UserMenu } from "../../src/auth/user-menu";
 
 describe("Login form", () => {

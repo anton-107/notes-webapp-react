@@ -1,6 +1,8 @@
 import * as React from "react";
 import { useEffect, useState } from "react";
+import { DragDropContext, DropResult, SensorAPI } from "react-beautiful-dnd";
 import { useLocation, useParams } from "react-router-dom";
+
 import { AddSectionComponent } from "../../notes/add-section.component";
 import {
   groupNotesBySection,
@@ -10,7 +12,6 @@ import { NotesSection } from "../../notes/notes-section.component";
 import { Note, NotesService } from "../../notes/notes-service";
 import { Notebook, NotebooksService } from "../notebooks-service";
 import { NotebookSidePanel } from "./notebook-side-panel";
-import { DragDropContext, DropResult, SensorAPI } from "react-beautiful-dnd";
 
 class DragAndDropTestingSensor {
   private sensorAPI: SensorAPI;

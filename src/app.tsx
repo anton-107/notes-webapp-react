@@ -1,11 +1,13 @@
+import "./main.css";
+
 import * as React from "react";
 import { useEffect, useState } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+
 import { ApplicationEvents } from "./app-events";
 import { AuthService } from "./auth/auth-service";
 import { LoginForm } from "./auth/login-form";
 import { UserMenu } from "./auth/user-menu";
-import "./main.css";
 import { LeftMenuLinks } from "./navigation/left-menu-links";
 import { NotebooksLeftMenu } from "./navigation/notebooks-left-menu";
 import { NotebookBoardComponent } from "./notebooks/notebook-views/notebook-board.component";

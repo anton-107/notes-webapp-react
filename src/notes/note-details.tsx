@@ -1,7 +1,9 @@
+import "./note-details.css";
+
 import * as React from "react";
 import { useEffect, useState } from "react";
+
 import { API_ROOT } from "../environment";
-import "./note-details.css";
 import { Note, NoteAttachment, NotesService } from "./notes-service";
 
 interface NoteDetailsProps {
@@ -124,7 +126,6 @@ export function NoteDetails(props: NoteDetailsProps): React.ReactElement {
       </div>
       {attachments && (
         <div className="content-block">
-          {attachments.length}
           {attachments.map((a: NoteAttachment) => {
             return (
               <div
@@ -134,6 +135,7 @@ export function NoteDetails(props: NoteDetailsProps): React.ReactElement {
                 [attachment]&nbsp;
                 <a
                   href={`${API_ROOT}/note/${props.note.id}/attachment/${a.id}`}
+                  download="test.xml"
                 >
                   {a.name}
                 </a>

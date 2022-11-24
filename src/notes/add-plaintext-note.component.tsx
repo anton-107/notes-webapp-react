@@ -1,6 +1,8 @@
+import "./add-plaintext-note.component.css";
+
 import * as React from "react";
 import { FormEvent, useRef, useState } from "react";
-import "./add-plaintext-note.component.css";
+
 import { NotesService } from "./notes-service";
 
 interface AddPlaintextNoteComponentProperties {

@@ -2,6 +2,7 @@
  * @jest-environment jsdom
  */
 import "@testing-library/jest-dom/extend-expect";
+
 import {
   act,
   fireEvent,
@@ -12,6 +13,7 @@ import {
 import fetchMock from "jest-fetch-mock";
 import * as React from "react";
 import { BrowserRouter } from "react-router-dom";
+
 import {
   NotebookListComponent,
   testingSensor,

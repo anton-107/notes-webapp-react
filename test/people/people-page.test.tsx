@@ -1,12 +1,14 @@
 /**
  * @jest-environment jsdom
  */
-import * as React from "react";
 import "@testing-library/jest-dom/extend-expect";
-import fetchMock from "jest-fetch-mock";
+
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
-import { PeoplePage } from "../../src/people/people-page";
+import fetchMock from "jest-fetch-mock";
+import * as React from "react";
 import { BrowserRouter } from "react-router-dom";
+
+import { PeoplePage } from "../../src/people/people-page";
 
 describe("People page", () => {
   beforeAll(() => {

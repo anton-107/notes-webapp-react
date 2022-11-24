@@ -1,8 +1,10 @@
+import "./people-page.css";
+
 import * as React from "react";
 import { useEffect, useState } from "react";
+
 import { AddPersonComponent } from "./add-person.component";
 import { PeopleService, Person } from "./people-service";
-import "./people-page.css";
 
 export function PeoplePage(): React.ReactElement {
   const [isLoading, setLoading] = useState(false);

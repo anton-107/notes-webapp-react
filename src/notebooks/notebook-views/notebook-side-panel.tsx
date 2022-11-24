@@ -1,4 +1,5 @@
 import * as React from "react";
+
 import { NoteDetails } from "../../notes/note-details";
 import { Note } from "../../notes/notes-service";
 

@@ -1,15 +1,17 @@
+import "./single-notebook-page.css";
+
 import * as React from "react";
 import { useEffect, useState } from "react";
 import {
   Link,
   NavLink,
   Outlet,
-  useParams,
   useNavigate,
+  useParams,
 } from "react-router-dom";
+
 import { ApplicationEventEmitter, ApplicationEvents } from "../app-events";
 import { Notebook, NotebooksService } from "./notebooks-service";
-import "./single-notebook-page.css";
 
 export function SingleNotebookPage(): React.ReactElement {
   const [notebook, setNotebook] = useState<Notebook | null>(null);

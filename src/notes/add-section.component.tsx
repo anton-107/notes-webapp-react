@@ -1,5 +1,6 @@
 import * as React from "react";
 import { useRef, useState } from "react";
+
 import { NotesService } from "./notes-service";
 
 interface AddSectionComponentProperties {
