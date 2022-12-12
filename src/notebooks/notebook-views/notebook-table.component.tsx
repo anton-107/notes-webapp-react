@@ -6,14 +6,8 @@ import { useParams } from "react-router-dom";
 
 import { Note, NotesService } from "../../notes/notes-service";
 import { NotebooksService, NotebookTableColumn } from "../notebooks-service";
+import { NotebookTableRow, TableCell } from "./notebook-table/table-row";
 import { NotebookTableColumnSidePanel } from "./notebook-table-column-side-panel";
-import { CellEditorCheckbox } from "./table-cells/cell-editor-checkbox";
-import { CellEditorPlaintext } from "./table-cells/cell-editor-plaintext";
-
-interface TableCell {
-  noteID: string;
-  dynamicColumnType: string;
-}
 
 export function NotebookTableComponent(): React.ReactElement {
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -27,9 +21,6 @@ export function NotebookTableComponent(): React.ReactElement {
   >({});
   const [isSidePanelVisible, setSidePanelVisible] = useState(false);
   const [activeCellToEdit, setActiveCellToEdit] = useState<TableCell | null>(
-    null
-  );
-  const [cellBeingUpdated, setCellBeingUpdated] = useState<TableCell | null>(
     null
   );
   const { notebookID } = useParams();
@@ -81,43 +72,17 @@ export function NotebookTableComponent(): React.ReactElement {
     loadNotebook(notebookID);
   };
 
-  const isCellActivelyEdited = (
-    noteID: string,
-    columnType: string
-  ): boolean => {
-    return (
-      activeCellToEdit !== null &&
-      activeCellToEdit.noteID === noteID &&
-      activeCellToEdit.dynamicColumnType === columnType
-    );
-  };
-
-  const isCellBeingUpdated = (noteID: string, columnType: string): boolean => {
-    return (
-      cellBeingUpdated !== null &&
-      cellBeingUpdated.noteID === noteID &&
-      cellBeingUpdated.dynamicColumnType === columnType
-    );
-  };
-
-  const startEditCell = (noteID: string, columnType: string) => {
-    setActiveCellToEdit({ noteID, dynamicColumnType: columnType });
-  };
-
   const saveCellValue = async (
     noteID: string,
     column: NotebookTableColumn,
     newValue: string
   ) => {
     const notesService = new NotesService();
-    setActiveCellToEdit(null);
-    setCellBeingUpdated({ noteID, dynamicColumnType: column.columnType });
     await notesService.editNote({
       "note-id": noteID,
       "table-columns": { [column.columnType]: newValue },
     });
     await loadNotes();
-    setCellBeingUpdated(null);
   };
 
   useEffect(() => {
@@ -156,70 +121,18 @@ export function NotebookTableComponent(): React.ReactElement {
             </tr>
           </thead>
           <tbody>
-            {notes.map((n) => (
-              <tr data-testid={`note-row-${n.id}`} key={`note-${n.id}`}>
-                <td>{n.content}</td>
-                {tableColumns.map((c, columnIndex) => {
-                  return (
-                    <td
-                      onClick={() =>
-                        supportedColumnsMap[c.columnType].valueType !==
-                          "boolean" && startEditCell(n.id, c.columnType)
-                      }
-                      data-testid={`table-cell-${n.id}-${c.columnType}`}
-                    >
-                      <span>
-                        {supportedColumnsMap[c.columnType].valueType ===
-                          "boolean" && (
-                          <CellEditorCheckbox
-                            testid={`${c.columnType}-${n.id}`}
-                            value={
-                              n.columnValues &&
-                              n.columnValues[c.columnType] === "true"
-                            }
-                            onSave={(value: boolean) =>
-                              saveCellValue(
-                                n.id,
-                                tableColumns[columnIndex],
-                                String(value)
-                              )
-                            }
-                          />
-                        )}
-                        {isCellActivelyEdited(n.id, c.columnType) && (
-                          <span>
-                            <CellEditorPlaintext
-                              value={
-                                n.columnValues && n.columnValues[c.columnType]
-                              }
-                              onSave={(value) =>
-                                saveCellValue(
-                                  n.id,
-                                  tableColumns[columnIndex],
-                                  value
-                                )
-                              }
-                            />
-                          </span>
-                        )}
-                        {!isCellActivelyEdited(n.id, c.columnType) &&
-                          n.columnValues && (
-                            <span
-                              data-testid={`table-cell-displayed-value-${n.id}-${c.columnType}`}
-                            >
-                              {n.columnValues[c.columnType]}
-                            </span>
-                          )}
-                        {isCellBeingUpdated(n.id, c.columnType) && (
-                          <small> (updating)</small>
-                        )}
-                      </span>
-                    </td>
-                  );
-                })}
-                <td className="table-no-highlight"></td>
-              </tr>
-            ))}
+            {tableColumns &&
+              supportedColumnsMap &&
+              notes.map((n) => (
+                <NotebookTableRow
+                  note={n}
+                  tableColumns={tableColumns}
+                  supportedColumnsMap={supportedColumnsMap}
+                  activeCellToEdit={activeCellToEdit}
+                  onChangeActiveCellToEdit={(cell) => setActiveCellToEdit(cell)}
+                  onCellSaved={saveCellValue}
+                />
+              ))}
           </tbody>
         </table>
       </div>
