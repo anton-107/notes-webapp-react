@@ -87,9 +87,8 @@ export class NotesInSectionService {
         : null;
       if (typeof firstNoteOrder !== "number") {
         return this.STEP;
-      } else {
-        return firstNoteOrder / 2;
       }
+      return firstNoteOrder / 2;
     }
     if (insertedAtIndex >= section.notes.length) {
       const lastNoteOrder = section.notes[section.notes.length - 1]
@@ -99,9 +98,8 @@ export class NotesInSectionService {
         : null;
       if (typeof lastNoteOrder !== "number") {
         return this.STEP;
-      } else {
-        return lastNoteOrder + this.STEP;
       }
+      return lastNoteOrder + this.STEP;
     }
     const cardBeforeOrder = section.notes[insertedAtIndex - 1]
       .extensionProperties
@@ -110,7 +108,6 @@ export class NotesInSectionService {
     const cardAfterOrder = section.notes[insertedAtIndex].extensionProperties
       ? section.notes[insertedAtIndex].extensionProperties.manualOrder
       : null;
-    console.log("orders", insertedAtIndex, cardBeforeOrder, cardAfterOrder);
     if (
       typeof cardBeforeOrder !== "number" ||
       typeof cardAfterOrder !== "number"
