@@ -95,7 +95,7 @@ export class NotesService {
     return resp;
   }
   public async editNote(
-    note: EditNoteRequest | PartialEditNoteRequest
+    note: EditNoteRequest | PartialEditNoteRequest | UpdateNoteSectionRequest
   ): Promise<Note> {
     const request = await fetch(`${API_ROOT}/note/${note["note-id"]}/edit`, {
       method: "POST",
@@ -113,17 +113,6 @@ export class NotesService {
   public async moveNoteToSection(
     note: UpdateNoteSectionRequest
   ): Promise<Note> {
-    const request = await fetch(`${API_ROOT}/note/${note["note-id"]}/edit`, {
-      method: "POST",
-      mode: "cors",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(note),
-      credentials: "include",
-    });
-    const resp = await request.json();
-    console.log("moveNoteToSection response", resp);
-    return resp;
+    return await this.editNote(note);
   }
 }
