@@ -14,10 +14,8 @@ import fetchMock from "jest-fetch-mock";
 import * as React from "react";
 import { BrowserRouter } from "react-router-dom";
 
-import {
-  NotebookBoardComponent,
-  testingSensor,
-} from "../../../src/notebooks/notebook-views/notebook-board.component";
+import { NotebookBoardComponent } from "../../../src/notebooks/notebook-views/notebook-board.component";
+import { testingSensor } from "../../../src/notebooks/notebook-views/notebook-notes.component";
 
 describe("Notebook board component", () => {
   beforeAll(() => {
