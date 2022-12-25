@@ -10,6 +10,8 @@ import { BrowserRouter } from "react-router-dom";
 
 import { AddPersonComponent } from "../../src/people/add-person.component";
 
+jest.mock("./../../src/environment.ts");
+
 describe("Add person component", () => {
   it("should show and hide form", async () => {
     const onPersonAddedMock = jest.fn();

@@ -16,6 +16,8 @@ import { BrowserRouter } from "react-router-dom";
 
 import { NotebookTableComponent } from "../../../src/notebooks/notebook-views/notebook-table.component";
 
+jest.mock("./../../../src/environment.ts");
+
 describe("Notebook table component", () => {
   const mockNotes = [
     {

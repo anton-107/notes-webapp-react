@@ -7,6 +7,8 @@ import * as React from "react";
 
 import { LoginForm } from "../../src/auth/login-form";
 
+jest.mock("./../../src/environment.ts");
+
 describe("Login form", () => {
   it("should submit login and password", () => {
     const onSignIn = () => {

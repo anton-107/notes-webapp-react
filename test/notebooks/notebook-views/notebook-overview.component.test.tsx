@@ -9,6 +9,8 @@ import * as React from "react";
 
 import { NotebookOverviewComponent } from "../../../src/notebooks/notebook-views/notebook-overview.component";
 
+jest.mock("./../../../src/environment.ts");
+
 describe("Notebook overview component", () => {
   beforeAll(() => {
     fetchMock.mockResponse(async () => {

@@ -11,6 +11,8 @@ import { BrowserRouter } from "react-router-dom";
 import { NoteDetails } from "../../src/notes/note-details";
 import { EditNoteRequest, Note } from "../../src/notes/notes-service";
 
+jest.mock("./../../src/environment.ts");
+
 describe("Notes details component", () => {
   it("should display 'more actions' menu", () => {
     fetchMock.mockResponse(async () => {

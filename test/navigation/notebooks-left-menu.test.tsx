@@ -11,6 +11,8 @@ import { MemoryRouter } from "react-router-dom";
 import { ApplicationEventEmitter } from "../../src/app-events";
 import { NotebooksLeftMenu } from "../../src/navigation/notebooks-left-menu";
 
+jest.mock("./../../src/environment.ts");
+
 describe("Notebooks page", () => {
   it("should show list of notebooks and highlight an active notebook", async () => {
     fetchMock.mockResponse(

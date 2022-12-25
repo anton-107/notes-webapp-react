@@ -10,6 +10,8 @@ import { BrowserRouter } from "react-router-dom";
 
 import { AddNotebookComponent } from "../../src/notebooks/add-notebook.component";
 
+jest.mock("./../../src/environment.ts");
+
 describe("Add notebook component", () => {
   it("should submit form for notebook creation by hitting Enter on the keyboard", async () => {
     fetchMock.mockResponse(`{ "id": "test-notebook-id" }`);

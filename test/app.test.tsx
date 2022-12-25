@@ -9,6 +9,8 @@ import * as React from "react";
 
 import { App } from "../src/app";
 
+jest.mock("./../src/environment.ts");
+
 describe("App", () => {
   it("should show a sign in form if not authenticated", async () => {
     fetchMock.mockResponse(`{ "isAuthenticated": false }`);

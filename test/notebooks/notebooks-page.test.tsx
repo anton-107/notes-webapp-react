@@ -10,6 +10,8 @@ import { BrowserRouter } from "react-router-dom";
 
 import { NotebooksPage } from "./../../src/notebooks/notebooks-page";
 
+jest.mock("./../../src/environment.ts");
+
 describe("Notebooks page", () => {
   it("should show list of notebooks", async () => {
     fetchMock.mockResponse(

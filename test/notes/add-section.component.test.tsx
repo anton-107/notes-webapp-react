@@ -10,6 +10,8 @@ import { BrowserRouter } from "react-router-dom";
 
 import { AddSectionComponent } from "../../src/notes/add-section.component";
 
+jest.mock("./../../src/environment.ts");
+
 describe("Add section component", () => {
   it("should submit form for section creation", async () => {
     fetchMock.mockResponse(`{ "id": "test-section-id" }`);

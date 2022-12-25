@@ -10,6 +10,8 @@ import { BrowserRouter, MemoryRouter } from "react-router-dom";
 
 import { SingleNotebookPage } from "../../src/notebooks/single-notebook-page";
 
+jest.mock("./../../src/environment.ts");
+
 describe("Notebooks page", () => {
   beforeAll(() => {
     fetchMock.mockResponse(async (req) => {

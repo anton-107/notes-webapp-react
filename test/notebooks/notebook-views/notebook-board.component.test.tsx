@@ -17,6 +17,8 @@ import { BrowserRouter } from "react-router-dom";
 import { NotebookBoardComponent } from "../../../src/notebooks/notebook-views/notebook-board.component";
 import { testingSensor } from "../../../src/notebooks/notebook-views/notebook-notes.component";
 
+jest.mock("./../../../src/environment.ts");
+
 describe("Notebook board component", () => {
   beforeAll(() => {
     fetchMock.mockResponse(async (req) => {
@@ -130,7 +132,7 @@ describe("Notebook board component", () => {
     act(() => {
       testingSensor.moveCardDown("note-1");
     });
-    expect(fetchMock).lastCalledWith("undefined/note/note-1/edit", {
+    expect(fetchMock).lastCalledWith("MOCKED_API_ROOT/note/note-1/edit", {
       body: '{"note-id":"note-1","note-section":"<empty-section>","note-manual-order":250}',
       credentials: "include",
       headers: { "Content-Type": "application/json" },

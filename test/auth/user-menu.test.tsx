@@ -9,6 +9,8 @@ import * as React from "react";
 
 import { UserMenu } from "../../src/auth/user-menu";
 
+jest.mock("./../../src/environment.ts");
+
 describe("Login form", () => {
   it("should show user greeting and signout", () => {
     const onSignOut = () => {

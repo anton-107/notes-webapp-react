@@ -10,6 +10,8 @@ import { BrowserRouter } from "react-router-dom";
 
 import { AddPlaintextNoteComponent } from "../../src/notes/add-plaintext-note.component";
 
+jest.mock("./../../src/environment.ts");
+
 describe("Add plain text note component", () => {
   it("should submit form for note creation", async () => {
     fetchMock.mockResponse(`{ "id": "test-note-id" }`);

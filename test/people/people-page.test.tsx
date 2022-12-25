@@ -10,6 +10,8 @@ import { BrowserRouter } from "react-router-dom";
 
 import { PeoplePage } from "../../src/people/people-page";
 
+jest.mock("./../../src/environment.ts");
+
 describe("People page", () => {
   beforeAll(() => {
     fetchMock.mockResponse(
