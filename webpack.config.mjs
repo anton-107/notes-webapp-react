@@ -1,14 +1,15 @@
-const path = require("path");
-const HtmlWebpackPlugin = require("html-webpack-plugin");
-const Dotenv = require("dotenv-webpack");
+import * as path from "path";
+import HtmlWebpackPlugin from "html-webpack-plugin";
+import Dotenv from "dotenv-webpack";
+import { fileURLToPath } from "url";
 
-module.exports = (env) => {
+export default (env) => {
   return {
     entry: "./src/main.ts",
     mode: "production",
     output: {
       filename: "main.js",
-      path: path.resolve(__dirname, "dist"),
+      path: path.resolve(path.dirname(fileURLToPath(import.meta.url)), "dist"),
       publicPath: "/",
     },
     module: {
@@ -40,6 +41,7 @@ module.exports = (env) => {
       }),
       new Dotenv({
         path: `./${env.file}`,
+        prefix: "import.meta.env.",
       }),
     ],
     devServer: {
