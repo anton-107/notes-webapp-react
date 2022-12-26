@@ -13,7 +13,7 @@
     "jest-update-snapshots": "jest  -c jest.config.cjs --updateSnapshot",
     "check-format": "prettier --check .",
     "fix-format": "prettier --write .",
-    "check-dependencies": "depcruise --config .dependency-cruiser.js src",
+    "check-dependencies": "depcruise --config .dependency-cruiser.cjs src",
     "check-duplications": "jscpd --pattern 'src/**/*.*' -l 2 --exitCode 1",
     "lint": "eslint . --ext .ts,.tsx",
     "fix-lint": "eslint . --ext .ts,.tsx --fix",
