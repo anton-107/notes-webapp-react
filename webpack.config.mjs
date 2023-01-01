@@ -16,7 +16,9 @@ export default (env) => {
       rules: [
         {
           test: /\.tsx?$/,
-          use: "ts-loader",
+          use: process.env.WEBPACK_COVERAGE
+            ? ["@jsdevtools/coverage-istanbul-loader", "ts-loader"]
+            : "ts-loader",
           exclude: /node_modules/,
         },
         {
@@ -29,7 +31,7 @@ export default (env) => {
       extensions: [".tsx", ".ts", ".js"],
     },
     performance: {
-      hints: "error",
+      hints: process.env.WEBPACK_COVERAGE ? false : "error",
       maxEntrypointSize: 650_000,
       maxAssetSize: 650_000,
     },

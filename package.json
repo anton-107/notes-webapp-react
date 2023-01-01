@@ -8,6 +8,7 @@
     "build": "webpack --config webpack.config.mjs --env file=.env.example",
     "start": "webpack serve --env file=.env.development",
     "start-vite": "vite serve",
+    "start-vite-instrumented": "vite serve --config vite.instrumented.config.js",
     "test": "jest -c jest.config.cjs",
     "test:coverage": "jest  -c jest.config.cjs --coverage",
     "jest-update-snapshots": "jest  -c jest.config.cjs --updateSnapshot",
@@ -30,6 +31,7 @@
   },
   "homepage": "https://github.com/anton-107/notes-webapp-react#readme",
   "devDependencies": {
+    "@jsdevtools/coverage-istanbul-loader": "^3.0.5",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.3.0",
     "@types/jest": "^28.1.6",
