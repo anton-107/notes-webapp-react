@@ -33,10 +33,10 @@ $ npm start
 
 Open `http://localhost:8080` in your web browser
 
-
 ### Enable code coverage when running with webpack:
 
 Run with the environment variable `WEBPACK_COVERAGE` set to `true`:
+
 ```
 $ WEBPACK_COVERAGE=true npm start
 ```
