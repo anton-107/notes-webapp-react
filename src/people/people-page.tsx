@@ -62,7 +62,7 @@ export function PeoplePage(): React.ReactElement {
               {people.map((p: Person) => {
                 return (
                   <tr data-testid={`person-${p.id}`} key={`person-${p.id}`}>
-                    <td>{p.name}</td>
+                    <td data-entityid={p.id}>{p.name}</td>
                     <td>{p.email}</td>
                     <td>
                       <div
