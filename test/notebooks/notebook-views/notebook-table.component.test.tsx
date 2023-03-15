@@ -57,11 +57,36 @@ describe("Notebook table component", () => {
   ];
 
   const mockSupportedColumns = [
-    { name: "Due date", columnType: "due-date", valueType: "date" },
-    { name: "Start date", columnType: "start-date", valueType: "date" },
-    { name: "End date", columnType: "end-date", valueType: "date" },
-    { name: "Assignee", columnType: "task-assignee", valueType: "person-id" },
-    { name: "Completed", columnType: "task-completed", valueType: "boolean" },
+    {
+      name: "Due date",
+      columnType: "due-date",
+      valueType: "date",
+      valueSource: "columnValues",
+    },
+    {
+      name: "Start date",
+      columnType: "start-date",
+      valueType: "date",
+      valueSource: "columnValues",
+    },
+    {
+      name: "End date",
+      columnType: "end-date",
+      valueType: "date",
+      valueSource: "columnValues",
+    },
+    {
+      name: "Assignee",
+      columnType: "task-assignee",
+      valueType: "person-id",
+      valueSource: "columnValues",
+    },
+    {
+      name: "Completed",
+      columnType: "task-completed",
+      valueType: "boolean",
+      valueSource: "columnValues",
+    },
   ];
 
   it("should show list of notes and columns", async () => {
@@ -76,7 +101,13 @@ describe("Notebook table component", () => {
         });
       } else {
         return JSON.stringify({
-          tableColumns: [{ name: "Due date", columnType: "due-date" }],
+          tableColumns: [
+            {
+              name: "Due date",
+              columnType: "due-date",
+              valueSource: "columnValues",
+            },
+          ],
         });
       }
     });
@@ -155,7 +186,13 @@ describe("Notebook table component", () => {
       } else {
         return JSON.stringify({
           id: "notebook-1",
-          tableColumns: [{ columnType: "due-date", name: "Due date" }],
+          tableColumns: [
+            {
+              columnType: "due-date",
+              name: "Due date",
+              valueSource: "columnValues",
+            },
+          ],
         });
       }
     });
@@ -211,7 +248,13 @@ describe("Notebook table component", () => {
       } else {
         return JSON.stringify({
           id: "notebook-1",
-          tableColumns: [{ columnType: "due-date", name: "Due date" }],
+          tableColumns: [
+            {
+              columnType: "due-date",
+              name: "Due date",
+              valueSource: "columnValues",
+            },
+          ],
         });
       }
     });
