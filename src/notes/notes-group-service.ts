@@ -51,10 +51,10 @@ export function groupNotesBySection(notes: Note[]): NotesInSection[] {
   r.forEach((section) => {
     section.notes.sort((a, b) => {
       const aOrder = a.extensionProperties
-        ? a.extensionProperties.manualOrder || 1
+        ? Number(a.extensionProperties["manualOrder"]) || 1
         : 1;
       const bOrder = b.extensionProperties
-        ? b.extensionProperties.manualOrder || 2
+        ? Number(b.extensionProperties["manualOrder"]) || 2
         : 2;
       return aOrder - bOrder;
     });
@@ -132,6 +132,6 @@ export class NotesInSectionService {
     if (!lastNote.extensionProperties.manualOrder) {
       return this.STEP;
     }
-    return lastNote.extensionProperties.manualOrder + this.STEP;
+    return Number(lastNote.extensionProperties.manualOrder) + this.STEP;
   }
 }

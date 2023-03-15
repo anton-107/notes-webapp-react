@@ -73,28 +73,30 @@ export function NotebookTableRow(
         return (
           <td
             onClick={() =>
+              props.supportedColumnsMap[c.columnType] &&
               props.supportedColumnsMap[c.columnType].valueType !== "boolean" &&
               startEditCell(n.id, c.columnType)
             }
             data-testid={`table-cell-${n.id}-${c.columnType}`}
           >
             <span>
-              {props.supportedColumnsMap[c.columnType].valueType ===
-                "boolean" && (
-                <CellEditorCheckbox
-                  testid={`${c.columnType}-${n.id}`}
-                  value={
-                    n.columnValues && n.columnValues[c.columnType] === "true"
-                  }
-                  onSave={(value: boolean) =>
-                    saveCell(
-                      n.id,
-                      props.tableColumns[columnIndex],
-                      String(value)
-                    )
-                  }
-                />
-              )}
+              {props.supportedColumnsMap[c.columnType] &&
+                props.supportedColumnsMap[c.columnType].valueType ===
+                  "boolean" && (
+                  <CellEditorCheckbox
+                    testid={`${c.columnType}-${n.id}`}
+                    value={
+                      n.columnValues && n.columnValues[c.columnType] === "true"
+                    }
+                    onSave={(value: boolean) =>
+                      saveCell(
+                        n.id,
+                        props.tableColumns[columnIndex],
+                        String(value)
+                      )
+                    }
+                  />
+                )}
               {isCellActivelyEdited(n.id, c.columnType) && (
                 <span>
                   <CellEditorPlaintext
@@ -105,13 +107,26 @@ export function NotebookTableRow(
                   />
                 </span>
               )}
-              {!isCellActivelyEdited(n.id, c.columnType) && n.columnValues && (
-                <span
-                  data-testid={`table-cell-displayed-value-${n.id}-${c.columnType}`}
-                >
-                  {n.columnValues[c.columnType]}
-                </span>
-              )}
+              {!isCellActivelyEdited(n.id, c.columnType) &&
+                c.valueSource === "columnValues" &&
+                n.columnValues &&
+                n.columnValues[c.columnType] && (
+                  <span
+                    data-testid={`table-cell-displayed-value-${n.id}-${c.columnType}`}
+                  >
+                    {n.columnValues[c.columnType]}
+                  </span>
+                )}
+              {!isCellActivelyEdited(n.id, c.columnType) &&
+                c.valueSource === "extensionProperties" &&
+                n.extensionProperties &&
+                n.extensionProperties[c.columnType] && (
+                  <span
+                    data-testid={`table-cell-displayed-value-${n.id}-${c.columnType}`}
+                  >
+                    {n.extensionProperties[c.columnType]}
+                  </span>
+                )}
               {isCellBeingUpdated(n.id, c.columnType) && (
                 <small> (updating)</small>
               )}

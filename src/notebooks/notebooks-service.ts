@@ -9,10 +9,13 @@ export type NotebookColumnValueType =
   | "note-id"
   | "notebook-id";
 
+type NotebookColumnValueSource = "columnValues" | "extensionProperties";
+
 export interface NotebookTableColumn {
   name: string;
   columnType: string;
   valueType: NotebookColumnValueType;
+  valueSource: NotebookColumnValueSource;
 }
 
 export interface Notebook {

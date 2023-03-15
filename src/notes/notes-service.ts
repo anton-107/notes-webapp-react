@@ -9,16 +9,14 @@ export interface NoteAttachment {
   createdAt: string;
 }
 
+type ExtensionProperties = { [key: string]: string };
+
 export interface Note {
   id: string;
   content: string;
   type: { type: NoteType };
   notebookID: string;
-  extensionProperties?: {
-    section: string | null;
-    manualOrder: number | null;
-    youtubeURL?: string | null;
-  };
+  extensionProperties?: ExtensionProperties;
   columnValues?: { [key: string]: string };
 }
 export interface NoteRequest {
