@@ -50,10 +50,10 @@ export function groupNotesBySection(notes: Note[]): NotesInSection[] {
   // sort notes by manual order:
   r.forEach((section) => {
     section.notes.sort((a, b) => {
-      const aOrder = a.extensionProperties
+      const aOrder: number = a.extensionProperties
         ? Number(a.extensionProperties["manualOrder"]) || 1
         : 1;
-      const bOrder = b.extensionProperties
+      const bOrder: number = b.extensionProperties
         ? Number(b.extensionProperties["manualOrder"]) || 2
         : 2;
       return aOrder - bOrder;
@@ -83,9 +83,9 @@ export class NotesInSectionService {
     }
     if (insertedAtIndex === 0) {
       const firstNoteOrder = section.notes[0].extensionProperties
-        ? section.notes[0].extensionProperties.manualOrder
+        ? Number(section.notes[0].extensionProperties.manualOrder)
         : null;
-      if (typeof firstNoteOrder !== "number") {
+      if (typeof firstNoteOrder !== "number" || Number.isNaN(firstNoteOrder)) {
         return this.STEP;
       }
       return firstNoteOrder / 2;
@@ -93,24 +93,31 @@ export class NotesInSectionService {
     if (insertedAtIndex >= section.notes.length) {
       const lastNoteOrder = section.notes[section.notes.length - 1]
         .extensionProperties
-        ? section.notes[section.notes.length - 1].extensionProperties
-            .manualOrder
+        ? Number(
+            section.notes[section.notes.length - 1].extensionProperties[
+              "manualOrder"
+            ]
+          )
         : null;
-      if (typeof lastNoteOrder !== "number") {
+      if (typeof lastNoteOrder !== "number" || Number.isNaN(lastNoteOrder)) {
         return this.STEP;
       }
       return lastNoteOrder + this.STEP;
     }
     const cardBeforeOrder = section.notes[insertedAtIndex - 1]
       .extensionProperties
-      ? section.notes[insertedAtIndex - 1].extensionProperties.manualOrder
+      ? Number(
+          section.notes[insertedAtIndex - 1].extensionProperties.manualOrder
+        )
       : null;
     const cardAfterOrder = section.notes[insertedAtIndex].extensionProperties
-      ? section.notes[insertedAtIndex].extensionProperties.manualOrder
+      ? Number(section.notes[insertedAtIndex].extensionProperties.manualOrder)
       : null;
     if (
       typeof cardBeforeOrder !== "number" ||
-      typeof cardAfterOrder !== "number"
+      typeof cardAfterOrder !== "number" ||
+      Number.isNaN(cardBeforeOrder) ||
+      Number.isNaN(cardAfterOrder)
     ) {
       return this.STEP;
     }
