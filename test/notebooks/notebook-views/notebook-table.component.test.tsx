@@ -54,6 +54,11 @@ describe("Notebook table component", () => {
       id: "todo-1",
       extensionProperties: { section: "todo-section" },
     },
+    {
+      content: "/path/to/file",
+      id: "file-1",
+      extensionProperties: { numberOfChanges: "1001" },
+    },
   ];
 
   const mockSupportedColumns = [
@@ -87,6 +92,12 @@ describe("Notebook table component", () => {
       valueType: "boolean",
       valueSource: "columnValues",
     },
+    {
+      name: "Number of changes",
+      columnType: "numberOfChanges",
+      valueType: "number",
+      valueSource: "extensionProperties",
+    },
   ];
 
   it("should show list of notes and columns", async () => {
@@ -107,6 +118,12 @@ describe("Notebook table component", () => {
               columnType: "due-date",
               valueSource: "columnValues",
             },
+            {
+              name: "Number of changes",
+              columnType: "numberOfChanges",
+              valueType: "number",
+              valueSource: "extensionProperties",
+            },
           ],
         });
       }
@@ -118,6 +135,7 @@ describe("Notebook table component", () => {
     );
     await waitFor(() => screen.getByTestId("notebook-table-view"));
     await waitFor(() => screen.getByTestId("note-row-note-1"));
+    await waitFor(() => screen.getByTestId("note-row-file-1"));
     await waitFor(() => screen.getByTestId("dynamic-column-header-due-date"));
     await waitFor(() =>
       screen.getByTestId("table-cell-displayed-value-note-3-due-date")
@@ -125,6 +143,9 @@ describe("Notebook table component", () => {
     expect(
       screen.getByTestId("table-cell-displayed-value-note-3-due-date")
     ).toHaveTextContent("2022-10-31");
+    expect(
+      screen.getByTestId("table-cell-displayed-value-file-1-numberOfChanges")
+    ).toHaveTextContent("1001");
     component.unmount();
   });
   it("should add a new column to the table view of the notebook when no columns are set in the notebook", async () => {
