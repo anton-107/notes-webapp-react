@@ -4,6 +4,7 @@ import * as React from "react";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
+import { sortNotes } from "../../notes/notes-local-sort-service";
 import { Note, NotesService } from "../../notes/notes-service";
 import { NotebooksService, NotebookTableColumn } from "../notebooks-service";
 import { NotebookTableRow, TableCell } from "./notebook-table/table-row";
@@ -23,6 +24,7 @@ export function NotebookTableComponent(): React.ReactElement {
   const [activeCellToEdit, setActiveCellToEdit] = useState<TableCell | null>(
     null
   );
+  const [isSortAscending, setSortAscending] = useState(true);
   const { notebookID } = useParams();
 
   const loadNotebook = async (notebookID: string) => {
@@ -85,6 +87,13 @@ export function NotebookTableComponent(): React.ReactElement {
     await loadNotes();
   };
 
+  const changeRowsSort = (column: NotebookTableColumn) => {
+    setSortAscending(!isSortAscending);
+    const direction = isSortAscending ? 1 : -1;
+    const sortedNotes = sortNotes([...notes], column, direction);
+    setNotes(sortedNotes);
+  };
+
   useEffect(() => {
     loadNotes();
     loadNotebook(notebookID);
@@ -102,7 +111,10 @@ export function NotebookTableComponent(): React.ReactElement {
               <th>Note</th>
               {tableColumns.map((x) => {
                 return (
-                  <th data-testid={`dynamic-column-header-${x.columnType}`}>
+                  <th
+                    data-testid={`dynamic-column-header-${x.columnType}`}
+                    onClick={() => changeRowsSort(x)}
+                  >
                     {x.name}
                   </th>
                 );

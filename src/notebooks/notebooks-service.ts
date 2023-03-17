@@ -5,6 +5,7 @@ export type NotebookColumnValueType =
   | "date"
   | "datetime"
   | "boolean"
+  | "number"
   | "person-id"
   | "note-id"
   | "notebook-id";
