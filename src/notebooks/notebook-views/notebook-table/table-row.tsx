@@ -67,7 +67,11 @@ export function NotebookTableRow(
   };
 
   return (
-    <tr data-testid={`note-row-${n.id}`} key={`note-${n.id}`}>
+    <tr
+      data-testid={`note-row-${n.id}`}
+      key={`note-${n.id}`}
+      role="note-table-row"
+    >
       <td>{n.content}</td>
       {props.tableColumns.map((c, columnIndex) => {
         return (
@@ -78,6 +82,7 @@ export function NotebookTableRow(
               startEditCell(n.id, c.columnType)
             }
             data-testid={`table-cell-${n.id}-${c.columnType}`}
+            key={`table-cell-${n.id}-${c.columnType}`}
           >
             <span>
               {props.supportedColumnsMap[c.columnType] &&

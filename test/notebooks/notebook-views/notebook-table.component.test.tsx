@@ -55,9 +55,14 @@ describe("Notebook table component", () => {
       extensionProperties: { section: "todo-section" },
     },
     {
-      content: "/path/to/file",
+      content: "/path/to/file-1",
       id: "file-1",
       extensionProperties: { numberOfChanges: "1001" },
+    },
+    {
+      content: "/path/to/file-2",
+      id: "file-2",
+      extensionProperties: { numberOfChanges: "2001" },
     },
   ];
 
@@ -350,6 +355,54 @@ describe("Notebook table component", () => {
     );
     await waitFor(() => expect(lastRequestBody).toBeDefined());
     expect(lastRequestBody["table-columns"]["task-completed"]).toBe("true");
+    component.unmount();
+  });
+  it("should sort notes by value of an extension property", async () => {
+    fetchMock.mockResponse(async (req) => {
+      if (req.url.endsWith("/note")) {
+        return JSON.stringify({
+          notes: mockNotes,
+        });
+      } else if (req.url.endsWith("/notebook-supported-columns")) {
+        return JSON.stringify({
+          columns: mockSupportedColumns,
+        });
+      } else {
+        return JSON.stringify({
+          tableColumns: [
+            {
+              name: "Number of changes",
+              columnType: "numberOfChanges",
+              valueType: "number",
+              valueSource: "extensionProperties",
+            },
+          ],
+        });
+      }
+    });
+
+    const component = render(
+      <BrowserRouter>
+        <NotebookTableComponent />
+      </BrowserRouter>
+    );
+    await waitFor(() => screen.getByTestId("note-row-file-1"));
+    await waitFor(() => screen.getByTestId("note-row-file-2"));
+    let rows = screen.queryAllByRole("note-table-row");
+    expect(rows[0]).toHaveTextContent("Note 1");
+    expect(rows[1]).toHaveTextContent("Note 2");
+
+    act(() => {
+      fireEvent.click(
+        screen.getByTestId("dynamic-column-header-numberOfChanges")
+      );
+    });
+    await waitFor(() => screen.getByTestId("note-row-file-1"));
+    await waitFor(() => screen.getByTestId("note-row-file-2"));
+    rows = screen.queryAllByRole("note-table-row");
+    expect(rows[rows.length - 2]).toHaveTextContent("/path/to/file-1");
+    expect(rows[rows.length - 1]).toHaveTextContent("/path/to/file-2");
+
     component.unmount();
   });
 });

@@ -113,6 +113,7 @@ export function NotebookTableComponent(): React.ReactElement {
                 return (
                   <th
                     data-testid={`dynamic-column-header-${x.columnType}`}
+                    key={`dynamic-column-header-${x.columnType}`}
                     onClick={() => changeRowsSort(x)}
                   >
                     {x.name}

@@ -57,7 +57,9 @@ export function NotebookTableColumnSidePanel(
           Visible columns:
           {props.supportedColumns.map((column) => {
             return (
-              <div>
+              <div
+                key={`sidepanel-setting-visible-column-${column.columnType}`}
+              >
                 <label>
                   <input
                     type="checkbox"
