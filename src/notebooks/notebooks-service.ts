@@ -22,6 +22,7 @@ export interface NotebookTableColumn {
 export interface Notebook {
   id: string;
   name: string;
+  status: string;
   createdAt?: string;
   updatedAt?: string;
   tableColumns: NotebookTableColumn[];

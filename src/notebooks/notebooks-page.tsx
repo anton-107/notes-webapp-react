@@ -33,7 +33,9 @@ export function NotebooksPage(): React.ReactElement {
               <Link to={`/notebook/${n.id}`} className="notebook-link">
                 <div className="notebook-item">
                   <div className="notebook-cover"></div>
-                  <div className="notebook-title">{n.name}</div>
+                  <div className="notebook-title">
+                    {n.name} {n.status}
+                  </div>
                 </div>
               </Link>
             </div>
