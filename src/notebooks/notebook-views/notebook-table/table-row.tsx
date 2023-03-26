@@ -5,6 +5,10 @@ import { Note } from "../../../notes/notes-service";
 import { NotebookTableColumn } from "../../notebooks-service";
 import { CellEditorCheckbox } from "./table-cells/cell-editor-checkbox";
 import { CellEditorPlaintext } from "./table-cells/cell-editor-plaintext";
+import {
+  CellRendererListOfObjects,
+  ListOfObjectsItem,
+} from "./table-cells/cell-renderer-list-of-objects";
 
 export interface TableCell {
   noteID: string;
@@ -129,7 +133,18 @@ export function NotebookTableRow(
                   <span
                     data-testid={`table-cell-displayed-value-${n.id}-${c.columnType}`}
                   >
-                    {n.extensionProperties[c.columnType]}
+                    {c.valueType === "list-of-objects" && (
+                      <CellRendererListOfObjects
+                        objects={
+                          n.extensionProperties[
+                            c.columnType
+                          ] as unknown as ListOfObjectsItem[]
+                        }
+                      />
+                    )}
+                    {c.valueType !== "list-of-objects" && (
+                      <span>{n.extensionProperties[c.columnType]}</span>
+                    )}
                   </span>
                 )}
               {isCellBeingUpdated(n.id, c.columnType) && (
