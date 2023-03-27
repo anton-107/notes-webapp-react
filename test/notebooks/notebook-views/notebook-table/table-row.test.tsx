@@ -3,7 +3,7 @@
  */
 import "@testing-library/jest-dom/extend-expect";
 
-import { render, screen } from "@testing-library/react";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import React from "react";
 import { BrowserRouter } from "react-router-dom";
 
@@ -12,7 +12,7 @@ import { NotebookTableColumn } from "../../../../src/notebooks/notebooks-service
 import { Note } from "../../../../src/notes/notes-service";
 
 describe("Table row component", () => {
-  it("should display a list of objects", async () => {
+  it("should display a list of objects with a popover", async () => {
     const note: Note = {
       id: "file-1",
       content: "/src/index-file",
@@ -55,6 +55,11 @@ describe("Table row component", () => {
     expect(
       screen.getByTestId("table-cell-file-1-contributors")
     ).toHaveTextContent("3 item(s)");
+
+    // verify tooltip is shown:
+    const tooltipTrigger = screen.getAllByRole("tooltip-trigger")[0];
+    fireEvent.mouseEnter(tooltipTrigger);
+    await waitFor(() => screen.getAllByRole("tooltip"));
 
     component.unmount();
   });
