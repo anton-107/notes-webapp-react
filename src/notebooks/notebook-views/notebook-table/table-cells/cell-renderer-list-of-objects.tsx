@@ -33,8 +33,8 @@ export function CellRendererListOfObjects(
           role="tooltip"
           style={{
             position: strategy,
-            top: y ?? 0,
-            left: x ?? 0,
+            top: y,
+            left: x,
             width: "max-content",
           }}
         >
