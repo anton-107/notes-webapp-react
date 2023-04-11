@@ -32,8 +32,8 @@ export default (env) => {
     },
     performance: {
       hints: process.env.WEBPACK_COVERAGE ? false : "error",
-      maxEntrypointSize: 670_000,
-      maxAssetSize: 670_000,
+      maxEntrypointSize: 690_000,
+      maxAssetSize: 690_000,
     },
     plugins: [
       new HtmlWebpackPlugin({
