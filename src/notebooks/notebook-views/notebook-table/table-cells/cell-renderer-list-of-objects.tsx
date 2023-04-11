@@ -62,20 +62,24 @@ export function CellRendererListOfObjects(
         >
           {props.objects.length > 0 && (
             <table>
-              <tr>
-                {columns.map((k) => {
-                  return <th>{k}1</th>;
+              <thead>
+                <tr>
+                  {columns.map((k) => {
+                    return <th key={`table-header-${k}`}>{k}</th>;
+                  })}
+                </tr>
+              </thead>
+              <tbody>
+                {props.objects.map((o, rowIdx) => {
+                  return (
+                    <tr key={`row-${rowIdx}`}>
+                      {columns.map((k, colIdx) => {
+                        return <td key={`cell-${rowIdx}-${colIdx}`}>{o[k]}</td>;
+                      })}
+                    </tr>
+                  );
                 })}
-              </tr>
-              {props.objects.map((o) => {
-                return (
-                  <tr>
-                    {columns.map((k) => {
-                      return <td>{o[k]}</td>;
-                    })}
-                  </tr>
-                );
-              })}
+              </tbody>
             </table>
           )}
         </div>
