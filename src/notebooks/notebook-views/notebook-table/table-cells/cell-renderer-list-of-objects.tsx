@@ -8,7 +8,10 @@ import {
 } from "@floating-ui/react";
 import * as React from "react";
 
-import { sortKeys } from "../table-columns/auto-columns-sorter";
+import {
+  defineColumns,
+  TableColumn,
+} from "../table-columns/auto-columns-definer";
 
 export type ListOfObjectsItem = { [key: string]: string };
 
@@ -20,7 +23,7 @@ export function CellRendererListOfObjects(
   props: CellRendererListOfObjectsProperties
 ): React.ReactElement {
   const [isOpen, setIsOpen] = React.useState(false);
-  const [columns, setColumns] = React.useState([]);
+  const [columns, setColumns] = React.useState<TableColumn[]>([]);
   const { x, y, strategy, refs, context } = useFloating({
     open: isOpen,
     onOpenChange: setIsOpen,
@@ -29,15 +32,6 @@ export function CellRendererListOfObjects(
 
   const hover = useHover(context);
   useInteractions([hover]);
-
-  const defineColumns = (objects: ListOfObjectsItem[]): string[] => {
-    if (objects.length <= 0) {
-      return [];
-    }
-    const refObject = objects[0];
-    const columns = Object.keys(refObject);
-    return sortKeys(columns);
-  };
 
   React.useEffect(() => {
     setColumns(defineColumns(props.objects));
@@ -64,8 +58,10 @@ export function CellRendererListOfObjects(
             <table>
               <thead>
                 <tr>
-                  {columns.map((k) => {
-                    return <th key={`table-header-${k}`}>{k}</th>;
+                  {columns.map((column) => {
+                    return (
+                      <th key={`table-header-${column}`}>{column.name}</th>
+                    );
                   })}
                 </tr>
               </thead>
@@ -73,8 +69,12 @@ export function CellRendererListOfObjects(
                 {props.objects.map((o, rowIdx) => {
                   return (
                     <tr key={`row-${rowIdx}`}>
-                      {columns.map((k, colIdx) => {
-                        return <td key={`cell-${rowIdx}-${colIdx}`}>{o[k]}</td>;
+                      {columns.map((column, colIdx) => {
+                        return (
+                          <td key={`cell-${rowIdx}-${colIdx}`}>
+                            {column.valueRenderer(o[column.key])}
+                          </td>
+                        );
                       })}
                     </tr>
                   );
