@@ -1,4 +1,4 @@
-import { sortKeys } from "../../../../../src/notebooks/notebook-views/notebook-table/table-cells/auto-columns-sorter";
+import { sortKeys } from "../../../../../src/notebooks/notebook-views/notebook-table/table-columns/auto-columns-sorter";
 
 describe("Auto columns sorter", () => {
   it("should given a list of object keys sort them in alphabetic order", () => {

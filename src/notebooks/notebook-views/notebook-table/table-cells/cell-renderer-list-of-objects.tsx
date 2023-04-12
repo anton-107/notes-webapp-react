@@ -8,7 +8,7 @@ import {
 } from "@floating-ui/react";
 import * as React from "react";
 
-import { sortKeys } from "./auto-columns-sorter";
+import { sortKeys } from "../table-columns/auto-columns-sorter";
 
 export type ListOfObjectsItem = { [key: string]: string };
 
