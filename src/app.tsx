@@ -11,6 +11,7 @@ import { UserMenu } from "./auth/user-menu";
 import { LeftMenuLinks } from "./navigation/left-menu-links";
 import { NotebooksLeftMenu } from "./navigation/notebooks-left-menu";
 import { NotebookBoardComponent } from "./notebooks/notebook-views/notebook-board.component";
+import { NotebookFileTreeComponent } from "./notebooks/notebook-views/notebook-filetree.component";
 import { NotebookListComponent } from "./notebooks/notebook-views/notebook-list.component";
 import { NotebookOverviewComponent } from "./notebooks/notebook-views/notebook-overview.component";
 import { NotebookTableComponent } from "./notebooks/notebook-views/notebook-table.component";
@@ -92,6 +93,10 @@ export function App(): React.ReactElement {
                       <Route
                         path="table"
                         element={<NotebookTableComponent />}
+                      />
+                      <Route
+                        path="file-tree"
+                        element={<NotebookFileTreeComponent />}
                       />
                     </Route>
                     <Route path="people" element={<PeoplePage />} />
