@@ -106,6 +106,18 @@ describe("Notebooks page", () => {
     );
     component.unmount();
   });
+  it("should highlight file-tree link", async () => {
+    const component = render(
+      <MemoryRouter initialEntries={["/file-tree"]}>
+        <SingleNotebookPage />
+      </MemoryRouter>
+    );
+    await waitFor(() => screen.getByTestId("notebook-filetree-link"));
+    expect(screen.getByTestId("notebook-filetree-link")).toHaveClass(
+      "active-nav-link"
+    );
+    component.unmount();
+  });
   it("should delete a notebook", async () => {
     const component = render(
       <MemoryRouter initialEntries={["/"]}>
