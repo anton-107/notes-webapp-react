@@ -1,1 +1,3 @@
-jest.mock("./../src/environment", () => "TEST_API_ROOT");
+jest.mock("./../src/environment", () => {
+  return { API_ROOT: "MOCKED_API_ROOT" };
+});
