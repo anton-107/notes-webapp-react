@@ -45,7 +45,9 @@ export function NotebookFileTreeComponent(): React.ReactElement {
   return (
     <div className="content-block" data-testid="notebook-filetree-view">
       {files.map((file) => (
-        <div>{file.name}</div>
+        <div key={`file-${file.name}`} data-testid={`file-${file.name}`}>
+          {file.name}
+        </div>
       ))}
     </div>
   );

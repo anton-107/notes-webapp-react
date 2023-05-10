@@ -15,5 +15,8 @@ module.exports = {
       "<rootDir>/__mocks__/file-mock.js",
     "\\.(css|less)$": "<rootDir>/__mocks__/style-mock.js",
   },
-  setupFiles: ["<rootDir>/__mocks__/fetch-mock.js"],
+  setupFiles: [
+    "<rootDir>/__mocks__/environment-mock.js",
+    "<rootDir>/__mocks__/fetch-mock.js",
+  ],
 };
