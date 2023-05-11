@@ -11,9 +11,11 @@ export interface NoteAttachment {
 
 type ExtensionProperties = { [key: string]: string };
 
+export type NoteContent = string;
+
 export interface Note {
   id: string;
-  content: string;
+  content: NoteContent;
   type: { type: NoteType };
   notebookID: string;
   extensionProperties?: ExtensionProperties;
