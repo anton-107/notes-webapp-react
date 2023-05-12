@@ -6,13 +6,14 @@ interface HasContent {
 
 interface FileEntry {
   name: string;
+  isFolder: boolean;
 }
 
 export function groupNotesAsFileTree(
   notes: HasContent[],
   currentFolder: string
 ): FileEntry[] {
-  const folders: Set<string> = new Set();
+  const fileEntries: Record<string, FileEntry> = {};
 
   notes
     .filter((n) => n.content.startsWith(currentFolder))
@@ -20,12 +21,16 @@ export function groupNotesAsFileTree(
       const parts = n.content.substring(currentFolder.length).split("/");
       const fileName =
         currentFolder.length > 1 && parts.length > 1 ? parts[1] : parts[0];
-      folders.add(fileName);
+      const existingEntry = fileEntries[fileName];
+      if (existingEntry) {
+        existingEntry.isFolder = true;
+      } else {
+        fileEntries[fileName] = {
+          name: fileName,
+          isFolder: parts.findIndex((x) => x === fileName) !== parts.length - 1,
+        };
+      }
     });
 
-  return Array.from(folders.values()).map((f) => {
-    return {
-      name: f,
-    };
-  });
+  return Object.values(fileEntries);
 }
