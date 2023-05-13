@@ -2,12 +2,15 @@ import * as React from "react";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
-import { groupNotesAsFileTree } from "../../notes/notes-filetree-service";
+import {
+  FileEntry,
+  groupNotesAsFileTree,
+} from "../../notes/notes-filetree-service";
 import { NotesService } from "../../notes/notes-service";
 
 export function NotebookFileTreeComponent(): React.ReactElement {
   const { notebookID } = useParams();
-  const [files, setFiles] = useState([]);
+  const [files, setFiles] = useState<FileEntry[]>([]);
 
   const loadNotes = async () => {
     const notesService = new NotesService();
@@ -24,6 +27,7 @@ export function NotebookFileTreeComponent(): React.ReactElement {
     <div className="content-block" data-testid="notebook-filetree-view">
       {files.map((file) => (
         <div key={`file-${file.name}`} data-testid={`file-${file.name}`}>
+          {file.isFolder && <span>[folder] </span>}
           {file.name}
         </div>
       ))}

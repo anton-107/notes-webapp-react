@@ -4,7 +4,7 @@ interface HasContent {
   content: NoteContent;
 }
 
-interface FileEntry {
+export interface FileEntry {
   name: string;
   isFolder: boolean;
 }
@@ -32,5 +32,17 @@ export function groupNotesAsFileTree(
       }
     });
 
-  return Object.values(fileEntries);
+  const r = Object.values(fileEntries);
+
+  r.sort((a, b) => {
+    if (a.isFolder && !b.isFolder) {
+      return -1;
+    }
+    if (!a.isFolder && b.isFolder) {
+      return 1;
+    }
+    return a.name.localeCompare(b.name);
+  });
+
+  return r;
 }
