@@ -13,6 +13,7 @@ export function NotebookFileTreeComponent(): React.ReactElement {
   const { notebookID } = useParams();
   const [files, setFiles] = useState<FileEntry[]>([]);
   const [currentPath, setCurrentPath] = useState<string>("");
+  const [levelUpPath, setLevelUpPath] = useState<string | null>(null);
 
   const loadNotes = async (currentPath: string) => {
     const notesService = new NotesService();
@@ -25,12 +26,29 @@ export function NotebookFileTreeComponent(): React.ReactElement {
     const currentPath =
       new URLSearchParams(location.search).get("currentPath") || "";
     setCurrentPath(currentPath);
+    setLevelUpPath(getLevelUpPath(currentPath));
     loadNotes(currentPath || "/");
   }, [location]);
 
+  const getLevelUpPath = (path: string): string | null => {
+    const parts = path.split("/");
+    if (parts.length <= 1) {
+      return null;
+    }
+    return parts.slice(0, -1).join("/");
+  };
+
   return (
     <div className="content-block" data-testid="notebook-filetree-view">
-      <div>Current path: {currentPath}</div>
+      {levelUpPath !== null && (
+        <div>
+          <Link
+            to={`/notebook/${notebookID}/file-tree?currentPath=${levelUpPath}`}
+          >
+            ..
+          </Link>
+        </div>
+      )}
       {files.map((file) => (
         <div key={`file-${file.name}`} data-testid={`file-${file.name}`}>
           {file.isFolder && <span>[folder] </span>}
