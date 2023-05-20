@@ -6,7 +6,7 @@ import "@testing-library/jest-dom/extend-expect";
 import { render, screen, waitFor } from "@testing-library/react";
 import fetchMock from "jest-fetch-mock";
 import * as React from "react";
-import { BrowserRouter } from "react-router-dom";
+import { BrowserRouter, MemoryRouter, Route, Routes } from "react-router-dom";
 
 import { NotebookFileTreeComponent } from "../../../src/notebooks/notebook-views/notebook-filetree.component";
 
@@ -46,6 +46,30 @@ describe("Notebook file tree component", () => {
     await waitFor(() => screen.getByTestId("file-config-file"));
     expect(screen.getByTestId("file-config-file")).toHaveTextContent(
       "config-file"
+    );
+    component.unmount();
+  });
+
+  it("should show a 'level up' button", async () => {
+    const component = render(
+      <MemoryRouter
+        initialEntries={["/notebook/notebook-1/file-tree?currentPath=/src"]}
+      >
+        <Routes>
+          <Route
+            path="/notebook/:notebookID/file-tree"
+            element={<NotebookFileTreeComponent />}
+          />
+        </Routes>
+      </MemoryRouter>
+    );
+    await waitFor(() => screen.getByTestId("filetree-level-up-link"));
+    expect(screen.getByTestId("filetree-level-up-link")).toHaveTextContent(
+      ".."
+    );
+    expect(screen.getByTestId("filetree-level-up-link")).toHaveAttribute(
+      "href",
+      "/notebook/notebook-1/file-tree?currentPath="
     );
     component.unmount();
   });

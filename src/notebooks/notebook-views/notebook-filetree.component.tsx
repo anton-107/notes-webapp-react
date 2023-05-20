@@ -44,6 +44,7 @@ export function NotebookFileTreeComponent(): React.ReactElement {
         <div>
           <Link
             to={`/notebook/${notebookID}/file-tree?currentPath=${levelUpPath}`}
+            data-testid="filetree-level-up-link"
           >
             ..
           </Link>
