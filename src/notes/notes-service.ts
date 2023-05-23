@@ -9,7 +9,7 @@ export interface NoteAttachment {
   createdAt: string;
 }
 
-type ExtensionProperties = { [key: string]: string };
+export type ExtensionProperties = { [key: string]: string };
 
 export type NoteContent = string;
 

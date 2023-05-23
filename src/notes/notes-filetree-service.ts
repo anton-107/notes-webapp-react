@@ -1,16 +1,18 @@
-import { NoteContent } from "./notes-service";
+import { ExtensionProperties, NoteContent } from "./notes-service";
 
-interface HasContent {
+interface HasContentAndExtensionProperties {
   content: NoteContent;
+  extensionProperties?: ExtensionProperties;
 }
 
 export interface FileEntry {
   name: string;
   isFolder: boolean;
+  extensionProperties?: ExtensionProperties;
 }
 
 export function groupNotesAsFileTree(
-  notes: HasContent[],
+  notes: HasContentAndExtensionProperties[],
   currentFolder: string
 ): FileEntry[] {
   const fileEntries: Record<string, FileEntry> = {};
@@ -28,6 +30,7 @@ export function groupNotesAsFileTree(
         fileEntries[fileName] = {
           name: fileName,
           isFolder: parts.findIndex((x) => x === fileName) !== parts.length - 1,
+          extensionProperties: { ...n.extensionProperties },
         };
       }
     });
