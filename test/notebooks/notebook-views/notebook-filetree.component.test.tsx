@@ -33,6 +33,11 @@ describe("Notebook file tree component", () => {
             },
           ],
         });
+      } else {
+        return JSON.stringify({
+          name: "Notebook 1",
+          id: "notebook-1",
+        });
       }
     });
   });

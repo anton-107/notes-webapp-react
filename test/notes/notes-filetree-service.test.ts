@@ -32,15 +32,31 @@ describe("groupNotesAsFileTree", () => {
 
   it("should group notes by folder and subfolder when current folder is 'folder1'", () => {
     const result = groupNotesAsFileTree(notes, "/folder1");
-    expect(result).toContainEqual({ name: "file1", isFolder: false });
-    expect(result).toContainEqual({ name: "file2", isFolder: false });
+    expect(result).toContainEqual({
+      name: "file1",
+      isFolder: false,
+      extensionProperties: {},
+    });
+    expect(result).toContainEqual({
+      name: "file2",
+      isFolder: false,
+      extensionProperties: {},
+    });
     expect(result).toHaveLength(2);
   });
 
   it("should group notes by folder and subfolder when current folder is 'folder3'", () => {
     const result = groupNotesAsFileTree(notes, "/folder3");
-    expect(result).toContainEqual({ name: "file1", isFolder: false });
-    expect(result).toContainEqual({ name: "file2", isFolder: false });
+    expect(result).toContainEqual({
+      name: "file1",
+      isFolder: false,
+      extensionProperties: {},
+    });
+    expect(result).toContainEqual({
+      name: "file2",
+      isFolder: false,
+      extensionProperties: {},
+    });
     expect(result).toHaveLength(2);
   });
 });
