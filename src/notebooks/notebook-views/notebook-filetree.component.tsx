@@ -107,7 +107,9 @@ export function NotebookFileTreeComponent(): React.ReactElement {
                             data-testid={`table-cell-displayed-value-${file.name}-${c.columnType}`}
                           >
                             {c.valueType !== "list-of-objects" && (
-                              <span>
+                              <span
+                                data-testid={`file-column-displayed-value-${file.name}-${c.columnType}`}
+                              >
                                 {file.extensionProperties[c.columnType]}
                               </span>
                             )}
