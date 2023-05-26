@@ -101,8 +101,7 @@ export function NotebookFileTreeComponent(): React.ReactElement {
                   >
                     <span>
                       {c.valueSource === "extensionProperties" &&
-                        file.extensionProperties &&
-                        file.extensionProperties[c.columnType] && (
+                        c.columnType === "numberOfChanges" && (
                           <span
                             data-testid={`table-cell-displayed-value-${file.name}-${c.columnType}`}
                           >
@@ -110,7 +109,7 @@ export function NotebookFileTreeComponent(): React.ReactElement {
                               <span
                                 data-testid={`file-column-displayed-value-${file.name}-${c.columnType}`}
                               >
-                                {file.extensionProperties[c.columnType]}
+                                {file.numberOfChanges}
                               </span>
                             )}
                           </span>

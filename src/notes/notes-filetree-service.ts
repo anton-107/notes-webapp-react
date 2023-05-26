@@ -1,14 +1,16 @@
-import { ExtensionProperties, NoteContent } from "./notes-service";
+import { NoteContent } from "./notes-service";
 
 interface HasContentAndExtensionProperties {
   content: NoteContent;
-  extensionProperties?: ExtensionProperties;
+  extensionProperties?: {
+    numberOfChanges?: string;
+  };
 }
 
 export interface FileEntry {
   name: string;
   isFolder: boolean;
-  extensionProperties?: ExtensionProperties;
+  numberOfChanges: number;
 }
 
 export function groupNotesAsFileTree(
@@ -26,11 +28,15 @@ export function groupNotesAsFileTree(
       const existingEntry = fileEntries[fileName];
       if (existingEntry) {
         existingEntry.isFolder = true;
+        existingEntry.numberOfChanges += parseInt(
+          n.extensionProperties.numberOfChanges
+        );
       } else {
         fileEntries[fileName] = {
           name: fileName,
           isFolder: parts.findIndex((x) => x === fileName) !== parts.length - 1,
-          extensionProperties: { ...n.extensionProperties },
+          numberOfChanges:
+            parseInt(n.extensionProperties["numberOfChanges"]) || 0,
         };
       }
     });
