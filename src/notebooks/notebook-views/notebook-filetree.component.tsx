@@ -100,56 +100,38 @@ export function NotebookFileTreeComponent(): React.ReactElement {
                     key={`table-cell-${file.name}-${c.columnType}`}
                   >
                     <span>
-                      {c.valueSource === "extensionProperties" &&
-                        c.columnType === "numberOfChanges" && (
+                      {c.valueSource === "extensionProperties" && (
+                        <span
+                          data-testid={`table-cell-displayed-value-${file.name}-${c.columnType}`}
+                        >
                           <span
-                            data-testid={`table-cell-displayed-value-${file.name}-${c.columnType}`}
+                            data-testid={`file-column-displayed-value-${file.name}-${c.columnType}`}
                           >
-                            <span
-                              data-testid={`file-column-displayed-value-${file.name}-${c.columnType}`}
-                            >
-                              {file.numberOfChanges}
-                            </span>
+                            {c.columnType === "numberOfChanges" && (
+                              <span>{file.numberOfChanges}</span>
+                            )}
+                            {c.columnType === "numberOfLines" && (
+                              <span>{file.numberOfLines}</span>
+                            )}
+                            {c.columnType === "numberOfContributors" && (
+                              <span>
+                                {
+                                  Array.from(file.contrbutorNames.values())
+                                    .length
+                                }
+                              </span>
+                            )}
+                            {c.columnType === "contributors" && (
+                              <span>
+                                {Array.from(file.contrbutorNames.values()).join(
+                                  ",\n"
+                                )}
+                                )
+                              </span>
+                            )}
                           </span>
-                        )}
-                      {c.valueSource === "extensionProperties" &&
-                        c.columnType === "numberOfLines" && (
-                          <span
-                            data-testid={`table-cell-displayed-value-${file.name}-${c.columnType}`}
-                          >
-                            <span
-                              data-testid={`file-column-displayed-value-${file.name}-${c.columnType}`}
-                            >
-                              {file.numberOfLines}
-                            </span>
-                          </span>
-                        )}
-                      {c.valueSource === "extensionProperties" &&
-                        c.columnType === "numberOfContributors" && (
-                          <span
-                            data-testid={`table-cell-displayed-value-${file.name}-${c.columnType}`}
-                          >
-                            <span
-                              data-testid={`file-column-displayed-value-${file.name}-${c.columnType}`}
-                            >
-                              {Array.from(file.contrbutorNames.values()).length}
-                            </span>
-                          </span>
-                        )}
-                      {c.valueSource === "extensionProperties" &&
-                        c.columnType === "contributors" && (
-                          <span
-                            data-testid={`table-cell-displayed-value-${file.name}-${c.columnType}`}
-                          >
-                            <span
-                              data-testid={`file-column-displayed-value-${file.name}-${c.columnType}`}
-                            >
-                              {Array.from(file.contrbutorNames.values()).join(
-                                ",\n"
-                              )}
-                            </span>
-                          </span>
-                        )}
+                        </span>
+                      )}
                     </span>
                   </td>
                 );

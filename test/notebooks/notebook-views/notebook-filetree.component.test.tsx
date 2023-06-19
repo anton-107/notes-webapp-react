@@ -20,17 +20,17 @@ describe("Notebook file tree component", () => {
               {
                 content: "/src/file-1",
                 id: "note-1",
-                extensionProperties: { manualOrder: 100 },
+                extensionProperties: { manualOrder: 100, numberOfLines: 10 },
               },
               {
                 content: "/src/file-2",
                 id: "note-2",
-                extensionProperties: { manualOrder: 200 },
+                extensionProperties: { manualOrder: 200, numberOfLines: 10 },
               },
               {
                 content: "/config-file",
                 id: "note-3",
-                extensionProperties: { manualOrder: 300 },
+                extensionProperties: { manualOrder: 300, numberOfLines: 10 },
               },
             ],
           });
@@ -104,7 +104,11 @@ describe("Notebook file tree component", () => {
               {
                 content: "/config-file",
                 id: "note-3",
-                extensionProperties: { manualOrder: 300, numberOfChanges: 8 },
+                extensionProperties: {
+                  manualOrder: 300,
+                  numberOfChanges: 8,
+                  numberOfLines: 10,
+                },
               },
             ],
           });

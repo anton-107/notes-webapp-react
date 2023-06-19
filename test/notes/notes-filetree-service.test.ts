@@ -2,13 +2,13 @@ import { groupNotesAsFileTree } from "../../src/notes/notes-filetree-service";
 
 describe("groupNotesAsFileTree", () => {
   const notes = [
-    { content: "/file0" },
-    { content: "/folder1/file1" },
-    { content: "/folder1/file2" },
-    { content: "/folder2/file1" },
-    { content: "/folder3/file1" },
-    { content: "/folder3/file2" },
-    { content: "/file3" },
+    { content: "/file0", extensionProperties: { numberOfLines: "10" } },
+    { content: "/folder1/file1", extensionProperties: { numberOfLines: "10" } },
+    { content: "/folder1/file2", extensionProperties: { numberOfLines: "10" } },
+    { content: "/folder2/file1", extensionProperties: { numberOfLines: "10" } },
+    { content: "/folder3/file1", extensionProperties: { numberOfLines: "10" } },
+    { content: "/folder3/file2", extensionProperties: { numberOfLines: "10" } },
+    { content: "/file3", extensionProperties: { numberOfLines: "10" } },
   ];
 
   it("should return an empty array when notes are empty", () => {
@@ -32,31 +32,23 @@ describe("groupNotesAsFileTree", () => {
 
   it("should group notes by folder and subfolder when current folder is 'folder1'", () => {
     const result = groupNotesAsFileTree(notes, "/folder1");
-    expect(result).toContainEqual({
-      name: "file1",
-      isFolder: false,
-      extensionProperties: {},
-    });
-    expect(result).toContainEqual({
-      name: "file2",
-      isFolder: false,
-      extensionProperties: {},
-    });
     expect(result).toHaveLength(2);
+    expect(result[0].name).toBe("file1");
+    expect(result[0].numberOfLines).toBe(10);
+    expect(result[0].isFolder).toBe(false);
+    expect(result[1].name).toBe("file2");
+    expect(result[1].numberOfLines).toBe(10);
+    expect(result[1].isFolder).toBe(false);
   });
 
   it("should group notes by folder and subfolder when current folder is 'folder3'", () => {
     const result = groupNotesAsFileTree(notes, "/folder3");
-    expect(result).toContainEqual({
-      name: "file1",
-      isFolder: false,
-      extensionProperties: {},
-    });
-    expect(result).toContainEqual({
-      name: "file2",
-      isFolder: false,
-      extensionProperties: {},
-    });
     expect(result).toHaveLength(2);
+    expect(result[0].name).toBe("file1");
+    expect(result[0].numberOfLines).toBe(10);
+    expect(result[0].isFolder).toBe(false);
+    expect(result[1].name).toBe("file2");
+    expect(result[1].numberOfLines).toBe(10);
+    expect(result[1].isFolder).toBe(false);
   });
 });
