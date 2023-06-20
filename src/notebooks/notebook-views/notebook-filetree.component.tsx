@@ -126,7 +126,6 @@ export function NotebookFileTreeComponent(): React.ReactElement {
                                 {Array.from(file.contrbutorNames.values()).join(
                                   ",\n"
                                 )}
-                                )
                               </span>
                             )}
                           </span>
