@@ -53,7 +53,7 @@ export function groupNotesAsFileTree(
           isFolder: parts.findIndex((x) => x === fileName) !== parts.length - 1,
           numberOfChanges:
             parseInt(n.extensionProperties["numberOfChanges"]) || 0,
-          numberOfLines: parseInt(n.extensionProperties["numberOfLines"]) || 0,
+          numberOfLines: parseInt(n.extensionProperties["numberOfLines"]),
           contrbutorNames: new Set(),
         };
 

@@ -3,8 +3,40 @@ import { groupNotesAsFileTree } from "../../src/notes/notes-filetree-service";
 describe("groupNotesAsFileTree", () => {
   const notes = [
     { content: "/file0", extensionProperties: { numberOfLines: "10" } },
-    { content: "/folder1/file1", extensionProperties: { numberOfLines: "10" } },
-    { content: "/folder1/file2", extensionProperties: { numberOfLines: "10" } },
+    {
+      content: "/folder1/file1",
+      extensionProperties: {
+        numberOfLines: "10",
+        contributors: [
+          {
+            name: "Bob",
+            numberOfChanges: 1,
+            firstChangeTimestamp: 0,
+            lastChangeTimestamp: 0,
+          },
+          {
+            name: "Alice",
+            numberOfChanges: 2,
+            firstChangeTimestamp: 0,
+            lastChangeTimestamp: 0,
+          },
+        ],
+      },
+    },
+    {
+      content: "/folder1/file2",
+      extensionProperties: {
+        numberOfLines: "10",
+        contributors: [
+          {
+            name: "Mallory",
+            numberOfChanges: 5,
+            firstChangeTimestamp: 0,
+            lastChangeTimestamp: 0,
+          },
+        ],
+      },
+    },
     { content: "/folder2/file1", extensionProperties: { numberOfLines: "10" } },
     { content: "/folder3/file1", extensionProperties: { numberOfLines: "10" } },
     { content: "/folder3/file2", extensionProperties: { numberOfLines: "10" } },
@@ -50,5 +82,18 @@ describe("groupNotesAsFileTree", () => {
     expect(result[1].name).toBe("file2");
     expect(result[1].numberOfLines).toBe(10);
     expect(result[1].isFolder).toBe(false);
+  });
+
+  it("should group contributors from files of the folder", () => {
+    const result = groupNotesAsFileTree(notes, "/");
+    expect(result).toHaveLength(5);
+
+    const folderOneContributors = Array.from(
+      result[0].contrbutorNames.values()
+    );
+    expect(folderOneContributors).toHaveLength(3);
+    expect(folderOneContributors[0]).toBe("Bob");
+    expect(folderOneContributors[1]).toBe("Alice");
+    expect(folderOneContributors[2]).toBe("Mallory");
   });
 });
