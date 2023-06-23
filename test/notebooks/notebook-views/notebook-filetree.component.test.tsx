@@ -94,12 +94,22 @@ describe("Notebook file tree component", () => {
               {
                 content: "/src/file-1",
                 id: "note-1",
-                extensionProperties: { manualOrder: 100 },
+                extensionProperties: {
+                  manualOrder: 100,
+                  numberOfChanges: 1,
+                  numberOfLines: 10,
+                  contributors: [{ name: "Alice" }],
+                },
               },
               {
                 content: "/src/file-2",
                 id: "note-2",
-                extensionProperties: { manualOrder: 200 },
+                extensionProperties: {
+                  manualOrder: 200,
+                  numberOfChanges: 2,
+                  numberOfLines: 20,
+                  contributors: [{ name: "Alice" }, { name: "Bob" }],
+                },
               },
               {
                 content: "/config-file",
@@ -121,6 +131,24 @@ describe("Notebook file tree component", () => {
                 name: "Number of changes",
                 columnType: "numberOfChanges",
                 valueType: "number",
+                valueSource: "extensionProperties",
+              },
+              {
+                name: "Number of lines",
+                columnType: "numberOfLines",
+                valueType: "number",
+                valueSource: "extensionProperties",
+              },
+              {
+                name: "Number of contributors",
+                columnType: "numberOfContributors",
+                valueType: "number",
+                valueSource: "extensionProperties",
+              },
+              {
+                name: "Contributors",
+                columnType: "contributors",
+                valueType: "list-of-objects",
                 valueSource: "extensionProperties",
               },
             ],
@@ -148,6 +176,20 @@ describe("Notebook file tree component", () => {
           "file-column-displayed-value-config-file-numberOfChanges"
         )
       ).toHaveTextContent("8");
+      expect(
+        screen.getByTestId("file-column-displayed-value-src-numberOfChanges")
+      ).toHaveTextContent("3");
+      expect(
+        screen.getByTestId("file-column-displayed-value-src-numberOfLines")
+      ).toHaveTextContent("30");
+      expect(
+        screen.getByTestId(
+          "file-column-displayed-value-src-numberOfContributors"
+        )
+      ).toHaveTextContent("2");
+      expect(
+        screen.getByTestId("file-column-displayed-value-src-contributors")
+      ).toHaveTextContent("Alice, Bob");
       component.unmount();
     });
   });
