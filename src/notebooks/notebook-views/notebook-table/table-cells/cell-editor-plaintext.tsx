@@ -17,7 +17,7 @@ export function CellEditorPlaintext(
   };
   const saveValueOnEnter = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.code === "Enter" && !e.shiftKey) {
-      saveValue(e.target.value);
+      saveValue((e.target as HTMLInputElement).value);
     }
   };
 

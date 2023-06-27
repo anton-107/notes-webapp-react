@@ -43,8 +43,8 @@ export function NoteDetails(props: NoteDetailsProps): React.ReactElement {
   const changeNoteContent = async (e: React.ChangeEvent<HTMLInputElement>) => {
     setNoteContent(e.target.value);
   };
-  const saveNoteContent = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    setNoteContent(e.target.value);
+  const saveNoteContent = async (inputValue: string) => {
+    setNoteContent(inputValue);
     await persistNote({
       ...props.note,
       content: noteContent,
@@ -54,7 +54,7 @@ export function NoteDetails(props: NoteDetailsProps): React.ReactElement {
     e: React.KeyboardEvent<HTMLInputElement>
   ) => {
     if (e.code === "Enter") {
-      await saveNoteContent(e);
+      await saveNoteContent((e.target as HTMLInputElement).value);
     }
   };
   const persistNote = async (note: Note) => {
@@ -115,7 +115,7 @@ export function NoteDetails(props: NoteDetailsProps): React.ReactElement {
           value={noteContent}
           className="note-content-edit-input"
           onChange={changeNoteContent}
-          onBlur={saveNoteContent}
+          onBlur={(e) => saveNoteContent(e.target.value)}
           onKeyPress={saveNoteContentOnEnter}
           data-testid="note-details-content-edit-input"
         />
