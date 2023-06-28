@@ -67,7 +67,7 @@ describe("Notes details component", () => {
     );
     component.unmount();
   });
-  it("should edit note content", async () => {
+  it("should edit note content when pressing enter", async () => {
     fetchMock.mockResponse(async (req) => {
       if (req.url.endsWith("/attachment")) {
         return JSON.stringify({ attachments: [] });
@@ -109,6 +109,53 @@ describe("Notes details component", () => {
       code: "Enter",
       key: "Enter",
       charCode: 13,
+      target: { value: "This is an edited note" },
+    });
+    expect(screen.getByTestId("note-details-content-edit-input")).toHaveValue(
+      "This is an edited note"
+    );
+    await waitFor(() =>
+      expect(onNoteEditedMock).toBeCalledWith({
+        content: "This is an edited note",
+        id: "note-1",
+      })
+    );
+    component.unmount();
+  });
+  it("should edit note content when blurring from input", async () => {
+    fetchMock.mockResponse(async (req) => {
+      if (req.url.endsWith("/attachment")) {
+        return JSON.stringify({ attachments: [] });
+      }
+      const requestBody: EditNoteRequest = await req.json();
+      return JSON.stringify({
+        id: requestBody["note-id"],
+        content: requestBody["note-content"],
+      });
+    });
+    const onNoteDeletedMock = jest.fn();
+    const onNoteEditedMock = jest.fn();
+    const note: Note = {
+      id: "note-1",
+      content: "This is a test note",
+      type: { type: "note" },
+      notebookID: "notebook-1",
+      extensionProperties: { section: null, manualOrder: null },
+    };
+
+    const component = render(
+      <BrowserRouter>
+        <NoteDetails
+          note={note}
+          onNoteDeleted={onNoteDeletedMock}
+          onNoteEdited={onNoteEditedMock}
+        />
+      </BrowserRouter>
+    );
+    fireEvent.change(screen.getByTestId("note-details-content-edit-input"), {
+      target: { value: "This is an edited note" },
+    });
+    fireEvent.blur(screen.getByTestId("note-details-content-edit-input"), {
       target: { value: "This is an edited note" },
     });
     expect(screen.getByTestId("note-details-content-edit-input")).toHaveValue(
